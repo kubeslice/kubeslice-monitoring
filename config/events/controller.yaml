@@ -1,0 +1,7 @@
+events:
+  - name: slice-deletion-failed
+    reason: SliceDeletionFailed
+    action: SliceDeletion
+    type: Warning
+    reportingController: controller
+    message: Slice deletion failed - please ask admin to check the slice configuration on the worker cluster. <link to tech doc event-list>
