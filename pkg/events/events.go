@@ -30,12 +30,34 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+<<<<<<< Updated upstream
 type EventType string
 
 var (
 	EventTypeWarning EventType = "Warning"
 	EventTypeNormal  EventType = "Normal"
 )
+=======
+func main() {
+	recorder := EventRecorder{
+		Client:    nil,
+		Logger:    nil,
+		Scheme:    nil,
+		Version:   "",
+		Cluster:   "",
+		Project:   "",
+		Slice:     "",
+		Namespace: "",
+		Component: "",
+	}
+	recorder.WithSlice("red").RecordEvent(context.Background(), &Event{
+		Object:            nil,
+		RelatedObject:     nil,
+		ReportingInstance: "",
+		Name:              "",
+	})
+}
+>>>>>>> Stashed changes
 
 type EventRecorder struct {
 	Client    client.Client
@@ -43,7 +65,7 @@ type EventRecorder struct {
 	Scheme    *runtime.Scheme
 	Version   string
 	Cluster   string
-	Tenant    string
+	Project   string
 	Slice     string
 	Namespace string
 	Component string
@@ -66,7 +88,7 @@ func (er *EventRecorder) Copy() *EventRecorder {
 		Scheme:    er.Scheme,
 		Version:   er.Version,
 		Cluster:   er.Cluster,
-		Tenant:    er.Tenant,
+		Project:   er.Project,
 		Slice:     er.Slice,
 		Namespace: er.Namespace,
 		Component: er.Component,
@@ -108,10 +130,18 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 			Name:      fmt.Sprintf("%v.%x", ref.Name, t.UnixNano()),
 			Namespace: ns,
 			Labels: map[string]string{
+<<<<<<< Updated upstream
 				"sliceCluster":   er.Cluster,
 				"sliceNamespace": ns,
 				"sliceName":      er.Slice,
 				"sliceTenant":    er.Tenant,
+=======
+				"sliceCluster":            er.Cluster,
+				"sliceNamespace":          ns,
+				"sliceName":               er.Slice,
+				"sliceProject":            er.Project,
+				"reportingControllerName": event.ReportingController,
+>>>>>>> Stashed changes
 			},
 			Annotations: map[string]string{
 				"release": er.Version,
