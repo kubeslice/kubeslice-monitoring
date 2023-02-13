@@ -1,5 +1,5 @@
 events:
-  - name: slice-deletion-failed
+  - name: SliceDeletionFailed
     reason: SliceDeletionFailed
     action: SliceDeletion
     type: Warning

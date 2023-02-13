@@ -20,7 +20,7 @@ package events
 
 import (
 	"fmt"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/utils"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 
 	"go.uber.org/zap"
 	"golang.org/x/net/context"
@@ -93,7 +93,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ns = ref.Namespace
 	}
 
-	event, err := utils.GetEvent(e.Name)
+	event, err := schema.GetEvent(e.Name)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to get event")
 		return err

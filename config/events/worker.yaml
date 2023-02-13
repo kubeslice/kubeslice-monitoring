@@ -1,5 +1,5 @@
 events:
-  - name: net-pol-violation
+  - name: NetPolViolation
     reason: PolicyViolation
     action: PolicyMonitoring
     type: Warning

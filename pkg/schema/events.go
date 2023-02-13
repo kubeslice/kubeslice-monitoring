@@ -1,4 +1,4 @@
-package utils
+package schema
 
 import (
 	"k8s.io/apimachinery/pkg/util/yaml"
@@ -12,11 +12,11 @@ var (
 	EventTypeNormal  EventType = "Normal"
 )
 
-type EventSchema struct {
-	Events []DefaultEvent
+type EventSchemaList struct {
+	Events []EventSchema
 }
 
-type DefaultEvent struct {
+type EventSchema struct {
 	Name                string
 	Reason              string
 	Action              string
@@ -25,7 +25,7 @@ type DefaultEvent struct {
 	Message             string
 }
 
-func GetEvent(name string) (*DefaultEvent, error) {
+func GetEvent(name string) (*EventSchema, error) {
 	controllerEvents, err := parseEvent("config/events/controller.yaml")
 	if err != nil {
 		return nil, err
@@ -43,8 +43,8 @@ func GetEvent(name string) (*DefaultEvent, error) {
 	return nil, nil
 }
 
-func parseEvent(filepath string) ([]DefaultEvent, error) {
-	var eventSchema EventSchema
+func parseEvent(filepath string) ([]EventSchema, error) {
+	var eventSchema EventSchemaList
 	event, err := os.ReadFile(filepath)
 	if err != nil {
 		return nil, err
