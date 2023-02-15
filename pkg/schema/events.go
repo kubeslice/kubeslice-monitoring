@@ -26,11 +26,11 @@ type EventSchema struct {
 }
 
 func GetEvent(name string) (*EventSchema, error) {
-	controllerEvents, err := parseEvent("config/events/controller.yaml")
+	controllerEvents, err := parseEvent("../../config/events/controller.yaml")
 	if err != nil {
 		return nil, err
 	}
-	workerEvents, err := parseEvent("config/events/worker.yaml")
+	workerEvents, err := parseEvent("../../config/events/worker.yaml")
 	if err != nil {
 		return nil, err
 	}

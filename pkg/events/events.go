@@ -21,6 +21,7 @@ package events
 import (
 	"fmt"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 
 	"go.uber.org/zap"
 	"golang.org/x/net/context"
@@ -28,11 +29,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/reference"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 type EventRecorder struct {
-	Client    client.Client
+	Client    util.Client
 	Logger    *zap.SugaredLogger
 	Scheme    *runtime.Scheme
 	Version   string
@@ -139,7 +139,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ev.Related = related
 	}
 
-	er.Logger.Info("raised event", "event", ev)
+	er.Logger.Infof("raised event %v", ev)
 
 	if err := er.Client.Create(ctx, ev); err != nil {
 		er.Logger.With("error", err, "event", ev).Error("Unable to create event")
