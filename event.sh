@@ -29,15 +29,14 @@ output="pkg/schema/event_names.go"
 if [ ! -f $input1 ] || [ ! -f $input2 ]; then
   printf "Error: file does not exist"
   exit 1
-else
-  printf "%s\n\n%s\n\npackage schema\n\n" "$license" "$header" >$output
-  printf "var (\n" >>$output
-  while IFS=$'\t' read -r; do
-    x=$(grep -o "name: [A-Za-z0-9]*" | awk '{print $2}')
-    IFS=$'\n' read -ra ADDR -d $'\0' <<<"$x"
-    for i in "${ADDR[@]}"; do
-      printf "\tEvent%s = \"%s\"\n" "${i}" "${i}" >>$output
-    done
-  done < <(paste $input1 $input2)
-  printf ")" >>$output
 fi
+printf "%s\n\n%s\n\npackage schema\n\n" "$license" "$header" >$output
+printf "var (\n" >>$output
+while IFS=$'\t' read -r; do
+  x=$(grep -o "name: [A-Za-z0-9]*" | awk '{print $2}')
+  IFS=$'\n' read -ra ADDR -d $'\0' <<<"$x"
+  for i in "${ADDR[@]}"; do
+    printf "\tEvent%s = \"%s\"\n" "${i}" "${i}" >>$output
+  done
+done < <(paste $input1 $input2)
+printf ")" >>$output

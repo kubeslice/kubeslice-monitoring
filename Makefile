@@ -1,4 +1,4 @@
-.PHONY: generate
+.PHONY: generate-events
 generate-events: ## Generate event_names.go
 	./event.sh
 
