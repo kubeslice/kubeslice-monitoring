@@ -20,47 +20,19 @@ package events
 
 import (
 	"fmt"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 
-	zap "go.uber.org/zap"
+	"go.uber.org/zap"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/reference"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 )
-
-<<<<<<< Updated upstream
-type EventType string
-
-var (
-	EventTypeWarning EventType = "Warning"
-	EventTypeNormal  EventType = "Normal"
-)
-=======
-func main() {
-	recorder := EventRecorder{
-		Client:    nil,
-		Logger:    nil,
-		Scheme:    nil,
-		Version:   "",
-		Cluster:   "",
-		Project:   "",
-		Slice:     "",
-		Namespace: "",
-		Component: "",
-	}
-	recorder.WithSlice("red").RecordEvent(context.Background(), &Event{
-		Object:            nil,
-		RelatedObject:     nil,
-		ReportingInstance: "",
-		Name:              "",
-	})
-}
->>>>>>> Stashed changes
 
 type EventRecorder struct {
-	Client    client.Client
+	Client    util.Client
 	Logger    *zap.SugaredLogger
 	Scheme    *runtime.Scheme
 	Version   string
@@ -74,11 +46,8 @@ type EventRecorder struct {
 type Event struct {
 	Object            runtime.Object
 	RelatedObject     runtime.Object
-	EventType         EventType
-	Reason            string
-	Message           string
-	Action            string
 	ReportingInstance string
+	Name              string
 }
 
 func (er *EventRecorder) Copy() *EventRecorder {
@@ -124,24 +93,22 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ns = ref.Namespace
 	}
 
+	event, err := schema.GetEvent(e.Name)
+	if err != nil {
+		er.Logger.With("error", err).Error("Unable to get event")
+		return err
+	}
 	t := metav1.Now()
 	ev := &corev1.Event{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      fmt.Sprintf("%v.%x", ref.Name, t.UnixNano()),
 			Namespace: ns,
 			Labels: map[string]string{
-<<<<<<< Updated upstream
-				"sliceCluster":   er.Cluster,
-				"sliceNamespace": ns,
-				"sliceName":      er.Slice,
-				"sliceTenant":    er.Tenant,
-=======
 				"sliceCluster":            er.Cluster,
 				"sliceNamespace":          ns,
 				"sliceName":               er.Slice,
 				"sliceProject":            er.Project,
 				"reportingControllerName": event.ReportingController,
->>>>>>> Stashed changes
 			},
 			Annotations: map[string]string{
 				"release": er.Version,
@@ -149,18 +116,18 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		},
 		InvolvedObject:      *ref,
 		EventTime:           metav1.NowMicro(),
-		Reason:              e.Reason,
-		Message:             e.Message,
+		Reason:              event.Reason,
+		Message:             event.Message,
 		FirstTimestamp:      t,
 		LastTimestamp:       t,
 		Count:               1,
-		ReportingController: er.Component,
+		ReportingController: event.ReportingController,
 		ReportingInstance:   e.ReportingInstance,
 		Source: corev1.EventSource{
 			Component: er.Component,
 		},
-		Action: e.Action,
-		Type:   string(e.EventType),
+		Action: event.Action,
+		Type:   string(event.Type),
 	}
 
 	if e.RelatedObject != nil {
@@ -172,7 +139,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ev.Related = related
 	}
 
-	er.Logger.Info("raised event", "event", ev)
+	er.Logger.Infof("raised event %v", ev)
 
 	if err := er.Client.Create(ctx, ev); err != nil {
 		er.Logger.With("error", err, "event", ev).Error("Unable to create event")
