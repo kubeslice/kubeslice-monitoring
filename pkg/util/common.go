@@ -12,6 +12,14 @@ func MergeMaps(ms ...map[string]string) map[string]string {
 	return res
 }
 
+func MapKeys(ms map[string]string) []string {
+	var res []string
+	for k := range ms {
+		res = append(res, k)
+	}
+	return res
+}
+
 func FlattenKey(key string) string {
 	key = strings.Replace(key, " ", "_", -1)
 	key = strings.Replace(key, ".", "_", -1)

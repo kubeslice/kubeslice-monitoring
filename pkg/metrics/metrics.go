@@ -26,7 +26,7 @@ type Metric struct {
 	Name             string
 	Help             string
 	Value            float64
-	labels           map[string]string
+	Labels           map[string]string
 	histogramBuckets []float64
 }
 
@@ -83,7 +83,7 @@ func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		fixedLabels,
+		append(fixedLabels, util.MapKeys(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -91,7 +91,7 @@ func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
 				"slice_project": util.FlattenKey(mr.Project),
 				"slice_cluster": util.FlattenKey(mr.Cluster),
 				"slice_name":    util.FlattenKey(mr.Slice),
-			}, util.FlattenMap(m.labels)),
+			}, util.FlattenMap(m.Labels)),
 	).Set(m.Value)
 }
 
@@ -103,7 +103,7 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		fixedLabels,
+		append(fixedLabels, util.MapKeys(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -111,7 +111,7 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 				"slice_project": util.FlattenKey(mr.Project),
 				"slice_cluster": util.FlattenKey(mr.Cluster),
 				"slice_name":    util.FlattenKey(mr.Slice),
-			}, util.FlattenMap(m.labels)),
+			}, util.FlattenMap(m.Labels)),
 	).Add(m.Value)
 }
 
@@ -125,7 +125,7 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 			Help:      m.Help,
 			Buckets:   m.histogramBuckets,
 		},
-		fixedLabels,
+		append(fixedLabels, util.MapKeys(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -133,7 +133,7 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 				"slice_project": util.FlattenKey(mr.Project),
 				"slice_cluster": util.FlattenKey(mr.Cluster),
 				"slice_name":    util.FlattenKey(mr.Slice),
-			}, util.FlattenMap(m.labels)),
+			}, util.FlattenMap(m.Labels)),
 	).Observe(time.Since(start).Seconds())
 }
 
@@ -146,7 +146,7 @@ func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		fixedLabels,
+		append(fixedLabels, util.MapKeys(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -154,6 +154,6 @@ func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 				"slice_project": util.FlattenKey(mr.Project),
 				"slice_cluster": util.FlattenKey(mr.Cluster),
 				"slice_name":    util.FlattenKey(mr.Slice),
-			}, util.FlattenMap(m.labels)),
+			}, util.FlattenMap(m.Labels)),
 	).Observe(time.Since(start).Seconds())
 }
