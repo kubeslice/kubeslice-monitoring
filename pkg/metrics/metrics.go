@@ -32,6 +32,8 @@ type Metric struct {
 
 type MetricType string
 
+var fixedLabels = []string{"slice_project", "slice_cluster", "slice_name"}
+
 const (
 	MetricTypeGauge     = "Gauge"
 	MetricTypeCounter   = "Counter"
@@ -54,7 +56,7 @@ func (mr *MetricRecorder) NewPrometheusProvider() *MetricRecorder {
 	}
 }
 
-func (mr *MetricRecorder) RecordEvent(ctx context.Context, m *Metric) error {
+func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
 	mr.Logger.Infof("Recording metric: %v", m)
 	switch m.Type {
 	case MetricTypeGauge:
@@ -81,7 +83,7 @@ func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		[]string{"slice_project", "slice_cluster", "slice_name"},
+		fixedLabels,
 	)
 	metric.With(
 		util.MergeMaps(
@@ -101,7 +103,7 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		[]string{"slice_project", "slice_cluster", "slice_name"},
+		fixedLabels,
 	)
 	metric.With(
 		util.MergeMaps(
@@ -123,7 +125,7 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 			Help:      m.Help,
 			Buckets:   m.histogramBuckets,
 		},
-		[]string{"slice_project", "slice_cluster", "slice_name"},
+		fixedLabels,
 	)
 	metric.With(
 		util.MergeMaps(
@@ -144,7 +146,7 @@ func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		[]string{"slice_project", "slice_cluster", "slice_name"},
+		fixedLabels,
 	)
 	metric.With(
 		util.MergeMaps(
