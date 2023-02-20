@@ -57,7 +57,6 @@ func (mr *MetricRecorder) NewPrometheusProvider() *MetricRecorder {
 }
 
 func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
-	mr.Logger.Infof("Recording metric: %v", m)
 	switch m.Type {
 	case MetricTypeGauge:
 		mr.recordGauge(ctx, m)
@@ -78,6 +77,7 @@ func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
 }
 
 func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
+	mr.Logger.Infof("Recording gauge metric: %v", m)
 	metric := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Namespace: util.FlattenKey(mr.Namespace),
@@ -85,7 +85,7 @@ func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		append(fixedLabels, util.MapKeys(m.Labels)...),
+		append(fixedLabels, util.KeysFromMap(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -98,6 +98,7 @@ func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
 }
 
 func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
+	mr.Logger.Infof("Recording counter metric: %v", m)
 	metric := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: util.FlattenKey(mr.Namespace),
@@ -105,7 +106,7 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		append(fixedLabels, util.MapKeys(m.Labels)...),
+		append(fixedLabels, util.KeysFromMap(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -118,6 +119,7 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 }
 
 func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
+	mr.Logger.Infof("Recording histogram metric: %v", m)
 	start := time.Now()
 	metric := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
@@ -127,7 +129,7 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 			Help:      m.Help,
 			Buckets:   m.histogramBuckets,
 		},
-		append(fixedLabels, util.MapKeys(m.Labels)...),
+		append(fixedLabels, util.KeysFromMap(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(
@@ -140,6 +142,7 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 }
 
 func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
+	mr.Logger.Infof("Recording summary metric: %v", m)
 	start := time.Now()
 	metric := prometheus.NewSummaryVec(
 		prometheus.SummaryOpts{
@@ -148,7 +151,7 @@ func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 			Name:      util.FlattenKey(m.Name),
 			Help:      m.Help,
 		},
-		append(fixedLabels, util.MapKeys(m.Labels)...),
+		append(fixedLabels, util.KeysFromMap(m.Labels)...),
 	)
 	metric.With(
 		util.MergeMaps(

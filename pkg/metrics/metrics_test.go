@@ -3,17 +3,21 @@ package metrics
 import (
 	"context"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"github.com/stretchr/testify/require"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"testing"
 )
 
+var (
+	project     = "dummy"
+	sliceName   = "red"
+	clusterName = "cluster-1"
+	namespace   = "kubeslice-dummy"
+)
+
 func TestRecordGaugeMetric(t *testing.T) {
-	project := "cisco"
-	sliceName := "red"
-	clusterName := "cluster-1"
-	namespace := "kubeslice-cisco"
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
 		Scheme:    newTestScheme(),
@@ -27,7 +31,7 @@ func TestRecordGaugeMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &Metric{
 		Type:  MetricTypeGauge,
-		Name:  SliceNetPolViolation,
+		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{
@@ -38,10 +42,6 @@ func TestRecordGaugeMetric(t *testing.T) {
 }
 
 func TestRecordCounterMetric(t *testing.T) {
-	project := "cisco"
-	sliceName := "red"
-	clusterName := "cluster-1"
-	namespace := "kubeslice-cisco"
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
 		Scheme:    newTestScheme(),
@@ -55,7 +55,7 @@ func TestRecordCounterMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &Metric{
 		Type:  MetricTypeCounter,
-		Name:  SliceNetPolViolation,
+		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{
@@ -66,10 +66,6 @@ func TestRecordCounterMetric(t *testing.T) {
 }
 
 func TestRecordHistogramMetric(t *testing.T) {
-	project := "cisco"
-	sliceName := "red"
-	clusterName := "cluster-1"
-	namespace := "kubeslice-cisco"
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
 		Scheme:    newTestScheme(),
@@ -83,21 +79,18 @@ func TestRecordHistogramMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &Metric{
 		Type:  MetricTypeHistogram,
-		Name:  SliceNetPolViolation,
+		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{
 			"test_key": "test_value",
 		},
+		histogramBuckets: []float64{1, 2, 3},
 	})
 	require.Nil(t, err)
 }
 
 func TestRecordSummaryMetric(t *testing.T) {
-	project := "cisco"
-	sliceName := "red"
-	clusterName := "cluster-1"
-	namespace := "kubeslice-cisco"
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
 		Scheme:    newTestScheme(),
@@ -111,7 +104,7 @@ func TestRecordSummaryMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &Metric{
 		Type:  MetricTypeSummary,
-		Name:  SliceNetPolViolation,
+		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{

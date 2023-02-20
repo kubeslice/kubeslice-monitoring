@@ -12,7 +12,7 @@ func MergeMaps(ms ...map[string]string) map[string]string {
 	return res
 }
 
-func MapKeys(ms map[string]string) []string {
+func KeysFromMap(ms map[string]string) []string {
 	var res []string
 	for k := range ms {
 		res = append(res, k)

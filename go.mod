@@ -7,7 +7,6 @@ require (
 	github.com/go-logr/zapr v1.2.3
 	github.com/kubeslice/apis v0.1.2
 	github.com/prometheus/client_golang v1.14.0
-	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/zap v1.24.0
 	golang.org/x/net v0.5.0

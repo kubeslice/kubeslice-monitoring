@@ -16,8 +16,8 @@
  *  limitations under the License.
  */
 
-package metrics
+package schema
 
 var (
-	SliceNetPolViolation = "slice_net_pol_violation"
+	MetricNetPolViolation = "net_pol_violation"
 )
