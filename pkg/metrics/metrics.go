@@ -71,6 +71,8 @@ func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
 	case MetricTypeSummary:
 		mr.recordSummary(ctx, m)
 		break
+	default:
+		mr.Logger.Errorf("Unknown metric type: %v", m.Type)
 	}
 	return nil
 }
