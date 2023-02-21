@@ -6,6 +6,7 @@ import (
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"github.com/stretchr/testify/require"
 	"testing"
+	"time"
 )
 
 var (
@@ -77,7 +78,8 @@ func TestRecordHistogramMetric(t *testing.T) {
 		Labels: map[string]string{
 			"test_key": "test_value",
 		},
-		histogramBuckets: []float64{1, 2, 3},
+		HistogramBuckets: []float64{1, 2, 3},
+		Time:             time.Now(),
 	})
 	require.Nil(t, err)
 }
@@ -100,6 +102,7 @@ func TestRecordSummaryMetric(t *testing.T) {
 		Labels: map[string]string{
 			"test_key": "test_value",
 		},
+		Time: time.Now(),
 	})
 	require.Nil(t, err)
 }
