@@ -5,8 +5,6 @@ import (
 	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"github.com/stretchr/testify/require"
-	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/runtime"
 	"testing"
 )
 
@@ -20,8 +18,6 @@ var (
 func TestRecordGaugeMetric(t *testing.T) {
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
-		Scheme:    newTestScheme(),
-		Version:   "1",
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
@@ -44,8 +40,6 @@ func TestRecordGaugeMetric(t *testing.T) {
 func TestRecordCounterMetric(t *testing.T) {
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
-		Scheme:    newTestScheme(),
-		Version:   "1",
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
@@ -68,8 +62,6 @@ func TestRecordCounterMetric(t *testing.T) {
 func TestRecordHistogramMetric(t *testing.T) {
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
-		Scheme:    newTestScheme(),
-		Version:   "1",
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
@@ -93,8 +85,6 @@ func TestRecordHistogramMetric(t *testing.T) {
 func TestRecordSummaryMetric(t *testing.T) {
 	recorder := MetricRecorder{
 		Logger:    logger.NewLogger(),
-		Scheme:    newTestScheme(),
-		Version:   "1",
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
@@ -112,10 +102,4 @@ func TestRecordSummaryMetric(t *testing.T) {
 		},
 	})
 	require.Nil(t, err)
-}
-
-func newTestScheme() *runtime.Scheme {
-	testScheme := runtime.NewScheme()
-	_ = corev1.AddToScheme(testScheme)
-	return testScheme
 }

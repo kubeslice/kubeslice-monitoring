@@ -5,15 +5,12 @@ import (
 	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
-	"k8s.io/apimachinery/pkg/runtime"
 	"time"
 )
 
 // MetricRecorder provides a container with config parameters for the Prometheus Exporter
 type MetricRecorder struct {
 	Logger    *zap.SugaredLogger
-	Scheme    *runtime.Scheme
-	Version   string
 	Project   string
 	Cluster   string
 	Slice     string
@@ -41,13 +38,11 @@ const (
 	MetricTypeSummary   = "Summary"
 )
 
-// NewPrometheusProvider returns a Provider that produces Prometheus metrics.
+// Copy returns a Provider that produces Prometheus metrics.
 // Namespace and subsystem are applied to all produced metrics.
-func (mr *MetricRecorder) NewPrometheusProvider() *MetricRecorder {
+func (mr *MetricRecorder) Copy() *MetricRecorder {
 	return &MetricRecorder{
 		Logger:    mr.Logger,
-		Scheme:    mr.Scheme,
-		Version:   mr.Version,
 		Project:   mr.Project,
 		Cluster:   mr.Cluster,
 		Slice:     mr.Slice,
@@ -77,12 +72,12 @@ func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
 }
 
 func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
-	mr.Logger.Infof("Recording gauge metric: %v", m)
+	mr.Logger.Debugf("Recording gauge metric: %v", m)
 	metric := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
-			Namespace: util.FlattenKey(mr.Namespace),
-			Subsystem: util.FlattenKey(mr.Subsystem),
-			Name:      util.FlattenKey(m.Name),
+			Namespace: util.FlattenString(mr.Namespace),
+			Subsystem: util.FlattenString(mr.Subsystem),
+			Name:      util.FlattenString(m.Name),
 			Help:      m.Help,
 		},
 		append(fixedLabels, util.KeysFromMap(m.Labels)...),
@@ -90,20 +85,20 @@ func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
 	metric.With(
 		util.MergeMaps(
 			prometheus.Labels{
-				"slice_project": util.FlattenKey(mr.Project),
-				"slice_cluster": util.FlattenKey(mr.Cluster),
-				"slice_name":    util.FlattenKey(mr.Slice),
+				"slice_project": util.FlattenString(mr.Project),
+				"slice_cluster": util.FlattenString(mr.Cluster),
+				"slice_name":    util.FlattenString(mr.Slice),
 			}, util.FlattenMap(m.Labels)),
 	).Set(m.Value)
 }
 
 func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
-	mr.Logger.Infof("Recording counter metric: %v", m)
+	mr.Logger.Debugf("Recording counter metric: %v", m)
 	metric := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
-			Namespace: util.FlattenKey(mr.Namespace),
-			Subsystem: util.FlattenKey(mr.Subsystem),
-			Name:      util.FlattenKey(m.Name),
+			Namespace: util.FlattenString(mr.Namespace),
+			Subsystem: util.FlattenString(mr.Subsystem),
+			Name:      util.FlattenString(m.Name),
 			Help:      m.Help,
 		},
 		append(fixedLabels, util.KeysFromMap(m.Labels)...),
@@ -111,21 +106,21 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 	metric.With(
 		util.MergeMaps(
 			prometheus.Labels{
-				"slice_project": util.FlattenKey(mr.Project),
-				"slice_cluster": util.FlattenKey(mr.Cluster),
-				"slice_name":    util.FlattenKey(mr.Slice),
+				"slice_project": util.FlattenString(mr.Project),
+				"slice_cluster": util.FlattenString(mr.Cluster),
+				"slice_name":    util.FlattenString(mr.Slice),
 			}, util.FlattenMap(m.Labels)),
 	).Add(m.Value)
 }
 
 func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
-	mr.Logger.Infof("Recording histogram metric: %v", m)
+	mr.Logger.Debugf("Recording histogram metric: %v", m)
 	start := time.Now()
 	metric := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Namespace: util.FlattenKey(mr.Namespace),
-			Subsystem: util.FlattenKey(mr.Subsystem),
-			Name:      util.FlattenKey(m.Name),
+			Namespace: util.FlattenString(mr.Namespace),
+			Subsystem: util.FlattenString(mr.Subsystem),
+			Name:      util.FlattenString(m.Name),
 			Help:      m.Help,
 			Buckets:   m.histogramBuckets,
 		},
@@ -134,21 +129,21 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 	metric.With(
 		util.MergeMaps(
 			prometheus.Labels{
-				"slice_project": util.FlattenKey(mr.Project),
-				"slice_cluster": util.FlattenKey(mr.Cluster),
-				"slice_name":    util.FlattenKey(mr.Slice),
+				"slice_project": util.FlattenString(mr.Project),
+				"slice_cluster": util.FlattenString(mr.Cluster),
+				"slice_name":    util.FlattenString(mr.Slice),
 			}, util.FlattenMap(m.Labels)),
 	).Observe(time.Since(start).Seconds())
 }
 
 func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
-	mr.Logger.Infof("Recording summary metric: %v", m)
+	mr.Logger.Debugf("Recording summary metric: %v", m)
 	start := time.Now()
 	metric := prometheus.NewSummaryVec(
 		prometheus.SummaryOpts{
-			Namespace: util.FlattenKey(mr.Namespace),
-			Subsystem: util.FlattenKey(mr.Subsystem),
-			Name:      util.FlattenKey(m.Name),
+			Namespace: util.FlattenString(mr.Namespace),
+			Subsystem: util.FlattenString(mr.Subsystem),
+			Name:      util.FlattenString(m.Name),
 			Help:      m.Help,
 		},
 		append(fixedLabels, util.KeysFromMap(m.Labels)...),
@@ -156,9 +151,9 @@ func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 	metric.With(
 		util.MergeMaps(
 			prometheus.Labels{
-				"slice_project": util.FlattenKey(mr.Project),
-				"slice_cluster": util.FlattenKey(mr.Cluster),
-				"slice_name":    util.FlattenKey(mr.Slice),
+				"slice_project": util.FlattenString(mr.Project),
+				"slice_cluster": util.FlattenString(mr.Cluster),
+				"slice_name":    util.FlattenString(mr.Slice),
 			}, util.FlattenMap(m.Labels)),
 	).Observe(time.Since(start).Seconds())
 }

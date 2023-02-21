@@ -20,7 +20,7 @@ func KeysFromMap(ms map[string]string) []string {
 	return res
 }
 
-func FlattenKey(key string) string {
+func FlattenString(key string) string {
 	key = strings.Replace(key, " ", "_", -1)
 	key = strings.Replace(key, ".", "_", -1)
 	key = strings.Replace(key, "-", "_", -1)
@@ -32,7 +32,7 @@ func FlattenKey(key string) string {
 func FlattenMap(m map[string]string) map[string]string {
 	res := make(map[string]string)
 	for k, v := range m {
-		res[FlattenKey(k)] = FlattenKey(v)
+		res[FlattenString(k)] = FlattenString(v)
 	}
 	return res
 }
