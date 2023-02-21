@@ -24,7 +24,8 @@ type Metric struct {
 	Help             string
 	Value            float64
 	Labels           map[string]string
-	histogramBuckets []float64
+	HistogramBuckets []float64
+	Time             time.Time
 }
 
 type MetricType string
@@ -115,14 +116,13 @@ func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
 
 func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 	mr.Logger.Debugf("Recording histogram metric: %v", m)
-	start := time.Now()
 	metric := prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
 			Namespace: util.FlattenString(mr.Namespace),
 			Subsystem: util.FlattenString(mr.Subsystem),
 			Name:      util.FlattenString(m.Name),
 			Help:      m.Help,
-			Buckets:   m.histogramBuckets,
+			Buckets:   m.HistogramBuckets,
 		},
 		append(fixedLabels, util.KeysFromMap(m.Labels)...),
 	)
@@ -133,12 +133,11 @@ func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
 				"slice_cluster": util.FlattenString(mr.Cluster),
 				"slice_name":    util.FlattenString(mr.Slice),
 			}, util.FlattenMap(m.Labels)),
-	).Observe(time.Since(start).Seconds())
+	).Observe(time.Since(m.Time).Seconds())
 }
 
 func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 	mr.Logger.Debugf("Recording summary metric: %v", m)
-	start := time.Now()
 	metric := prometheus.NewSummaryVec(
 		prometheus.SummaryOpts{
 			Namespace: util.FlattenString(mr.Namespace),
@@ -155,5 +154,5 @@ func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
 				"slice_cluster": util.FlattenString(mr.Cluster),
 				"slice_name":    util.FlattenString(mr.Slice),
 			}, util.FlattenMap(m.Labels)),
-	).Observe(time.Since(start).Seconds())
+	).Observe(time.Since(m.Time).Seconds())
 }
