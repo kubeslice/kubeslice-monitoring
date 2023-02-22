@@ -52,6 +52,7 @@ func (mr *MetricRecorder) Copy() *MetricRecorder {
 	}
 }
 
+// RecordMetric records a metric to the Prometheus Exporter
 func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
 	switch m.Type {
 	case MetricTypeGauge:
