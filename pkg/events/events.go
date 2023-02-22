@@ -37,7 +37,7 @@ type EventRecorder struct {
 	Scheme    *runtime.Scheme
 	Version   string
 	Cluster   string
-	Tenant    string
+	Project   string
 	Slice     string
 	Namespace string
 	Component string
@@ -57,7 +57,7 @@ func (er *EventRecorder) Copy() *EventRecorder {
 		Scheme:    er.Scheme,
 		Version:   er.Version,
 		Cluster:   er.Cluster,
-		Tenant:    er.Tenant,
+		Project:   er.Project,
 		Slice:     er.Slice,
 		Namespace: er.Namespace,
 		Component: er.Component,
@@ -107,7 +107,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 				"sliceCluster":            er.Cluster,
 				"sliceNamespace":          ns,
 				"sliceName":               er.Slice,
-				"sliceTenant":             er.Tenant,
+				"sliceProject":            er.Project,
 				"reportingControllerName": event.ReportingController,
 			},
 			Annotations: map[string]string{

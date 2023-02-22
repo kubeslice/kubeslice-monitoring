@@ -16,9 +16,8 @@
  *  limitations under the License.
  */
 
-package events
+package schema
 
-const (
-	EventReasonNodeIpUpdate   = "NodeIpUpdate"
-	EventReasonNodePortUpdate = "NodePortUpdate"
+var (
+	MetricNetPolViolation = "net_pol_violation"
 )

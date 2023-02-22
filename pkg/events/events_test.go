@@ -27,7 +27,7 @@ func TestRecordEvent(t *testing.T) {
 		Scheme:    newTestScheme(),
 		Version:   "1",
 		Cluster:   clusterName,
-		Tenant:    project,
+		Project:   project,
 		Slice:     sliceName,
 		Namespace: namespace,
 		Component: "controller",
