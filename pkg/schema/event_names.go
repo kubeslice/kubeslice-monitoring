@@ -22,5 +22,11 @@ package schema
 
 var (
 	EventSliceDeletionFailed = "SliceDeletionFailed"
-	EventNetPolViolation     = "NetPolViolation"
+	EventNetPolViolation = "NetPolViolation"
+	EventLicenseSecretNotFound = "LicenseSecretNotFound"
+	EventMachineFileNotFound = "MachineFileNotFound"
+	EventMachineFileInvalid = "MachineFileInvalid"
+	EventLicenseKeyInvalid = "LicenseKeyInvalid"
+	EventLicenseExpired = "LicenseExpired"
+	EventLicenseExpiredGracePeriodOn = "LicenseExpiredGracePeriodOn"
 )
