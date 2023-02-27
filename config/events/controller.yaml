@@ -41,3 +41,105 @@ events:
     type: Warning
     reportingController: controller
     message: License Expired , grace period is on ,please contact kubeslice support team to get it renewed!
+  - name: ProjectDeleted
+    reason: ProjectDeleted
+    action: DeleteProject
+    type: Warning
+    reportingController: controller
+    message: Project got deleted, please contact kubeslice support team to get it restored!
+  - name: ProjectCreated
+    reason: ProjectCreated
+    action: CreateProject
+    type: Normal
+    reportingController: controller
+    message: Project got created!
+  - name: ProjectUpdated
+    reason: ProjectUpdated
+    action: UpdateProject
+    type: Normal
+    reportingController: controller
+    message: Project got updated!
+  - name: UserCreated
+    reason: UserCreated
+    action: CreateUser
+    type: Normal
+    reportingController: controller
+    message: User got created!
+  - name: UserRemoved
+    reason: UserRemoved
+    action: RemoveUser
+    type: Normal
+    reportingController: controller
+    message: User got removed, please contact kubeslice support team to get it restored!
+  - name: ClusterDeleted
+    reason: ClusterDeleted
+    action: DeleteCluster
+    type: Warning
+    reportingController: controller
+    message: Cluster got deleted, please contact kubeslice support team to get it restored!
+  - name: ClusterCreated
+    reason: ClusterCreated
+    action: CreateCluster
+    type: Normal
+    reportingController: controller
+    message: Cluster got created!
+  - name: ClusterUpdated
+    reason: ClusterUpdated
+    action: UpdateCluster
+    type: Normal
+    reportingController: controller
+    message: Cluster got updated!
+  - name: SliceConfigDeleted
+    reason: SliceConfigDeleted
+    action: DeleteSliceConfig
+    type: Warning
+    reportingController: controller
+    message: Slice config got deleted, please contact kubeslice support team to get it restored!
+  - name: SliceConfigCreated
+    reason: SliceConfigCreated
+    action: CreateSliceConfig
+    type: Normal
+    reportingController: controller
+    message: Slice config got created!
+  - name: SliceConfigUpdated
+    reason: SliceConfigUpdated
+    action: UpdateSliceConfig
+    type: Normal
+    reportingController: controller
+    message: Slice config got updated!
+  - name: ServiceExportConfigDeleted
+    reason: ServiceExportConfigDeleted
+    action: DeleteServiceExportConfig
+    type: Warning
+    reportingController: controller
+    message: Service export config got deleted, please contact kubeslice support team to get it restored!
+  - name: ServiceExportConfigCreated
+    reason: ServiceExportConfigCreated
+    action: CreateServiceExportConfig
+    type: Normal
+    reportingController: controller
+    message: Service export config got created!
+  - name: ServiceExportConfigUpdated
+    reason: ServiceExportConfigUpdated
+    action: UpdateServiceExportConfig
+    type: Normal
+    reportingController: controller
+    message: Service export config got updated!
+  - name: SliceQoSConfigDeleted
+    reason: SliceQoSConfigDeleted
+    action: DeleteSliceQoSConfig
+    type: Warning
+    reportingController: controller
+    message: Slice QoS config got deleted, please contact kubeslice support team to get it restored!
+  - name: SliceQoSConfigCreated
+    reason: SliceQoSConfigCreated
+    action: CreateSliceQoSConfig
+    type: Normal
+    reportingController: controller
+    message: Slice QoS config got created!
+  - name: SliceQoSConfigUpdated
+    reason: SliceQoSConfigUpdated
+    action: UpdateSliceQoSConfig
+    type: Normal
+    reportingController: controller
+    message: Slice QoS config got updated!
