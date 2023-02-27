@@ -3,6 +3,7 @@ package schema
 import (
 	"k8s.io/apimachinery/pkg/util/yaml"
 	"os"
+	"path"
 )
 
 type EventType string
@@ -26,11 +27,20 @@ type EventSchema struct {
 }
 
 func GetEvent(name string) (*EventSchema, error) {
-	controllerEvents, err := parseEvent("../schema/config/controller.yaml")
+	file1 := "controller.yaml"
+	file2 := "worker.yaml"
+	controllerFilePath := path.Join("../../config/events", file1)
+	workerFilePath := path.Join("../../config/events", file2)
+	dir := os.Getenv("EVENT_SCHEMA_PATH")
+	if dir != "" {
+		controllerFilePath = path.Join(dir, file1)
+		workerFilePath = path.Join(dir, file2)
+	}
+	controllerEvents, err := parseEvent(controllerFilePath)
 	if err != nil {
 		return nil, err
 	}
-	workerEvents, err := parseEvent("../schema/config/worker.yaml")
+	workerEvents, err := parseEvent(workerFilePath)
 	if err != nil {
 		return nil, err
 	}
