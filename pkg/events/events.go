@@ -98,6 +98,10 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		er.Logger.With("error", err).Error("Unable to get event")
 		return err
 	}
+	if !schema.GetConfig(e.Name) {
+		er.Logger.Infof("Event disabled for %s", e.Name)
+		return nil
+	}
 	t := metav1.Now()
 	ev := &corev1.Event{
 		ObjectMeta: metav1.ObjectMeta{

@@ -24,6 +24,7 @@ type EventSchema struct {
 	Type                EventType
 	ReportingController string
 	Message             string
+	Enabled             bool
 }
 
 func GetEvent(name string) (*EventSchema, error) {
@@ -51,6 +52,19 @@ func GetEvent(name string) (*EventSchema, error) {
 		}
 	}
 	return nil, nil
+}
+
+func GetConfig(name string) bool {
+	configs, err := parseEvent("/events/event-schema/controller.yaml")
+	if err != nil {
+		return false
+	}
+	for _, config := range configs {
+		if config.Name == name {
+			return config.Enabled
+		}
+	}
+	return false
 }
 
 func parseEvent(filepath string) ([]EventSchema, error) {
