@@ -116,15 +116,15 @@ func (_m *Client) Patch(ctx context.Context, obj client.Object, patch client.Pat
 }
 
 // Status provides a mock function with given fields:
-func (_m *Client) Status() client.SubResourceWriter {
+func (_m *Client) Status() client.StatusWriter {
 	ret := _m.Called()
 
-	var r0 client.SubResourceWriter
-	if rf, ok := ret.Get(0).(func() client.SubResourceWriter); ok {
+	var r0 client.StatusWriter
+	if rf, ok := ret.Get(0).(func() client.StatusWriter); ok {
 		r0 = rf()
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(client.SubResourceWriter)
+			r0 = ret.Get(0).(client.StatusWriter)
 		}
 	}
 
