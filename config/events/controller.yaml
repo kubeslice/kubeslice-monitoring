@@ -41,3 +41,27 @@ events:
     type: Warning
     reportingController: controller
     message: License Expired , grace period is on ,please contact kubeslice support team to get it renewed!
+  - name: MachineFingerPrintErr
+    reason: MachineFingerPrintErr
+    action: GetMachineFingerPrint
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Unable to fetch MachineFingerPrint.Please look at the kubeslice-controller logs for more details.
+  - name: GotMachineFingerPrint
+    reason: GotMachineFingerPrint
+    action: GetMachineFingerPrint
+    type: Normal
+    reportingController: kubeslice-controller
+    message: Got MachineFingerPrint successfully
+  - name: ConfigMapErr
+    reason: ConfigMapErr
+    action: GetConfigMap
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Unable to validate license keys from configmap. please contact kubeslice support team
+  - name: GotConfigMap
+    reason: GotConfigMap
+    action: GetConfigMap
+    type: Normal
+    reportingController: kubeslice-controller
+    message: Got ConfigMap and kubeslice-license public keys successfully.

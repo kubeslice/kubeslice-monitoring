@@ -29,4 +29,8 @@ var (
 	EventLicenseKeyInvalid = "LicenseKeyInvalid"
 	EventLicenseExpired = "LicenseExpired"
 	EventLicenseExpiredGracePeriodOn = "LicenseExpiredGracePeriodOn"
+	EventMachineFingerPrintErr = "MachineFingerPrintErr"
+	EventGotMachineFingerPrint = "GotMachineFingerPrint"
+	EventConfigMapErr = "ConfigMapErr"
+	EventGotConfigMap = "GotConfigMap"
 )

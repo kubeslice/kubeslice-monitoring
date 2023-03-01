@@ -22,8 +22,8 @@ license=$(
  */
 EOF
 )
-input1="pkg/schema/config/controller.yaml"
-input2="pkg/schema/config/worker.yaml"
+input1="config/events/controller.yaml"
+input2="config/events/worker.yaml"
 output="pkg/schema/event_names.go"
 
 if [ ! -f $input1 ] || [ ! -f $input2 ]; then
