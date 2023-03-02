@@ -65,3 +65,58 @@ events:
     type: Normal
     reportingController: kubeslice-controller
     message: Got ConfigMap and kubeslice-license public keys successfully.
+  # license job
+  - name: LicenseProxyUnreachable
+    reason: LicenseProxyUnreachable
+    action: LicenseProxy
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Failed to get response from license proxy for automatic license creation. Please contact Avesha to obtain licernse manually.
+  - name: LicenseDeployError
+    reason: LicenseDeployError
+    action: LicenseDeploy
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Failed to deploy license secret.
+  - name: LicenseDeploySuccess
+    reason: LicenseDeploySuccess
+    action: LicenseDeploy
+    type: Normal
+    reportingController: kubeslice-controller
+    message: Successfully fetched license data & deployed license secret.
+  - name: ClusterMetadataCollectionFailed
+    reason: ClusterMetadataCollectionFailed
+    action: CollectClusterMetadata
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Failed to collect cluster metadata for cluster creation.
+  - name: ClusterMetadataCollectionSuccess
+    reason: ClusterMetadataCollectionSuccess
+    action: CollectClusterMetadata
+    type: Normal
+    reportingController: kubeslice-controller
+    message: Successfully collected cluster metadata for license creation.
+  - name: LicenseDataFetchError
+    reason: LicenseDataFetchError
+    action: LicenseDataFetch
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Failed to fetch license data from license proxy.
+  - name: LicenseDataFetchSuccess
+    reason: LicenseDataFetchSuccess
+    action: LicenseDataFetch
+    type: Normal
+    reportingController: kubeslice-controller
+    message: Successfully fetched license data from license proxy.
+  - name: LicenseSecretCreationFailed
+    reason: LicenseSecretCreationFailed
+    action: LicenseSecretCreation
+    type: Warning
+    reportingController: kubeslice-controller
+    message: Failed to create license secret.
+  - name: LicenseSecretCreationSuccess
+    reason: LicenseSecretCreationSuccess
+    action: LicenseSecretCreation
+    type: Normal
+    reportingController: kubeslice-controller
+    message: Successfully created license secret.
