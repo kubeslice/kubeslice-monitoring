@@ -33,4 +33,13 @@ var (
 	EventGotMachineFingerPrint = "GotMachineFingerPrint"
 	EventConfigMapErr = "ConfigMapErr"
 	EventGotConfigMap = "GotConfigMap"
+	EventLicenseProxyUnreachable = "LicenseProxyUnreachable"
+	EventLicenseDeployError = "LicenseDeployError"
+	EventLicenseDeploySuccess = "LicenseDeploySuccess"
+	EventClusterMetadataCollectionFailed = "ClusterMetadataCollectionFailed"
+	EventClusterMetadataCollectionSuccess = "ClusterMetadataCollectionSuccess"
+	EventLicenseDataFetchError = "LicenseDataFetchError"
+	EventLicenseDataFetchSuccess = "LicenseDataFetchSuccess"
+	EventLicenseSecretCreationFailed = "LicenseSecretCreationFailed"
+	EventLicenseSecretCreationSuccess = "LicenseSecretCreationSuccess"
 )
