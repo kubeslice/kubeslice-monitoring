@@ -6,6 +6,10 @@ import (
 	"path"
 )
 
+type EventConfig struct {
+	DisabledEvents []string
+}
+
 type EventType string
 
 var (
@@ -24,7 +28,6 @@ type EventSchema struct {
 	Type                EventType
 	ReportingController string
 	Message             string
-	Enabled             bool
 }
 
 func GetEvent(name string) (*EventSchema, error) {
@@ -54,14 +57,14 @@ func GetEvent(name string) (*EventSchema, error) {
 	return nil, nil
 }
 
-func GetConfig(name string) bool {
-	configs, err := parseEvent("/events/event-schema/controller.yaml")
+func IsEventDisabled(name string) bool {
+	configs, err := parseConfig("/events/event-schema/controller.yaml")
 	if err != nil {
 		return false
 	}
 	for _, config := range configs {
-		if config.Name == name {
-			return config.Enabled
+		if config == name {
+			return true
 		}
 	}
 	return false
@@ -78,4 +81,17 @@ func parseEvent(filepath string) ([]EventSchema, error) {
 		return nil, err
 	}
 	return eventSchema.Events, nil
+}
+
+func parseConfig(filepath string) ([]string, error) {
+	var eventConfig EventConfig
+	event, err := os.ReadFile(filepath)
+	if err != nil {
+		return nil, err
+	}
+	err = yaml.Unmarshal(event, &eventConfig)
+	if err != nil {
+		return nil, err
+	}
+	return eventConfig.DisabledEvents, nil
 }
