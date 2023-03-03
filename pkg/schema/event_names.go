@@ -20,7 +20,7 @@
 
 package schema
 
-var (
+const (
 	EventSliceDeletionFailed = "SliceDeletionFailed"
 	EventNetPolViolation = "NetPolViolation"
 	EventLicenseSecretNotFound = "LicenseSecretNotFound"

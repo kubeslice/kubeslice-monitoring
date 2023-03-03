@@ -31,7 +31,7 @@ if [ ! -f $input1 ] || [ ! -f $input2 ]; then
   exit 1
 fi
 printf "%s\n\n%s\n\npackage schema\n\n" "$license" "$header" >$output
-printf "var (\n" >>$output
+printf "const (\n" >>$output
 while IFS=$'\t' read -r; do
   x=$(grep -o "name: [A-Za-z0-9]*" | awk '{print $2}')
   IFS=$'\n' read -ra ADDR -d $'\0' <<<"$x"
@@ -40,3 +40,24 @@ while IFS=$'\t' read -r; do
   done
 done < <(paste $input1 $input2)
 printf ")" >>$output
+
+go build pkg/schema/test.go
+./pkg/schema/test
+
+#printf "\n\nvar Events = map[string]EventSchema{\n" >>$output
+#while IFS=$'\t' read -r; do
+#  x=$(grep -E "name: [A-Za-z0-9]*|action: [A-Za-z0-9]*" | awk '{print $3}')
+#  printf "%s" "$x">>$output
+##  IFS=$'\n' read -ra ADDR -d $'\0' <<<"$x"
+##  for i in "${ADDR[@]}"; do
+##    printf "\tEvent%s: {\n" "${i}" >>$output
+##    printf "\t\tName: Event%s,\n" "${i}" >>$output
+##    printf "\t\tReason: \"%s\",\n" "${i}" >>$output
+##    printf "\t\tAction: \"%s\",\n" "${i}" >>$output
+##    printf "\t\tType: \"%s\",\n" "${i}" >>$output
+##    printf "\t\tReportingController: \"%s\",\n" "${i}" >>$output
+##    printf "\t\tMessage: \"%s\",\n" "${i}" >>$output
+##    printf "\t},\n" >>$output
+##  done
+#done < <(paste $input1 $input2)
+#printf "}" >>$output

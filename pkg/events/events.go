@@ -31,6 +31,17 @@ import (
 	"k8s.io/client-go/tools/reference"
 )
 
+//var Events = map[string]EventSchema{
+//	EventSliceDeletionFailed: {
+//		Name:                EventSliceDeletionFailed,
+//		Reason:              "",
+//		Action:              "",
+//		Type:                "",
+//		ReportingController: "",
+//		Message:             "",
+//	},
+//}
+
 type EventRecorder struct {
 	Client    util.Client
 	Logger    *zap.SugaredLogger
