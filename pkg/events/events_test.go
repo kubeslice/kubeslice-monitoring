@@ -39,7 +39,7 @@ func TestRecordEvent(t *testing.T) {
 		},
 	}
 
-	event, err := schema.GetEvent(schema.EventSliceDeletionFailed)
+	event, err := schema.GetEvent(schema.EventSliceConfigDeletionFailed)
 	require.Nil(t, err)
 	clientMock.On("Create", context.Background(), mock.MatchedBy(func(evt *corev1.Event) bool {
 		return !evt.FirstTimestamp.IsZero() && strings.HasPrefix(evt.Name, sliceName) && evt.Namespace == namespace &&
@@ -52,7 +52,7 @@ func TestRecordEvent(t *testing.T) {
 		Object:            sliceConfig,
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
-		Name:              schema.EventSliceDeletionFailed,
+		Name:              schema.EventSliceConfigDeletionFailed,
 	})
 	require.Nil(t, err)
 	clientMock.AssertExpectations(t)
