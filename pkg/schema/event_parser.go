@@ -58,10 +58,17 @@ func GetEvent(name string) (*EventSchema, error) {
 }
 
 func IsEventDisabled(name string) bool {
-	configs, err := parseConfig("/events/event-schema/controller.yaml")
+	controllerFilePath := "/events/event-schema/controller.yaml"
+	workerFilePath := "/events/event-schema/worker.yaml"
+	controllerConfigs, err := parseConfig(controllerFilePath)
 	if err != nil {
 		return false
 	}
+	workerConfigs, err := parseConfig(workerFilePath)
+	if err != nil {
+		return false
+	}
+	configs := append(controllerConfigs, workerConfigs...)
 	for _, config := range configs {
 		if config == name {
 			return true
