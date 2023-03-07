@@ -93,6 +93,11 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ns = ref.Namespace
 	}
 
+	if schema.IsEventDisabled(e.Name) {
+		er.Logger.Infof("Event disabled for %s", e.Name)
+		return nil
+	}
+
 	event, err := schema.GetEvent(e.Name)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to get event")
