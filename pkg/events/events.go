@@ -114,6 +114,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 				"sliceName":               er.Slice,
 				"sliceProject":            er.Project,
 				"reportingControllerName": event.ReportingController,
+				"eventTitle":              event.Name,
 			},
 			Annotations: map[string]string{
 				"release": er.Version,
