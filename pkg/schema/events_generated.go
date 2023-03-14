@@ -19,7 +19,7 @@ package schema
  *  limitations under the License.
  */
 
-var eventsMap = map[string]EventSchema{
+var eventsMap = map[string]*EventSchema{
 	"LicenseSecretNotFound": {
 		Name:                "LicenseSecretNotFound",
 		Reason:              "LicenseNotFound",

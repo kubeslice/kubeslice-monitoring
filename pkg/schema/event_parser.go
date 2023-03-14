@@ -1,9 +1,10 @@
 package schema
 
 import (
-	"k8s.io/apimachinery/pkg/util/yaml"
+	"fmt"
 	"os"
-	"path"
+
+	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
 type EventConfig struct {
@@ -31,30 +32,10 @@ type EventSchema struct {
 }
 
 func GetEvent(name string) (*EventSchema, error) {
-	file1 := "controller.yaml"
-	file2 := "worker.yaml"
-	controllerFilePath := path.Join("../../config/events", file1)
-	workerFilePath := path.Join("../../config/events", file2)
-	dir := os.Getenv("EVENT_SCHEMA_PATH")
-	if dir != "" {
-		controllerFilePath = path.Join(dir, file1)
-		workerFilePath = path.Join(dir, file2)
+	if _, ok := eventsMap[name]; !ok {
+		return nil, fmt.Errorf("Invalid event")
 	}
-	controllerEvents, err := parseEvent(controllerFilePath)
-	if err != nil {
-		return nil, err
-	}
-	workerEvents, err := parseEvent(workerFilePath)
-	if err != nil {
-		return nil, err
-	}
-	events := append(controllerEvents, workerEvents...)
-	for _, event := range events {
-		if event.Name == name {
-			return &event, nil
-		}
-	}
-	return nil, nil
+	return eventsMap[name], nil
 }
 
 func IsEventDisabled(name string) bool {
