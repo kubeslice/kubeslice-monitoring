@@ -43,7 +43,9 @@ func handleError(err error) {
 }
 
 func parseEvent(filepath string) ([]schema.EventSchema, error) {
-	var eventSchema schema.EventSchemaList
+	var eventSchema struct {
+		Events []schema.EventSchema
+	}
 	event, err := os.ReadFile(filepath)
 	if err != nil {
 		return nil, err

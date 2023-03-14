@@ -18,10 +18,6 @@ var (
 	EventTypeNormal  EventType = "Normal"
 )
 
-type EventSchemaList struct {
-	Events []EventSchema
-}
-
 type EventSchema struct {
 	Name                string
 	Reason              string
@@ -56,19 +52,6 @@ func IsEventDisabled(name string) bool {
 		}
 	}
 	return false
-}
-
-func parseEvent(filepath string) ([]EventSchema, error) {
-	var eventSchema EventSchemaList
-	event, err := os.ReadFile(filepath)
-	if err != nil {
-		return nil, err
-	}
-	err = yaml.Unmarshal(event, &eventSchema)
-	if err != nil {
-		return nil, err
-	}
-	return eventSchema.Events, nil
 }
 
 func parseConfig(filepath string) ([]string, error) {
