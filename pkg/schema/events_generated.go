@@ -529,7 +529,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultDeploymentSliceRoleTemplateCreationFailed",
 		Action:              "CreateSliceRoleTemplate",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default deployment slice role template creation failed.",
 	},
 	"DefaultDeploymentSliceRoleTemplateCreated": {
@@ -537,7 +537,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultDeploymentSliceRoleTemplateCreated",
 		Action:              "CreateSliceRoleTemplate",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default deployment slice role template got created.",
 	},
 	"DefaultReaderSliceRoleTemplateCreationFailed": {
@@ -545,7 +545,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultReaderSliceRoleTemplateCreationFailed",
 		Action:              "CreateSliceRoleTemplate",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default reader slice role template creation failed.",
 	},
 	"DefaultReaderSliceRoleTemplateCreated": {
@@ -553,7 +553,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultReaderSliceRoleTemplateCreated",
 		Action:              "CreateSliceRoleTemplate",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default reader slice role template got created.",
 	},
 	"SliceResourceQuotaCreationFailed": {
@@ -561,7 +561,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaCreationFailed",
 		Action:              "CreateSliceResourceQuota",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota creation failed while creating slice config.",
 	},
 	"SliceResourceQuotaCreatedOnSliceConfigCreation": {
@@ -569,7 +569,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaCreatedOnSliceConfigCreation",
 		Action:              "CreateSliceResourceQuota",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota got created while creating slice config.",
 	},
 	"SliceNodeAffinityDeletionFailed": {
@@ -577,7 +577,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceNodeAffinityDeletionFailed",
 		Action:              "DeleteSliceNodeAffinity",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice node affinity deletion failed.",
 	},
 	"SliceNodeAffinityDeleted": {
@@ -585,7 +585,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceNodeAffinityDeleted",
 		Action:              "DeleteSliceNodeAffinity",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice node affinity got deleted.",
 	},
 	"SetSliceConfigAsOwnerOfSliceNodeAffinityFailed": {
@@ -593,7 +593,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
 		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Failed to set slice config as owner of slice node affinity.",
 	},
 	"SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded": {
@@ -601,7 +601,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
 		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Successfully set slice config as owner of slice node affinity.",
 	},
 	"SliceResourceQuotaDeletionFailed": {
@@ -609,7 +609,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaDeletionFailed",
 		Action:              "DeleteSliceResourceQuota",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota deletion failed.",
 	},
 	"SliceResourceQuotaDeleted": {
@@ -617,7 +617,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaDeleted",
 		Action:              "DeleteSliceResourceQuota",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota got deleted.",
 	},
 	"SliceResourceQuotaRecreationFailed": {
@@ -625,7 +625,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaRecreationFailed",
 		Action:              "CreateSliceResourceQuota",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota recreation failed after forceful deletion.",
 	},
 	"SliceResourceQuotaRecreated": {
@@ -633,7 +633,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaRecreated",
 		Action:              "CreateSliceResourceQuota",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota got recreated after forceful deletion.",
 	},
 	"SetSliceConfigAsOwnerOfSliceResourceQuotaFailed": {
@@ -641,7 +641,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SetSliceConfigAsOwnerOfSliceResourceQuotaFailed",
 		Action:              "SetSliceConfigAsOwnerOfSliceResourceQuota",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Failed to set slice config as owner of slice resource quota config.",
 	},
 	"SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded": {
@@ -649,7 +649,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded",
 		Action:              "SetSliceConfigAsOwnerOfSliceResourceQuota",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Successfully set slice config as owner of slice resource quota config.",
 	},
 	"SliceResourceQuotaCreated": {
@@ -657,7 +657,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaCreated",
 		Action:              "CreateSliceResourceQuota",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota config got created successfully.",
 	},
 	"SliceResourceQuotaUpdated": {
@@ -665,7 +665,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceResourceQuotaUpdated",
 		Action:              "UpdateSliceResourceQuota",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice resource quota config got updated successfully.",
 	},
 	"AllRQSpecificationViolationMetricsResetSuccess": {
@@ -673,7 +673,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "AllRQSpecificationViolationMetricsResetSuccess",
 		Action:              "ResetResourceQuotaMetrics",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "All resource quota specifications and violations metrics got reset successfully.",
 	},
 	"SliceRQSpecificationViolationMetricsResetSuccess": {
@@ -681,7 +681,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceRQSpecificationViolationMetricsResetSuccess",
 		Action:              "ResetResourceQuotaMetrics",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "All slice level resource quota specifications and violations metrics got reset successfully.",
 	},
 	"ClusterRQSpecificationViolationMetricsResetSuccess": {
@@ -689,7 +689,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ClusterRQSpecificationViolationMetricsResetSuccess",
 		Action:              "ResetResourceQuotaMetrics",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "All cluster level resource quota specifications and violations metrics got reset successfully.",
 	},
 	"OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess": {
@@ -697,7 +697,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess",
 		Action:              "ResetResourceQuotaMetrics",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "All outdated namespace level resource quota specifications and violations metrics got reset successfully.",
 	},
 	"OutdatedClusterRQSpecificationViolationMetricsResetSuccess": {
@@ -705,7 +705,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "OutdatedClusterRQSpecificationViolationMetricsResetSuccess",
 		Action:              "ResetResourceQuotaMetrics",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "All outdated cluster level resource quota specifications and violations metrics got reset successfully.",
 	},
 	"SliceRoleBindingDeletingFailed": {
@@ -713,7 +713,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceRoleBindingDeletingFailed",
 		Action:              "DeleteSliceRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice role binding deletion failed.",
 	},
 	"SliceRoleBindingDeleted": {
@@ -721,7 +721,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceRoleBindingDeleted",
 		Action:              "DeleteSliceRoleBinding",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice role binding got deleted.",
 	},
 	"SetSliceConfigAsOwnerOfSliceRoleBindingFailed": {
@@ -729,7 +729,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SetSliceConfigAsOwnerOfSliceRoleBindingFailed",
 		Action:              "SetSliceConfigAsOwnerOfSliceRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Failed to set slice config as owner of slice role binding.",
 	},
 	"SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded": {
@@ -737,7 +737,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded",
 		Action:              "SetSliceConfigAsOwnerOfSliceRoleBinding",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Successfully set slice config as owner of slice role binding.",
 	},
 	"SliceRoleTemplateDeletionFailed": {
@@ -745,7 +745,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceRoleTemplateDeletionFailed",
 		Action:              "DeleteSliceRoleTemplate",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice role template deletion failed.",
 	},
 	"SliceRoleTemplateDeleted": {
@@ -753,7 +753,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceRoleTemplateDeleted",
 		Action:              "DeleteSliceRoleTemplate",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice role template got deleted.",
 	},
 	"WorkerSliceRoleBindingReconciliationSuccess": {
@@ -761,7 +761,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "WorkerSliceRoleBindingReconciliationSuccess",
 		Action:              "ReconcileWorkerSliceRoleBinding",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Reconciliation of worker slice role binding is successful due to the change in slice role template.",
 	},
 	"NetPolViolation": {
