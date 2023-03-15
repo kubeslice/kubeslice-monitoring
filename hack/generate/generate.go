@@ -19,7 +19,6 @@ func main() {
 	handleError(err)
 	controllerFilePath := path.Join(pwd, "config/events", file1)
 	workerFilePath := path.Join(pwd, "config/events", file2)
-	fmt.Println(controllerFilePath)
 	controllerEvents, err := parseEvent(controllerFilePath)
 	handleError(err)
 	workerEvents, err := parseEvent(workerFilePath)
