@@ -25,7 +25,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseNotFound",
 		Action:              "LicenseValidation",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Secret with license config not found. Please ensure to create license secret if this is airgapped cluster.",
 	},
 	"MachineFileNotFound": {
@@ -33,7 +33,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "MachineFileNotFound",
 		Action:              "FetchMachineFileFromSecret",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Machine File not present in license secret. Please contact kubeslice support team.",
 	},
 	"MachineFileInvalid": {
@@ -41,7 +41,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "MachineFileInvalid",
 		Action:              "VerifyMachineFile",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Machine File is invalid in license secret. Please contact kubeslice support team.",
 	},
 	"LicenseKeyInvalid": {
@@ -49,7 +49,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseKeyInvalid",
 		Action:              "DecryptMachineFile",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "License Key is invalid in license secret. Please contact kubeslice support team.",
 	},
 	"LicenseExpired": {
@@ -57,7 +57,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseExpired",
 		Action:              "ValidateLicense",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "License Expired, please contact kubeslice support team to get it renewed!",
 	},
 	"LicenseExpiredGracePeriodOn": {
@@ -65,7 +65,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseExpiredGracePeriodOn",
 		Action:              "ValidateLicense",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "License Expired, grace period is on, please contact kubeslice support team to get it renewed!",
 	},
 	"MachineFingerPrintErr": {
@@ -73,7 +73,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "MachineFingerPrintErr",
 		Action:              "GetMachineFingerPrint",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Unable to fetch MachineFingerPrint. Please look at the kubeslice-controller logs for more details.",
 	},
 	"GotMachineFingerPrint": {
@@ -81,7 +81,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "GotMachineFingerPrint",
 		Action:              "GetMachineFingerPrint",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Got MachineFingerPrint successfully",
 	},
 	"ConfigMapErr": {
@@ -89,7 +89,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ConfigMapErr",
 		Action:              "GetConfigMap",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Unable to validate license keys from configmap. Please contact kubeslice support team",
 	},
 	"GotConfigMap": {
@@ -97,7 +97,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "GotConfigMap",
 		Action:              "GetConfigMap",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Got ConfigMap and kubeslice-license public keys successfully.",
 	},
 	"LicenseProxyUnreachable": {
@@ -105,7 +105,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseProxyUnreachable",
 		Action:              "LicenseProxy",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Failed to get response from license proxy for automatic license creation. Please contact Avesha to obtain licernse manually.",
 	},
 	"LicenseDeployError": {
@@ -113,7 +113,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseDeployError",
 		Action:              "LicenseDeploy",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Failed to deploy license secret.",
 	},
 	"LicenseDeploySuccess": {
@@ -121,7 +121,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseDeploySuccess",
 		Action:              "LicenseDeploy",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Successfully fetched license data & deployed license secret.",
 	},
 	"ClusterMetadataCollectionFailed": {
@@ -129,7 +129,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ClusterMetadataCollectionFailed",
 		Action:              "CollectClusterMetadata",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Failed to collect cluster metadata for cluster creation.",
 	},
 	"ClusterMetadataCollectionSuccess": {
@@ -137,7 +137,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ClusterMetadataCollectionSuccess",
 		Action:              "CollectClusterMetadata",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Successfully collected cluster metadata for license creation.",
 	},
 	"LicenseDataFetchError": {
@@ -145,7 +145,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseDataFetchError",
 		Action:              "LicenseDataFetch",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Failed to fetch license data from license proxy.",
 	},
 	"LicenseDataFetchSuccess": {
@@ -153,7 +153,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseDataFetchSuccess",
 		Action:              "LicenseDataFetch",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Successfully fetched license data from license proxy.",
 	},
 	"LicenseSecretCreationFailed": {
@@ -161,7 +161,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseSecretCreationFailed",
 		Action:              "LicenseSecretCreation",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Failed to create license secret.",
 	},
 	"LicenseSecretCreationSuccess": {
@@ -169,7 +169,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "LicenseSecretCreationSuccess",
 		Action:              "LicenseSecretCreation",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "kubeslice-controller",
 		Message:             "Successfully created license secret.",
 	},
 	"ProjectDeleted": {
@@ -177,7 +177,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ProjectDeleted",
 		Action:              "DeleteProject",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Project got deleted.",
 	},
 	"ProjectDeletionFailed": {
@@ -185,7 +185,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ProjectDeletionFailed",
 		Action:              "DeleteProject",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Project deletion failed.",
 	},
 	"ClusterDeleted": {
@@ -193,7 +193,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ClusterDeleted",
 		Action:              "DeleteCluster",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Cluster got deleted.",
 	},
 	"ClusterDeletionFailed": {
@@ -201,7 +201,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ClusterDeletionFailed",
 		Action:              "DeleteCluster",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Cluster deletion failed.",
 	},
 	"SliceConfigDeleted": {
@@ -209,7 +209,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceConfigDeleted",
 		Action:              "DeleteSliceConfig",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice config got deleted.",
 	},
 	"SliceConfigDeletionFailed": {
@@ -217,7 +217,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceConfigDeletionFailed",
 		Action:              "DeleteSliceConfig",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice config deletion failed.",
 	},
 	"ServiceExportConfigDeleted": {
@@ -225,7 +225,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceExportConfigDeleted",
 		Action:              "DeleteServiceExportConfig",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service export config got deleted.",
 	},
 	"ServiceExportConfigDeletionFailed": {
@@ -233,7 +233,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceExportConfigDeletionFailed",
 		Action:              "DeleteServiceExportConfig",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service export config deletion failed.",
 	},
 	"SliceQoSConfigDeleted": {
@@ -241,7 +241,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceQoSConfigDeleted",
 		Action:              "DeleteSliceQoSConfig",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice QoS config got deleted.",
 	},
 	"SliceQoSConfigDeletionFailed": {
@@ -249,7 +249,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SliceQoSConfigDeletionFailed",
 		Action:              "DeleteSliceQoSConfig",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Slice QoS config deletion failed.",
 	},
 	"SecretDeleted": {
@@ -257,7 +257,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SecretDeleted",
 		Action:              "DeleteSecret",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Secret got deleted.",
 	},
 	"SecretDeletionFailed": {
@@ -265,7 +265,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "SecretDeletionFailed",
 		Action:              "DeleteSecret",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Secret deletion failed.",
 	},
 	"NamespaceCreated": {
@@ -273,7 +273,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "NamespaceCreated",
 		Action:              "CreateNamespace",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Namespace got created.",
 	},
 	"NamespaceCreationFailed": {
@@ -281,7 +281,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "NamespaceCreationFailed",
 		Action:              "CreateNamespace",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Namespace creation failed.",
 	},
 	"NamespaceDeleted": {
@@ -289,7 +289,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "NamespaceDeleted",
 		Action:              "DeleteNamespace",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Namespace got deleted.",
 	},
 	"NamespaceDeletionFailed": {
@@ -297,7 +297,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "NamespaceDeletionFailed",
 		Action:              "DeleteNamespace",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Namespace deletion failed.",
 	},
 	"WorkerClusterRoleCreated": {
@@ -305,7 +305,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "WorkerClusterRoleCreated",
 		Action:              "CreateWorkerClusterRole",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Worker cluster role got created.",
 	},
 	"WorkerClusterRoleCreationFailed": {
@@ -313,7 +313,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "WorkerClusterRoleCreationFailed",
 		Action:              "CreateWorkerClusterRole",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Worker cluster role creation failed.",
 	},
 	"WorkerClusterRoleUpdated": {
@@ -321,7 +321,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "WorkerClusterRoleUpdated",
 		Action:              "UpdateWorkerClusterRole",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Worker cluster role got updated.",
 	},
 	"WorkerClusterRoleUpdateFailed": {
@@ -329,7 +329,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "WorkerClusterRoleUpdateFailed",
 		Action:              "UpdateWorkerClusterRole",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Worker cluster role update failed.",
 	},
 	"ReadOnlyRoleCreated": {
@@ -337,7 +337,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadOnlyRoleCreated",
 		Action:              "CreateReadOnlyRole",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read only role got created.",
 	},
 	"ReadOnlyRoleCreationFailed": {
@@ -345,7 +345,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadOnlyRoleCreationFailed",
 		Action:              "CreateReadOnlyRole",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read only role creation failed.",
 	},
 	"ReadOnlyRoleUpdated": {
@@ -353,7 +353,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadOnlyRoleUpdated",
 		Action:              "UpdateReadOnlyRole",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read only role got updated.",
 	},
 	"ReadOnlyRoleUpdateFailed": {
@@ -361,7 +361,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadOnlyRoleUpdateFailed",
 		Action:              "UpdateReadOnlyRole",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read only role update failed.",
 	},
 	"ReadWriteRoleCreated": {
@@ -369,7 +369,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadWriteRoleCreated",
 		Action:              "CreateReadWriteRole",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read write role got created.",
 	},
 	"ReadWriteRoleCreationFailed": {
@@ -377,7 +377,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadWriteRoleCreationFailed",
 		Action:              "CreateReadWriteRole",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read write role creation failed.",
 	},
 	"ReadWriteRoleUpdated": {
@@ -385,7 +385,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadWriteRoleUpdated",
 		Action:              "UpdateReadWriteRole",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read write role got updated.",
 	},
 	"ReadWriteRoleUpdateFailed": {
@@ -393,7 +393,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ReadWriteRoleUpdateFailed",
 		Action:              "UpdateReadWriteRole",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Read write role update failed.",
 	},
 	"ServiceAccountCreated": {
@@ -401,7 +401,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceAccountCreated",
 		Action:              "CreateServiceAccount",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service account got created.",
 	},
 	"ServiceAccountCreationFailed": {
@@ -409,7 +409,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceAccountCreationFailed",
 		Action:              "CreateServiceAccount",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service account creation failed.",
 	},
 	"ServiceAccountSecretCreated": {
@@ -417,7 +417,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceAccountSecretCreated",
 		Action:              "CreateServiceAccountSecret",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service account secret got created.",
 	},
 	"ServiceAccountSecretCreationFailed": {
@@ -425,7 +425,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceAccountSecretCreationFailed",
 		Action:              "CreateServiceAccountSecret",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service account secret creation failed.",
 	},
 	"DefaultRoleBindingCreated": {
@@ -433,7 +433,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultRoleBindingCreated",
 		Action:              "CreateDefaultRoleBinding",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default role binding got created.",
 	},
 	"DefaultRoleBindingCreationFailed": {
@@ -441,7 +441,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultRoleBindingCreationFailed",
 		Action:              "CreateDefaultRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default role binding creation failed.",
 	},
 	"DefaultRoleBindingUpdated": {
@@ -449,7 +449,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultRoleBindingUpdated",
 		Action:              "UpdateDefaultRoleBinding",
 		Type:                EventTypeNormal,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default role binding got updated.",
 	},
 	"DefaultRoleBindingUpdateFailed": {
@@ -457,7 +457,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultRoleBindingUpdateFailed",
 		Action:              "UpdateDefaultRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default role binding update failed.",
 	},
 	"DefaultRoleBindingDeleted": {
@@ -465,7 +465,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultRoleBindingDeleted",
 		Action:              "DeleteDefaultRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default role binding got deleted.",
 	},
 	"DefaultRoleBindingDeletionFailed": {
@@ -473,7 +473,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "DefaultRoleBindingDeletionFailed",
 		Action:              "DeleteDefaultRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Default role binding deletion failed.",
 	},
 	"InactiveRoleBindingDeleted": {
@@ -481,7 +481,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "InactiveRoleBindingDeleted",
 		Action:              "DeleteInactiveRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Inactive role binding got deleted.",
 	},
 	"InactiveRoleBindingDeletionFailed": {
@@ -489,7 +489,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "InactiveRoleBindingDeletionFailed",
 		Action:              "DeleteInactiveRoleBinding",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Inactive role binding deletion failed.",
 	},
 	"InactiveServiceAccountDeleted": {
@@ -497,7 +497,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "InactiveServiceAccountDeleted",
 		Action:              "DeleteInactiveServiceAccount",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Inactive service account got deleted.",
 	},
 	"InactiveServiceAccountDeletionFailed": {
@@ -505,7 +505,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "InactiveServiceAccountDeletionFailed",
 		Action:              "DeleteInactiveServiceAccount",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Inactive service account deletion failed.",
 	},
 	"ServiceAccountDeleted": {
@@ -513,7 +513,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceAccountDeleted",
 		Action:              "DeleteServiceAccount",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service account got deleted.",
 	},
 	"ServiceAccountDeletionFailed": {
@@ -521,7 +521,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "ServiceAccountDeletionFailed",
 		Action:              "DeleteServiceAccount",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "controller",
 		Message:             "Service account deletion failed.",
 	},
 	"NetPolViolation": {
@@ -529,7 +529,7 @@ var eventsMap = map[string]*EventSchema{
 		Reason:              "PolicyViolation",
 		Action:              "PolicyMonitoring",
 		Type:                EventTypeWarning,
-		ReportingController: "",
+		ReportingController: "worker",
 		Message:             "Network policy violation - please ask admin to check the network policy configuration on the worker cluster. <link to tech doc event-list>",
 	},
 }

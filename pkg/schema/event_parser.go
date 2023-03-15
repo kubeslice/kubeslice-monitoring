@@ -23,7 +23,7 @@ type EventSchema struct {
 	Reason              string
 	Action              string
 	Type                EventType
-	ReportingController string
+	ReportingController string `yaml:"reportingController"`
 	Message             string
 }
 
