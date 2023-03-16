@@ -5,7 +5,6 @@ import (
 
 	controllerv1alpha1 "github.com/kubeslice/apis/pkg/controller/v1alpha1"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -53,7 +52,7 @@ func TestRecordEvent(t *testing.T) {
 		Object:            pod,
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
-		Name:              schema.EventSliceConfigDeletionFailed,
+		Name:              events.EventSliceConfigDeletionFailed,
 	})
 	if err != nil {
 		t.Error("event not recorded")

@@ -6,7 +6,7 @@ import (
 	"path"
 	"text/template"
 
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
 	"gopkg.in/yaml.v2"
 )
 
@@ -29,7 +29,7 @@ func main() {
 	t, err := template.ParseFiles("hack/templates/schema.tmpl")
 	handleError(err)
 
-	f, err := os.Create("pkg/schema/events_generated.go")
+	f, err := os.Create("pkg/events/events_generated.go")
 	handleError(err)
 	t.Execute(f, events)
 }
@@ -41,9 +41,9 @@ func handleError(err error) {
 	}
 }
 
-func parseEvent(filepath string) ([]schema.EventSchema, error) {
+func parseEvent(filepath string) ([]events.EventSchema, error) {
 	var eventSchema struct {
-		Events []schema.EventSchema
+		Events []events.EventSchema
 	}
 	event, err := os.ReadFile(filepath)
 	if err != nil {
