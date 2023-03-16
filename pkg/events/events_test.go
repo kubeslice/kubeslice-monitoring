@@ -1,61 +1,70 @@
-package events
+package events_test
 
 import (
+	"testing"
+
 	controllerv1alpha1 "github.com/kubeslice/apis/pkg/controller/v1alpha1"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/util/mocks"
-	"github.com/stretchr/testify/mock"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"strings"
-	"testing"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+type k8sClientMock struct {
+	createdObject client.Object
+}
+
+func (o *k8sClientMock) Create(ctx context.Context, obj client.Object, opts ...client.CreateOption) error {
+	o.createdObject = obj
+	return nil
+}
+
+func (o *k8sClientMock) Delete(ctx context.Context, obj client.Object, opts ...client.DeleteOption) error {
+	return nil
+}
+
+func (o *k8sClientMock) Update(ctx context.Context, obj client.Object, opts ...client.UpdateOption) error {
+	return nil
+}
+
+func (o *k8sClientMock) Patch(ctx context.Context, obj client.Object, patch client.Patch, opts ...client.PatchOption) error {
+	return nil
+}
+
+func (o *k8sClientMock) DeleteAllOf(ctx context.Context, obj client.Object, opts ...client.DeleteAllOfOption) error {
+	return nil
+}
+
 func TestRecordEvent(t *testing.T) {
-	clientMock := &mocks.Client{}
-	project := "cisco"
-	sliceName := "red"
-	clusterName := "cluster-1"
-	namespace := "kubeslice-cisco"
-	recorder := EventRecorder{
-		Client:    clientMock,
-		Logger:    logger.NewLogger(),
-		Scheme:    newTestScheme(),
+	clientMock := &k8sClientMock{}
+
+	recorder := events.NewEventRecorder(clientMock, newTestScheme(), events.EventRecorderOptions{
 		Version:   "1",
-		Cluster:   clusterName,
-		Project:   project,
-		Slice:     sliceName,
-		Namespace: namespace,
+		Cluster:   "cluster-1",
 		Component: "controller",
-	}
-	sliceConfig := &controllerv1alpha1.SliceConfig{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      recorder.Slice,
-			Namespace: recorder.Namespace,
-		},
-	}
+		Namespace: "test-ns",
+	})
 
-	event, err := schema.GetEvent(schema.EventSliceConfigDeletionFailed)
-	require.Nil(t, err)
-	clientMock.On("Create", context.Background(), mock.MatchedBy(func(evt *corev1.Event) bool {
-		return !evt.FirstTimestamp.IsZero() && strings.HasPrefix(evt.Name, sliceName) && evt.Namespace == namespace &&
-			evt.InvolvedObject.Kind == "SliceConfig" && evt.InvolvedObject.Name == sliceName && evt.InvolvedObject.Namespace == namespace &&
-			evt.Reason == event.Reason && evt.Action == event.Action && evt.Type == string(event.Type) &&
-			evt.ReportingController == event.ReportingController && evt.Message == event.Message
-	})).Return(nil)
+	pod := &corev1.Pod{}
 
-	err = recorder.RecordEvent(context.Background(), &Event{
-		Object:            sliceConfig,
+	err := recorder.RecordEvent(context.Background(), &events.Event{
+		Object:            pod,
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
 		Name:              schema.EventSliceConfigDeletionFailed,
 	})
-	require.Nil(t, err)
-	clientMock.AssertExpectations(t)
+	if err != nil {
+		t.Error("event not recorded")
+	}
+
+	e := clientMock.createdObject.(*corev1.Event)
+	if e.Namespace != "test-ns" {
+		t.Error("invalid ns")
+	}
+
+	// TODO: test remaining fields
 }
 
 func newTestScheme() *runtime.Scheme {

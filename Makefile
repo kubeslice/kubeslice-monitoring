@@ -6,7 +6,3 @@ generate:
 .PHONY: fmt
 fmt:
 	go fmt ./...
-
-.PHONY: generate-mocks
-generate-mocks: ## Generate mocks for the controller-runtime.
-	mockery --dir pkg/util/ --all --output pkg/util/mocks
