@@ -22,7 +22,6 @@ import (
 	"fmt"
 
 	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 
 	"go.uber.org/zap"
 	"golang.org/x/net/context"
@@ -76,7 +75,7 @@ type Event struct {
 	// ReportingInstance is the name of the reporting instance
 	ReportingInstance string
 	// Name is the name of the event to be looked up in event schema
-	Name string
+	Name EventName
 }
 
 type eventRecorder struct {
@@ -131,12 +130,12 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ns = ref.Namespace
 	}
 
-	if schema.IsEventDisabled(e.Name) {
+	if IsEventDisabled(e.Name) {
 		er.Logger.Infof("Event disabled for %s", e.Name)
 		return nil
 	}
 
-	event, err := schema.GetEvent(e.Name)
+	event, err := GetEvent(e.Name)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to get event")
 		return err
@@ -152,7 +151,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 				"sliceName":               er.Options.Slice,
 				"sliceProject":            er.Options.Project,
 				"reportingControllerName": event.ReportingController,
-				"eventTitle":              event.Name,
+				"eventTitle":              string(event.Name),
 			},
 			Annotations: map[string]string{
 				"release": er.Options.Version,

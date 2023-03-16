@@ -1,4 +1,4 @@
-package schema
+package events
 
 import (
 	"fmt"
@@ -18,8 +18,10 @@ var (
 	EventTypeNormal  EventType = "Normal"
 )
 
+type EventName string
+
 type EventSchema struct {
-	Name                string
+	Name                EventName
 	Reason              string
 	Action              string
 	Type                EventType
@@ -27,14 +29,14 @@ type EventSchema struct {
 	Message             string
 }
 
-func GetEvent(name string) (*EventSchema, error) {
+func GetEvent(name EventName) (*EventSchema, error) {
 	if _, ok := eventsMap[name]; !ok {
 		return nil, fmt.Errorf("Invalid event")
 	}
 	return eventsMap[name], nil
 }
 
-func IsEventDisabled(name string) bool {
+func IsEventDisabled(name EventName) bool {
 	controllerFilePath := "/events/event-schema/controller.yaml"
 	workerFilePath := "/events/event-schema/worker.yaml"
 	controllerConfigs, err := parseConfig(controllerFilePath)
@@ -47,7 +49,7 @@ func IsEventDisabled(name string) bool {
 	}
 	configs := append(controllerConfigs, workerConfigs...)
 	for _, config := range configs {
-		if config == name {
+		if config == string(name) {
 			return true
 		}
 	}
