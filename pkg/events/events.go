@@ -40,6 +40,8 @@ type EventRecorder interface {
 	WithSlice(string) EventRecorder
 	// WithNamespace returns a new recorder with namespace name added
 	WithNamespace(string) EventRecorder
+	// WithProject returns a new recorder with project name added
+	WithProject(string) EventRecorder
 }
 
 func NewEventRecorder(c client.Writer, s *runtime.Scheme, o EventRecorderOptions) EventRecorder {
@@ -113,6 +115,13 @@ func (er *eventRecorder) WithSlice(slice string) EventRecorder {
 func (er *eventRecorder) WithNamespace(ns string) EventRecorder {
 	e := er.Copy()
 	e.Options.Namespace = ns
+	return e
+}
+
+// WithProject returns a new recorder with added project name
+func (er *eventRecorder) WithProject(project string) EventRecorder {
+	e := er.Copy()
+	e.Options.Project = project
 	return e
 }
 
