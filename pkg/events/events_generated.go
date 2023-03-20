@@ -524,6 +524,662 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "Service account deletion failed.",
 	},
+	"DefaultDeploymentSliceRoleTemplateCreationFailed": {
+		Name:                "DefaultDeploymentSliceRoleTemplateCreationFailed",
+		Reason:              "DefaultDeploymentSliceRoleTemplateCreationFailed",
+		Action:              "CreateSliceRoleTemplate",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Default deployment slice role template creation failed.",
+	},
+	"DefaultDeploymentSliceRoleTemplateCreated": {
+		Name:                "DefaultDeploymentSliceRoleTemplateCreated",
+		Reason:              "DefaultDeploymentSliceRoleTemplateCreated",
+		Action:              "CreateSliceRoleTemplate",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Default deployment slice role template got created.",
+	},
+	"DefaultReaderSliceRoleTemplateCreationFailed": {
+		Name:                "DefaultReaderSliceRoleTemplateCreationFailed",
+		Reason:              "DefaultReaderSliceRoleTemplateCreationFailed",
+		Action:              "CreateSliceRoleTemplate",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Default reader slice role template creation failed.",
+	},
+	"DefaultReaderSliceRoleTemplateCreated": {
+		Name:                "DefaultReaderSliceRoleTemplateCreated",
+		Reason:              "DefaultReaderSliceRoleTemplateCreated",
+		Action:              "CreateSliceRoleTemplate",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Default reader slice role template got created.",
+	},
+	"SliceResourceQuotaCreationFailed": {
+		Name:                "SliceResourceQuotaCreationFailed",
+		Reason:              "SliceResourceQuotaCreationFailed",
+		Action:              "CreateSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice resource quota creation failed while creating slice config.",
+	},
+	"SliceResourceQuotaCreatedOnSliceConfigCreation": {
+		Name:                "SliceResourceQuotaCreatedOnSliceConfigCreation",
+		Reason:              "SliceResourceQuotaCreatedOnSliceConfigCreation",
+		Action:              "CreateSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice resource quota got created while creating slice config.",
+	},
+	"SliceNodeAffinityDeletionFailed": {
+		Name:                "SliceNodeAffinityDeletionFailed",
+		Reason:              "SliceNodeAffinityDeletionFailed",
+		Action:              "DeleteSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice node affinity deletion failed.",
+	},
+	"SliceNodeAffinityDeleted": {
+		Name:                "SliceNodeAffinityDeleted",
+		Reason:              "SliceNodeAffinityDeleted",
+		Action:              "DeleteSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice node affinity got deleted.",
+	},
+	"SetSliceConfigAsOwnerOfSliceNodeAffinityFailed": {
+		Name:                "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
+		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
+		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Failed to set slice config as owner of slice node affinity.",
+	},
+	"SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded": {
+		Name:                "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
+		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
+		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Successfully set slice config as owner of slice node affinity.",
+	},
+	"SliceResourceQuotaDeletionFailed": {
+		Name:                "SliceResourceQuotaDeletionFailed",
+		Reason:              "SliceResourceQuotaDeletionFailed",
+		Action:              "DeleteSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice resource quota deletion failed.",
+	},
+	"SliceResourceQuotaDeleted": {
+		Name:                "SliceResourceQuotaDeleted",
+		Reason:              "SliceResourceQuotaDeleted",
+		Action:              "DeleteSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice resource quota got deleted.",
+	},
+	"SliceResourceQuotaRecreationFailed": {
+		Name:                "SliceResourceQuotaRecreationFailed",
+		Reason:              "SliceResourceQuotaRecreationFailed",
+		Action:              "CreateSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice resource quota recreation failed after forceful deletion.",
+	},
+	"SliceResourceQuotaRecreated": {
+		Name:                "SliceResourceQuotaRecreated",
+		Reason:              "SliceResourceQuotaRecreated",
+		Action:              "CreateSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice resource quota got recreated after forceful deletion.",
+	},
+	"SetSliceConfigAsOwnerOfSliceResourceQuotaFailed": {
+		Name:                "SetSliceConfigAsOwnerOfSliceResourceQuotaFailed",
+		Reason:              "SetSliceConfigAsOwnerOfSliceResourceQuotaFailed",
+		Action:              "SetSliceConfigAsOwnerOfSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Failed to set slice config as owner of slice resource quota config.",
+	},
+	"SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded": {
+		Name:                "SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded",
+		Reason:              "SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded",
+		Action:              "SetSliceConfigAsOwnerOfSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Successfully set slice config as owner of slice resource quota config.",
+	},
+	"SliceResourceQuotaCreated": {
+		Name:                "SliceResourceQuotaCreated",
+		Reason:              "SliceResourceQuotaCreated",
+		Action:              "CreateSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice resource quota config got created successfully.",
+	},
+	"SliceResourceQuotaUpdated": {
+		Name:                "SliceResourceQuotaUpdated",
+		Reason:              "SliceResourceQuotaUpdated",
+		Action:              "UpdateSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice resource quota config got updated successfully.",
+	},
+	"AllRQSpecificationViolationMetricsResetSuccess": {
+		Name:                "AllRQSpecificationViolationMetricsResetSuccess",
+		Reason:              "AllRQSpecificationViolationMetricsResetSuccess",
+		Action:              "ResetResourceQuotaMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "All resource quota specifications and violations metrics got reset successfully.",
+	},
+	"SliceRQSpecificationViolationMetricsResetSuccess": {
+		Name:                "SliceRQSpecificationViolationMetricsResetSuccess",
+		Reason:              "SliceRQSpecificationViolationMetricsResetSuccess",
+		Action:              "ResetResourceQuotaMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "All slice level resource quota specifications and violations metrics got reset successfully.",
+	},
+	"ClusterRQSpecificationViolationMetricsResetSuccess": {
+		Name:                "ClusterRQSpecificationViolationMetricsResetSuccess",
+		Reason:              "ClusterRQSpecificationViolationMetricsResetSuccess",
+		Action:              "ResetResourceQuotaMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "All cluster level resource quota specifications and violations metrics got reset successfully.",
+	},
+	"OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess": {
+		Name:                "OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess",
+		Reason:              "OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess",
+		Action:              "ResetResourceQuotaMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "All outdated namespace level resource quota specifications and violations metrics got reset successfully.",
+	},
+	"OutdatedClusterRQSpecificationViolationMetricsResetSuccess": {
+		Name:                "OutdatedClusterRQSpecificationViolationMetricsResetSuccess",
+		Reason:              "OutdatedClusterRQSpecificationViolationMetricsResetSuccess",
+		Action:              "ResetResourceQuotaMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "All outdated cluster level resource quota specifications and violations metrics got reset successfully.",
+	},
+	"SliceRoleBindingDeletingFailed": {
+		Name:                "SliceRoleBindingDeletingFailed",
+		Reason:              "SliceRoleBindingDeletingFailed",
+		Action:              "DeleteSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice role binding deletion failed.",
+	},
+	"SliceRoleBindingDeleted": {
+		Name:                "SliceRoleBindingDeleted",
+		Reason:              "SliceRoleBindingDeleted",
+		Action:              "DeleteSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice role binding got deleted.",
+	},
+	"SetSliceConfigAsOwnerOfSliceRoleBindingFailed": {
+		Name:                "SetSliceConfigAsOwnerOfSliceRoleBindingFailed",
+		Reason:              "SetSliceConfigAsOwnerOfSliceRoleBindingFailed",
+		Action:              "SetSliceConfigAsOwnerOfSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Failed to set slice config as owner of slice role binding.",
+	},
+	"SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded": {
+		Name:                "SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded",
+		Reason:              "SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded",
+		Action:              "SetSliceConfigAsOwnerOfSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Successfully set slice config as owner of slice role binding.",
+	},
+	"SliceRoleTemplateDeletionFailed": {
+		Name:                "SliceRoleTemplateDeletionFailed",
+		Reason:              "SliceRoleTemplateDeletionFailed",
+		Action:              "DeleteSliceRoleTemplate",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice role template deletion failed.",
+	},
+	"SliceRoleTemplateDeleted": {
+		Name:                "SliceRoleTemplateDeleted",
+		Reason:              "SliceRoleTemplateDeleted",
+		Action:              "DeleteSliceRoleTemplate",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice role template got deleted.",
+	},
+	"WorkerSliceRoleBindingReconciliationSuccess": {
+		Name:                "WorkerSliceRoleBindingReconciliationSuccess",
+		Reason:              "WorkerSliceRoleBindingReconciliationSuccess",
+		Action:              "ReconcileWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Reconciliation of worker slice role binding is successful due to the change in slice role template.",
+	},
+	"WorkerSliceNodeAffinityDeletedForcefully": {
+		Name:                "WorkerSliceNodeAffinityDeletedForcefully",
+		Reason:              "WorkerSliceNodeAffinityDeletedForcefully",
+		Action:              "DeleteWorkerSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity got deleted forcefully.",
+	},
+	"WorkerSliceNodeAffinityRecreationFailed": {
+		Name:                "WorkerSliceNodeAffinityRecreationFailed",
+		Reason:              "WorkerSliceNodeAffinityRecreationFailed",
+		Action:              "CreateWorkerSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity recreation failed after forceful deletion.",
+	},
+	"WorkerSliceNodeAffinityRecreated": {
+		Name:                "WorkerSliceNodeAffinityRecreated",
+		Reason:              "WorkerSliceNodeAffinityRecreated",
+		Action:              "CreateWorkerSliceNodeAffinity",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity got recreated after forceful deletion.",
+	},
+	"NodeAffinityRilesExpansionFailed": {
+		Name:                "NodeAffinityRilesExpansionFailed",
+		Reason:              "NodeAffinityRilesExpansionFailed",
+		Action:              "ExpandNodeAffinityRules",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Node affinity rules expansion failed.",
+	},
+	"SliceNodeAffinityConfigDeepCopyFailed": {
+		Name:                "SliceNodeAffinityConfigDeepCopyFailed",
+		Reason:              "SliceNodeAffinityConfigDeepCopyFailed",
+		Action:              "DeepCopySliceNodeAffinityConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Deep copy of slice node affinity configuration got failed.",
+	},
+	"WorkerSliceNodeAffinityCreationFailed": {
+		Name:                "WorkerSliceNodeAffinityCreationFailed",
+		Reason:              "WorkerSliceNodeAffinityCreationFailed",
+		Action:              "CreateWorkerSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity creation failed.",
+	},
+	"WorkerSliceNodeAffinityCreated": {
+		Name:                "WorkerSliceNodeAffinityCreated",
+		Reason:              "WorkerSliceNodeAffinityCreated",
+		Action:              "CreateWorkerSliceNodeAffinity",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity got created successfully.",
+	},
+	"WorkerSliceNodeAffinityUpdateFailed": {
+		Name:                "WorkerSliceNodeAffinityUpdateFailed",
+		Reason:              "WorkerSliceNodeAffinityUpdateFailed",
+		Action:              "UpdateWorkerSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity update failed.",
+	},
+	"WorkerSliceNodeAffinityUpdated": {
+		Name:                "WorkerSliceNodeAffinityUpdated",
+		Reason:              "WorkerSliceNodeAffinityUpdated",
+		Action:              "UpdateWorkerSliceNodeAffinity",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity got updated successfully.",
+	},
+	"WorkerSliceNodeAffinityDeletionFailed": {
+		Name:                "WorkerSliceNodeAffinityDeletionFailed",
+		Reason:              "WorkerSliceNodeAffinityDeletionFailed",
+		Action:              "DeleteWorkerSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity deletion failed.",
+	},
+	"WorkerSliceNodeAffinityDeleted": {
+		Name:                "WorkerSliceNodeAffinityDeleted",
+		Reason:              "WorkerSliceNodeAffinityDeleted",
+		Action:              "DeleteWorkerSliceNodeAffinity",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice node affinity got deleted successfully.",
+	},
+	"WorkerSliceResourceQuotaDeletedForcefully": {
+		Name:                "WorkerSliceResourceQuotaDeletedForcefully",
+		Reason:              "WorkerSliceResourceQuotaDeletedForcefully",
+		Action:              "DeleteWorkerSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota got deleted forcefully.",
+	},
+	"WorkerSliceResourceQuotaRecreationFailed": {
+		Name:                "WorkerSliceResourceQuotaRecreationFailed",
+		Reason:              "WorkerSliceResourceQuotaRecreationFailed",
+		Action:              "CreateWorkerSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota recreation failed after forceful deletion.",
+	},
+	"WorkerSliceResourceQuotaRecreated": {
+		Name:                "WorkerSliceResourceQuotaRecreated",
+		Reason:              "WorkerSliceResourceQuotaRecreated",
+		Action:              "CreateWorkerSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota got recreated after forceful deletion.",
+	},
+	"OffBoardedNamespaceUtilizationMetricsReset": {
+		Name:                "OffBoardedNamespaceUtilizationMetricsReset",
+		Reason:              "OffBoardedNamespaceUtilizationMetricsReset",
+		Action:              "ResetOffBoardedNamespaceUtilizationMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Utilization metrics of off-boarded namespaces got reset successfully.",
+	},
+	"ResourceQuotaMetricsPopulated": {
+		Name:                "ResourceQuotaMetricsPopulated",
+		Reason:              "ResourceQuotaMetricsPopulated",
+		Action:              "PopulateResourceQuotaMetrics",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Resource quota metrics got populated successfully.",
+	},
+	"ClusterCPULimitViolated": {
+		Name:                "ClusterCPULimitViolated",
+		Reason:              "ClusterCPULimitViolated",
+		Action:              "ViolateClusterCPULimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "CPU limit is violated at cluster level.",
+	},
+	"ClusterMemoryLimitViolated": {
+		Name:                "ClusterMemoryLimitViolated",
+		Reason:              "ClusterMemoryLimitViolated",
+		Action:              "ViolateClusterMemoryLimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Memory limit is violated at cluster level.",
+	},
+	"ClusterPodCountViolated": {
+		Name:                "ClusterPodCountViolated",
+		Reason:              "ClusterPodCountViolated",
+		Action:              "ViolateClusterPodCount",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Pod count is violated at cluster level.",
+	},
+	"ClusterEphemeralStorageLimitViolated": {
+		Name:                "ClusterEphemeralStorageLimitViolated",
+		Reason:              "ClusterEphemeralStorageLimitViolated",
+		Action:              "ViolateClusterEphemeralStorageLimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Ephemeral storage limit is violated at cluster level.",
+	},
+	"ClusterCPURequestViolated": {
+		Name:                "ClusterCPURequestViolated",
+		Reason:              "ClusterCPURequestViolated",
+		Action:              "ViolateClusterCPURequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "CPU request is violated at cluster level.",
+	},
+	"ClusterMemoryRequestViolated": {
+		Name:                "ClusterMemoryRequestViolated",
+		Reason:              "ClusterMemoryRequestViolated",
+		Action:              "ViolateClusterMemoryRequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Memory request is violated at cluster level.",
+	},
+	"ClusterEphemeralStorageRequestViolated": {
+		Name:                "ClusterEphemeralStorageRequestViolated",
+		Reason:              "ClusterEphemeralStorageRequestViolated",
+		Action:              "ViolateClusterEphemeralStorageRequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Ephemeral storage request is violated at cluster level.",
+	},
+	"NamespaceCPULimitViolated": {
+		Name:                "NamespaceCPULimitViolated",
+		Reason:              "NamespaceCPULimitViolated",
+		Action:              "ViolateNamespaceCPULimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "CPU limit is violated at namespace level.",
+	},
+	"NamespaceMemoryLimitViolated": {
+		Name:                "NamespaceMemoryLimitViolated",
+		Reason:              "NamespaceMemoryLimitViolated",
+		Action:              "ViolateNamespaceMemoryLimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Memory limit is violated at namespace level.",
+	},
+	"NamespacePodCountViolated": {
+		Name:                "NamespacePodCountViolated",
+		Reason:              "NamespacePodCountViolated",
+		Action:              "ViolateNamespacePodCount",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Pod count is violated at namespace level.",
+	},
+	"NamespaceEphemeralStorageLimitViolated": {
+		Name:                "NamespaceEphemeralStorageLimitViolated",
+		Reason:              "NamespaceEphemeralStorageLimitViolated",
+		Action:              "ViolateNamespaceEphemeralStorageLimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Ephemeral storage limit is violated at namespace level.",
+	},
+	"NamespaceCPURequestViolated": {
+		Name:                "NamespaceCPURequestViolated",
+		Reason:              "NamespaceCPURequestViolated",
+		Action:              "ViolateNamespaceCPURequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "CPU request is violated at namespace level.",
+	},
+	"NamespaceMemoryRequestViolated": {
+		Name:                "NamespaceMemoryRequestViolated",
+		Reason:              "NamespaceMemoryRequestViolated",
+		Action:              "ViolateNamespaceMemoryRequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Memory request is violated at namespace level.",
+	},
+	"NamespaceEphemeralStorageRequestViolated": {
+		Name:                "NamespaceEphemeralStorageRequestViolated",
+		Reason:              "NamespaceEphemeralStorageRequestViolated",
+		Action:              "ViolateNamespaceEphemeralStorageRequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Ephemeral storage request is violated at namespace level.",
+	},
+	"SliceCPULimitViolated": {
+		Name:                "SliceCPULimitViolated",
+		Reason:              "SliceCPULimitViolated",
+		Action:              "ViolateSliceCPULimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "CPU limit is violated at slice level.",
+	},
+	"SliceMemoryLimitViolated": {
+		Name:                "SliceMemoryLimitViolated",
+		Reason:              "SliceMemoryLimitViolated",
+		Action:              "ViolateSliceMemoryLimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Memory limit is violated at slice level.",
+	},
+	"SlicePodCountViolated": {
+		Name:                "SlicePodCountViolated",
+		Reason:              "SlicePodCountViolated",
+		Action:              "ViolateSlicePodCount",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Pod count is violated at slice level.",
+	},
+	"SliceEphemeralStorageLimitViolated": {
+		Name:                "SliceEphemeralStorageLimitViolated",
+		Reason:              "SliceEphemeralStorageLimitViolated",
+		Action:              "ViolateSliceEphemeralStorageLimit",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Ephemeral storage limit is violated at slice level.",
+	},
+	"SliceCPURequestViolated": {
+		Name:                "SliceCPURequestViolated",
+		Reason:              "SliceCPURequestViolated",
+		Action:              "ViolateSliceCPURequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "CPU request is violated at slice level.",
+	},
+	"SliceMemoryRequestViolated": {
+		Name:                "SliceMemoryRequestViolated",
+		Reason:              "SliceMemoryRequestViolated",
+		Action:              "ViolateSliceMemoryRequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Memory request is violated at slice level.",
+	},
+	"SliceEphemeralStorageRequestViolated": {
+		Name:                "SliceEphemeralStorageRequestViolated",
+		Reason:              "SliceEphemeralStorageRequestViolated",
+		Action:              "ViolateSliceEphemeralStorageRequest",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Ephemeral storage request is violated at slice level.",
+	},
+	"WorkerSliceResourceQuotaCreationFailed": {
+		Name:                "WorkerSliceResourceQuotaCreationFailed",
+		Reason:              "WorkerSliceResourceQuotaCreationFailed",
+		Action:              "CreateWorkerSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota creation failed.",
+	},
+	"WorkerSliceResourceQuotaCreated": {
+		Name:                "WorkerSliceResourceQuotaCreated",
+		Reason:              "WorkerSliceResourceQuotaCreated",
+		Action:              "CreateWorkerSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota got created successfully.",
+	},
+	"WorkerSliceResourceQuotaUpdateFailed": {
+		Name:                "WorkerSliceResourceQuotaUpdateFailed",
+		Reason:              "WorkerSliceResourceQuotaUpdateFailed",
+		Action:              "UpdateWorkerSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota update failed.",
+	},
+	"WorkerSliceResourceQuotaUpdated": {
+		Name:                "WorkerSliceResourceQuotaUpdated",
+		Reason:              "WorkerSliceResourceQuotaUpdated",
+		Action:              "UpdateWorkerSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota got updated successfully.",
+	},
+	"WorkerSliceResourceQuotaDeletionFailed": {
+		Name:                "WorkerSliceResourceQuotaDeletionFailed",
+		Reason:              "WorkerSliceResourceQuotaDeletionFailed",
+		Action:              "DeleteWorkerSliceResourceQuota",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota deletion failed.",
+	},
+	"WorkerSliceResourceQuotaDeleted": {
+		Name:                "WorkerSliceResourceQuotaDeleted",
+		Reason:              "WorkerSliceResourceQuotaDeleted",
+		Action:              "DeleteWorkerSliceResourceQuota",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice resource quota got deleted successfully.",
+	},
+	"WorkerSliceRoleBindingDeletedForcefully": {
+		Name:                "WorkerSliceRoleBindingDeletedForcefully",
+		Reason:              "WorkerSliceRoleBindingDeletedForcefully",
+		Action:              "DeleteWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got deleted forcefully.",
+	},
+	"WorkerSliceRoleBindingRecreationFailed": {
+		Name:                "WorkerSliceRoleBindingRecreationFailed",
+		Reason:              "WorkerSliceRoleBindingRecreationFailed",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding recreation failed after forceful deletion.",
+	},
+	"WorkerSliceRoleBindingRecreated": {
+		Name:                "WorkerSliceRoleBindingRecreated",
+		Reason:              "WorkerSliceRoleBindingRecreated",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got recreated after forceful deletion.",
+	},
+	"WorkerSliceRoleBindingCreationFailed": {
+		Name:                "WorkerSliceRoleBindingCreationFailed",
+		Reason:              "WorkerSliceRoleBindingCreationFailed",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding creation failed.",
+	},
+	"WorkerSliceRoleBindingCreated": {
+		Name:                "WorkerSliceRoleBindingCreated",
+		Reason:              "WorkerSliceRoleBindingCreated",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got created successfully.",
+	},
+	"WorkerSliceRoleBindingUpdateFailed": {
+		Name:                "WorkerSliceRoleBindingUpdateFailed",
+		Reason:              "WorkerSliceRoleBindingUpdateFailed",
+		Action:              "UpdateWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding update failed.",
+	},
+	"WorkerSliceRoleBindingUpdated": {
+		Name:                "WorkerSliceRoleBindingUpdated",
+		Reason:              "WorkerSliceRoleBindingUpdated",
+		Action:              "UpdateWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got updated successfully.",
+	},
+	"WorkerSliceRoleBindingDeletionFailed": {
+		Name:                "WorkerSliceRoleBindingDeletionFailed",
+		Reason:              "WorkerSliceRoleBindingDeletionFailed",
+		Action:              "DeleteWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding deletion failed.",
+	},
+	"WorkerSliceRoleBindingDeleted": {
+		Name:                "WorkerSliceRoleBindingDeleted",
+		Reason:              "WorkerSliceRoleBindingDeleted",
+		Action:              "DeleteWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got deleted successfully.",
+	},
 	"NetPolViolation": {
 		Name:                "NetPolViolation",
 		Reason:              "PolicyViolation",
@@ -551,70 +1207,152 @@ var eventsMap = map[EventName]*EventSchema{
 }
 
 var (
-	EventLicenseSecretNotFound                EventName = "LicenseSecretNotFound"
-	EventMachineFileNotFound                  EventName = "MachineFileNotFound"
-	EventMachineFileInvalid                   EventName = "MachineFileInvalid"
-	EventLicenseKeyInvalid                    EventName = "LicenseKeyInvalid"
-	EventLicenseExpired                       EventName = "LicenseExpired"
-	EventLicenseExpiredGracePeriodOn          EventName = "LicenseExpiredGracePeriodOn"
-	EventMachineFingerPrintErr                EventName = "MachineFingerPrintErr"
-	EventGotMachineFingerPrint                EventName = "GotMachineFingerPrint"
-	EventConfigMapErr                         EventName = "ConfigMapErr"
-	EventGotConfigMap                         EventName = "GotConfigMap"
-	EventLicenseProxyUnreachable              EventName = "LicenseProxyUnreachable"
-	EventLicenseDeployError                   EventName = "LicenseDeployError"
-	EventLicenseDeploySuccess                 EventName = "LicenseDeploySuccess"
-	EventClusterMetadataCollectionFailed      EventName = "ClusterMetadataCollectionFailed"
-	EventClusterMetadataCollectionSuccess     EventName = "ClusterMetadataCollectionSuccess"
-	EventLicenseDataFetchError                EventName = "LicenseDataFetchError"
-	EventLicenseDataFetchSuccess              EventName = "LicenseDataFetchSuccess"
-	EventLicenseSecretCreationFailed          EventName = "LicenseSecretCreationFailed"
-	EventLicenseSecretCreationSuccess         EventName = "LicenseSecretCreationSuccess"
-	EventProjectDeleted                       EventName = "ProjectDeleted"
-	EventProjectDeletionFailed                EventName = "ProjectDeletionFailed"
-	EventClusterDeleted                       EventName = "ClusterDeleted"
-	EventClusterDeletionFailed                EventName = "ClusterDeletionFailed"
-	EventSliceConfigDeleted                   EventName = "SliceConfigDeleted"
-	EventSliceConfigDeletionFailed            EventName = "SliceConfigDeletionFailed"
-	EventServiceExportConfigDeleted           EventName = "ServiceExportConfigDeleted"
-	EventServiceExportConfigDeletionFailed    EventName = "ServiceExportConfigDeletionFailed"
-	EventSliceQoSConfigDeleted                EventName = "SliceQoSConfigDeleted"
-	EventSliceQoSConfigDeletionFailed         EventName = "SliceQoSConfigDeletionFailed"
-	EventSecretDeleted                        EventName = "SecretDeleted"
-	EventSecretDeletionFailed                 EventName = "SecretDeletionFailed"
-	EventNamespaceCreated                     EventName = "NamespaceCreated"
-	EventNamespaceCreationFailed              EventName = "NamespaceCreationFailed"
-	EventNamespaceDeleted                     EventName = "NamespaceDeleted"
-	EventNamespaceDeletionFailed              EventName = "NamespaceDeletionFailed"
-	EventWorkerClusterRoleCreated             EventName = "WorkerClusterRoleCreated"
-	EventWorkerClusterRoleCreationFailed      EventName = "WorkerClusterRoleCreationFailed"
-	EventWorkerClusterRoleUpdated             EventName = "WorkerClusterRoleUpdated"
-	EventWorkerClusterRoleUpdateFailed        EventName = "WorkerClusterRoleUpdateFailed"
-	EventReadOnlyRoleCreated                  EventName = "ReadOnlyRoleCreated"
-	EventReadOnlyRoleCreationFailed           EventName = "ReadOnlyRoleCreationFailed"
-	EventReadOnlyRoleUpdated                  EventName = "ReadOnlyRoleUpdated"
-	EventReadOnlyRoleUpdateFailed             EventName = "ReadOnlyRoleUpdateFailed"
-	EventReadWriteRoleCreated                 EventName = "ReadWriteRoleCreated"
-	EventReadWriteRoleCreationFailed          EventName = "ReadWriteRoleCreationFailed"
-	EventReadWriteRoleUpdated                 EventName = "ReadWriteRoleUpdated"
-	EventReadWriteRoleUpdateFailed            EventName = "ReadWriteRoleUpdateFailed"
-	EventServiceAccountCreated                EventName = "ServiceAccountCreated"
-	EventServiceAccountCreationFailed         EventName = "ServiceAccountCreationFailed"
-	EventServiceAccountSecretCreated          EventName = "ServiceAccountSecretCreated"
-	EventServiceAccountSecretCreationFailed   EventName = "ServiceAccountSecretCreationFailed"
-	EventDefaultRoleBindingCreated            EventName = "DefaultRoleBindingCreated"
-	EventDefaultRoleBindingCreationFailed     EventName = "DefaultRoleBindingCreationFailed"
-	EventDefaultRoleBindingUpdated            EventName = "DefaultRoleBindingUpdated"
-	EventDefaultRoleBindingUpdateFailed       EventName = "DefaultRoleBindingUpdateFailed"
-	EventDefaultRoleBindingDeleted            EventName = "DefaultRoleBindingDeleted"
-	EventDefaultRoleBindingDeletionFailed     EventName = "DefaultRoleBindingDeletionFailed"
-	EventInactiveRoleBindingDeleted           EventName = "InactiveRoleBindingDeleted"
-	EventInactiveRoleBindingDeletionFailed    EventName = "InactiveRoleBindingDeletionFailed"
-	EventInactiveServiceAccountDeleted        EventName = "InactiveServiceAccountDeleted"
-	EventInactiveServiceAccountDeletionFailed EventName = "InactiveServiceAccountDeletionFailed"
-	EventServiceAccountDeleted                EventName = "ServiceAccountDeleted"
-	EventServiceAccountDeletionFailed         EventName = "ServiceAccountDeletionFailed"
-	EventNetPolViolation                      EventName = "NetPolViolation"
-	EventClusterUnhealthy                     EventName = "ClusterUnhealthy"
-	EventClusterHealthy                       EventName = "ClusterHealthy"
+	EventLicenseSecretNotFound                                        EventName = "LicenseSecretNotFound"
+	EventMachineFileNotFound                                          EventName = "MachineFileNotFound"
+	EventMachineFileInvalid                                           EventName = "MachineFileInvalid"
+	EventLicenseKeyInvalid                                            EventName = "LicenseKeyInvalid"
+	EventLicenseExpired                                               EventName = "LicenseExpired"
+	EventLicenseExpiredGracePeriodOn                                  EventName = "LicenseExpiredGracePeriodOn"
+	EventMachineFingerPrintErr                                        EventName = "MachineFingerPrintErr"
+	EventGotMachineFingerPrint                                        EventName = "GotMachineFingerPrint"
+	EventConfigMapErr                                                 EventName = "ConfigMapErr"
+	EventGotConfigMap                                                 EventName = "GotConfigMap"
+	EventLicenseProxyUnreachable                                      EventName = "LicenseProxyUnreachable"
+	EventLicenseDeployError                                           EventName = "LicenseDeployError"
+	EventLicenseDeploySuccess                                         EventName = "LicenseDeploySuccess"
+	EventClusterMetadataCollectionFailed                              EventName = "ClusterMetadataCollectionFailed"
+	EventClusterMetadataCollectionSuccess                             EventName = "ClusterMetadataCollectionSuccess"
+	EventLicenseDataFetchError                                        EventName = "LicenseDataFetchError"
+	EventLicenseDataFetchSuccess                                      EventName = "LicenseDataFetchSuccess"
+	EventLicenseSecretCreationFailed                                  EventName = "LicenseSecretCreationFailed"
+	EventLicenseSecretCreationSuccess                                 EventName = "LicenseSecretCreationSuccess"
+	EventProjectDeleted                                               EventName = "ProjectDeleted"
+	EventProjectDeletionFailed                                        EventName = "ProjectDeletionFailed"
+	EventClusterDeleted                                               EventName = "ClusterDeleted"
+	EventClusterDeletionFailed                                        EventName = "ClusterDeletionFailed"
+	EventSliceConfigDeleted                                           EventName = "SliceConfigDeleted"
+	EventSliceConfigDeletionFailed                                    EventName = "SliceConfigDeletionFailed"
+	EventServiceExportConfigDeleted                                   EventName = "ServiceExportConfigDeleted"
+	EventServiceExportConfigDeletionFailed                            EventName = "ServiceExportConfigDeletionFailed"
+	EventSliceQoSConfigDeleted                                        EventName = "SliceQoSConfigDeleted"
+	EventSliceQoSConfigDeletionFailed                                 EventName = "SliceQoSConfigDeletionFailed"
+	EventSecretDeleted                                                EventName = "SecretDeleted"
+	EventSecretDeletionFailed                                         EventName = "SecretDeletionFailed"
+	EventNamespaceCreated                                             EventName = "NamespaceCreated"
+	EventNamespaceCreationFailed                                      EventName = "NamespaceCreationFailed"
+	EventNamespaceDeleted                                             EventName = "NamespaceDeleted"
+	EventNamespaceDeletionFailed                                      EventName = "NamespaceDeletionFailed"
+	EventWorkerClusterRoleCreated                                     EventName = "WorkerClusterRoleCreated"
+	EventWorkerClusterRoleCreationFailed                              EventName = "WorkerClusterRoleCreationFailed"
+	EventWorkerClusterRoleUpdated                                     EventName = "WorkerClusterRoleUpdated"
+	EventWorkerClusterRoleUpdateFailed                                EventName = "WorkerClusterRoleUpdateFailed"
+	EventReadOnlyRoleCreated                                          EventName = "ReadOnlyRoleCreated"
+	EventReadOnlyRoleCreationFailed                                   EventName = "ReadOnlyRoleCreationFailed"
+	EventReadOnlyRoleUpdated                                          EventName = "ReadOnlyRoleUpdated"
+	EventReadOnlyRoleUpdateFailed                                     EventName = "ReadOnlyRoleUpdateFailed"
+	EventReadWriteRoleCreated                                         EventName = "ReadWriteRoleCreated"
+	EventReadWriteRoleCreationFailed                                  EventName = "ReadWriteRoleCreationFailed"
+	EventReadWriteRoleUpdated                                         EventName = "ReadWriteRoleUpdated"
+	EventReadWriteRoleUpdateFailed                                    EventName = "ReadWriteRoleUpdateFailed"
+	EventServiceAccountCreated                                        EventName = "ServiceAccountCreated"
+	EventServiceAccountCreationFailed                                 EventName = "ServiceAccountCreationFailed"
+	EventServiceAccountSecretCreated                                  EventName = "ServiceAccountSecretCreated"
+	EventServiceAccountSecretCreationFailed                           EventName = "ServiceAccountSecretCreationFailed"
+	EventDefaultRoleBindingCreated                                    EventName = "DefaultRoleBindingCreated"
+	EventDefaultRoleBindingCreationFailed                             EventName = "DefaultRoleBindingCreationFailed"
+	EventDefaultRoleBindingUpdated                                    EventName = "DefaultRoleBindingUpdated"
+	EventDefaultRoleBindingUpdateFailed                               EventName = "DefaultRoleBindingUpdateFailed"
+	EventDefaultRoleBindingDeleted                                    EventName = "DefaultRoleBindingDeleted"
+	EventDefaultRoleBindingDeletionFailed                             EventName = "DefaultRoleBindingDeletionFailed"
+	EventInactiveRoleBindingDeleted                                   EventName = "InactiveRoleBindingDeleted"
+	EventInactiveRoleBindingDeletionFailed                            EventName = "InactiveRoleBindingDeletionFailed"
+	EventInactiveServiceAccountDeleted                                EventName = "InactiveServiceAccountDeleted"
+	EventInactiveServiceAccountDeletionFailed                         EventName = "InactiveServiceAccountDeletionFailed"
+	EventServiceAccountDeleted                                        EventName = "ServiceAccountDeleted"
+	EventServiceAccountDeletionFailed                                 EventName = "ServiceAccountDeletionFailed"
+	EventDefaultDeploymentSliceRoleTemplateCreationFailed             EventName = "DefaultDeploymentSliceRoleTemplateCreationFailed"
+	EventDefaultDeploymentSliceRoleTemplateCreated                    EventName = "DefaultDeploymentSliceRoleTemplateCreated"
+	EventDefaultReaderSliceRoleTemplateCreationFailed                 EventName = "DefaultReaderSliceRoleTemplateCreationFailed"
+	EventDefaultReaderSliceRoleTemplateCreated                        EventName = "DefaultReaderSliceRoleTemplateCreated"
+	EventSliceResourceQuotaCreationFailed                             EventName = "SliceResourceQuotaCreationFailed"
+	EventSliceResourceQuotaCreatedOnSliceConfigCreation               EventName = "SliceResourceQuotaCreatedOnSliceConfigCreation"
+	EventSliceNodeAffinityDeletionFailed                              EventName = "SliceNodeAffinityDeletionFailed"
+	EventSliceNodeAffinityDeleted                                     EventName = "SliceNodeAffinityDeleted"
+	EventSetSliceConfigAsOwnerOfSliceNodeAffinityFailed               EventName = "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed"
+	EventSetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded            EventName = "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded"
+	EventSliceResourceQuotaDeletionFailed                             EventName = "SliceResourceQuotaDeletionFailed"
+	EventSliceResourceQuotaDeleted                                    EventName = "SliceResourceQuotaDeleted"
+	EventSliceResourceQuotaRecreationFailed                           EventName = "SliceResourceQuotaRecreationFailed"
+	EventSliceResourceQuotaRecreated                                  EventName = "SliceResourceQuotaRecreated"
+	EventSetSliceConfigAsOwnerOfSliceResourceQuotaFailed              EventName = "SetSliceConfigAsOwnerOfSliceResourceQuotaFailed"
+	EventSetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded           EventName = "SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded"
+	EventSliceResourceQuotaCreated                                    EventName = "SliceResourceQuotaCreated"
+	EventSliceResourceQuotaUpdated                                    EventName = "SliceResourceQuotaUpdated"
+	EventAllRQSpecificationViolationMetricsResetSuccess               EventName = "AllRQSpecificationViolationMetricsResetSuccess"
+	EventSliceRQSpecificationViolationMetricsResetSuccess             EventName = "SliceRQSpecificationViolationMetricsResetSuccess"
+	EventClusterRQSpecificationViolationMetricsResetSuccess           EventName = "ClusterRQSpecificationViolationMetricsResetSuccess"
+	EventOutdatedNamespaceRQSpecificationViolationMetricsResetSuccess EventName = "OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess"
+	EventOutdatedClusterRQSpecificationViolationMetricsResetSuccess   EventName = "OutdatedClusterRQSpecificationViolationMetricsResetSuccess"
+	EventSliceRoleBindingDeletingFailed                               EventName = "SliceRoleBindingDeletingFailed"
+	EventSliceRoleBindingDeleted                                      EventName = "SliceRoleBindingDeleted"
+	EventSetSliceConfigAsOwnerOfSliceRoleBindingFailed                EventName = "SetSliceConfigAsOwnerOfSliceRoleBindingFailed"
+	EventSetSliceConfigAsOwnerOfSliceRoleBindingSucceeded             EventName = "SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded"
+	EventSliceRoleTemplateDeletionFailed                              EventName = "SliceRoleTemplateDeletionFailed"
+	EventSliceRoleTemplateDeleted                                     EventName = "SliceRoleTemplateDeleted"
+	EventWorkerSliceRoleBindingReconciliationSuccess                  EventName = "WorkerSliceRoleBindingReconciliationSuccess"
+	EventWorkerSliceNodeAffinityDeletedForcefully                     EventName = "WorkerSliceNodeAffinityDeletedForcefully"
+	EventWorkerSliceNodeAffinityRecreationFailed                      EventName = "WorkerSliceNodeAffinityRecreationFailed"
+	EventWorkerSliceNodeAffinityRecreated                             EventName = "WorkerSliceNodeAffinityRecreated"
+	EventNodeAffinityRilesExpansionFailed                             EventName = "NodeAffinityRilesExpansionFailed"
+	EventSliceNodeAffinityConfigDeepCopyFailed                        EventName = "SliceNodeAffinityConfigDeepCopyFailed"
+	EventWorkerSliceNodeAffinityCreationFailed                        EventName = "WorkerSliceNodeAffinityCreationFailed"
+	EventWorkerSliceNodeAffinityCreated                               EventName = "WorkerSliceNodeAffinityCreated"
+	EventWorkerSliceNodeAffinityUpdateFailed                          EventName = "WorkerSliceNodeAffinityUpdateFailed"
+	EventWorkerSliceNodeAffinityUpdated                               EventName = "WorkerSliceNodeAffinityUpdated"
+	EventWorkerSliceNodeAffinityDeletionFailed                        EventName = "WorkerSliceNodeAffinityDeletionFailed"
+	EventWorkerSliceNodeAffinityDeleted                               EventName = "WorkerSliceNodeAffinityDeleted"
+	EventWorkerSliceResourceQuotaDeletedForcefully                    EventName = "WorkerSliceResourceQuotaDeletedForcefully"
+	EventWorkerSliceResourceQuotaRecreationFailed                     EventName = "WorkerSliceResourceQuotaRecreationFailed"
+	EventWorkerSliceResourceQuotaRecreated                            EventName = "WorkerSliceResourceQuotaRecreated"
+	EventOffBoardedNamespaceUtilizationMetricsReset                   EventName = "OffBoardedNamespaceUtilizationMetricsReset"
+	EventResourceQuotaMetricsPopulated                                EventName = "ResourceQuotaMetricsPopulated"
+	EventClusterCPULimitViolated                                      EventName = "ClusterCPULimitViolated"
+	EventClusterMemoryLimitViolated                                   EventName = "ClusterMemoryLimitViolated"
+	EventClusterPodCountViolated                                      EventName = "ClusterPodCountViolated"
+	EventClusterEphemeralStorageLimitViolated                         EventName = "ClusterEphemeralStorageLimitViolated"
+	EventClusterCPURequestViolated                                    EventName = "ClusterCPURequestViolated"
+	EventClusterMemoryRequestViolated                                 EventName = "ClusterMemoryRequestViolated"
+	EventClusterEphemeralStorageRequestViolated                       EventName = "ClusterEphemeralStorageRequestViolated"
+	EventNamespaceCPULimitViolated                                    EventName = "NamespaceCPULimitViolated"
+	EventNamespaceMemoryLimitViolated                                 EventName = "NamespaceMemoryLimitViolated"
+	EventNamespacePodCountViolated                                    EventName = "NamespacePodCountViolated"
+	EventNamespaceEphemeralStorageLimitViolated                       EventName = "NamespaceEphemeralStorageLimitViolated"
+	EventNamespaceCPURequestViolated                                  EventName = "NamespaceCPURequestViolated"
+	EventNamespaceMemoryRequestViolated                               EventName = "NamespaceMemoryRequestViolated"
+	EventNamespaceEphemeralStorageRequestViolated                     EventName = "NamespaceEphemeralStorageRequestViolated"
+	EventSliceCPULimitViolated                                        EventName = "SliceCPULimitViolated"
+	EventSliceMemoryLimitViolated                                     EventName = "SliceMemoryLimitViolated"
+	EventSlicePodCountViolated                                        EventName = "SlicePodCountViolated"
+	EventSliceEphemeralStorageLimitViolated                           EventName = "SliceEphemeralStorageLimitViolated"
+	EventSliceCPURequestViolated                                      EventName = "SliceCPURequestViolated"
+	EventSliceMemoryRequestViolated                                   EventName = "SliceMemoryRequestViolated"
+	EventSliceEphemeralStorageRequestViolated                         EventName = "SliceEphemeralStorageRequestViolated"
+	EventWorkerSliceResourceQuotaCreationFailed                       EventName = "WorkerSliceResourceQuotaCreationFailed"
+	EventWorkerSliceResourceQuotaCreated                              EventName = "WorkerSliceResourceQuotaCreated"
+	EventWorkerSliceResourceQuotaUpdateFailed                         EventName = "WorkerSliceResourceQuotaUpdateFailed"
+	EventWorkerSliceResourceQuotaUpdated                              EventName = "WorkerSliceResourceQuotaUpdated"
+	EventWorkerSliceResourceQuotaDeletionFailed                       EventName = "WorkerSliceResourceQuotaDeletionFailed"
+	EventWorkerSliceResourceQuotaDeleted                              EventName = "WorkerSliceResourceQuotaDeleted"
+	EventWorkerSliceRoleBindingDeletedForcefully                      EventName = "WorkerSliceRoleBindingDeletedForcefully"
+	EventWorkerSliceRoleBindingRecreationFailed                       EventName = "WorkerSliceRoleBindingRecreationFailed"
+	EventWorkerSliceRoleBindingRecreated                              EventName = "WorkerSliceRoleBindingRecreated"
+	EventWorkerSliceRoleBindingCreationFailed                         EventName = "WorkerSliceRoleBindingCreationFailed"
+	EventWorkerSliceRoleBindingCreated                                EventName = "WorkerSliceRoleBindingCreated"
+	EventWorkerSliceRoleBindingUpdateFailed                           EventName = "WorkerSliceRoleBindingUpdateFailed"
+	EventWorkerSliceRoleBindingUpdated                                EventName = "WorkerSliceRoleBindingUpdated"
+	EventWorkerSliceRoleBindingDeletionFailed                         EventName = "WorkerSliceRoleBindingDeletionFailed"
+	EventWorkerSliceRoleBindingDeleted                                EventName = "WorkerSliceRoleBindingDeleted"
+	EventNetPolViolation                                              EventName = "NetPolViolation"
+	EventClusterUnhealthy                                             EventName = "ClusterUnhealthy"
+	EventClusterHealthy                                               EventName = "ClusterHealthy"
 )

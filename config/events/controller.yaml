@@ -379,3 +379,496 @@ events:
     type: Warning
     reportingController: controller
     message: Service account deletion failed.
+  #Enterprise events
+  - name: DefaultDeploymentSliceRoleTemplateCreationFailed
+    reason: DefaultDeploymentSliceRoleTemplateCreationFailed
+    action: CreateSliceRoleTemplate
+    type: Warning
+    reportingController: controller
+    message: Default deployment slice role template creation failed.
+  - name: DefaultDeploymentSliceRoleTemplateCreated
+    reason: DefaultDeploymentSliceRoleTemplateCreated
+    action: CreateSliceRoleTemplate
+    type: Normal
+    reportingController: controller
+    message: Default deployment slice role template got created.
+  - name: DefaultReaderSliceRoleTemplateCreationFailed
+    reason: DefaultReaderSliceRoleTemplateCreationFailed
+    action: CreateSliceRoleTemplate
+    type: Warning
+    reportingController: controller
+    message: Default reader slice role template creation failed.
+  - name: DefaultReaderSliceRoleTemplateCreated
+    reason: DefaultReaderSliceRoleTemplateCreated
+    action: CreateSliceRoleTemplate
+    type: Normal
+    reportingController: controller
+    message: Default reader slice role template got created.
+  - name: SliceResourceQuotaCreationFailed
+    reason: SliceResourceQuotaCreationFailed
+    action: CreateSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Slice resource quota creation failed while creating slice config.
+  - name: SliceResourceQuotaCreatedOnSliceConfigCreation
+    reason: SliceResourceQuotaCreatedOnSliceConfigCreation
+    action: CreateSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Slice resource quota got created while creating slice config.
+  - name: SliceNodeAffinityDeletionFailed
+    reason: SliceNodeAffinityDeletionFailed
+    action: DeleteSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Slice node affinity deletion failed.
+  - name: SliceNodeAffinityDeleted
+    reason: SliceNodeAffinityDeleted
+    action: DeleteSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Slice node affinity got deleted.
+  - name: SetSliceConfigAsOwnerOfSliceNodeAffinityFailed
+    reason: SetSliceConfigAsOwnerOfSliceNodeAffinityFailed
+    action: SetSliceConfigAsOwnerOfSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Failed to set slice config as owner of slice node affinity.
+  - name: SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded
+    reason: SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded
+    action: SetSliceConfigAsOwnerOfSliceNodeAffinity
+    type: Normal
+    reportingController: controller
+    message: Successfully set slice config as owner of slice node affinity.
+  - name: SliceResourceQuotaDeletionFailed
+    reason: SliceResourceQuotaDeletionFailed
+    action: DeleteSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Slice resource quota deletion failed.
+  - name: SliceResourceQuotaDeleted
+    reason: SliceResourceQuotaDeleted
+    action: DeleteSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Slice resource quota got deleted.
+  - name: SliceResourceQuotaRecreationFailed
+    reason: SliceResourceQuotaRecreationFailed
+    action: CreateSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Slice resource quota recreation failed after forceful deletion.
+  - name: SliceResourceQuotaRecreated
+    reason: SliceResourceQuotaRecreated
+    action: CreateSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Slice resource quota got recreated after forceful deletion.
+  - name: SetSliceConfigAsOwnerOfSliceResourceQuotaFailed
+    reason: SetSliceConfigAsOwnerOfSliceResourceQuotaFailed
+    action: SetSliceConfigAsOwnerOfSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Failed to set slice config as owner of slice resource quota config.
+  - name: SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded
+    reason: SetSliceConfigAsOwnerOfSliceResourceQuotaSucceeded
+    action: SetSliceConfigAsOwnerOfSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Successfully set slice config as owner of slice resource quota config.
+  - name: SliceResourceQuotaCreated
+    reason: SliceResourceQuotaCreated
+    action: CreateSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Slice resource quota config got created successfully.
+  - name: SliceResourceQuotaUpdated
+    reason: SliceResourceQuotaUpdated
+    action: UpdateSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Slice resource quota config got updated successfully.
+  - name: AllRQSpecificationViolationMetricsResetSuccess
+    reason: AllRQSpecificationViolationMetricsResetSuccess
+    action: ResetResourceQuotaMetrics
+    type: Normal
+    reportingController: controller
+    message: All resource quota specifications and violations metrics got reset successfully.
+  - name: SliceRQSpecificationViolationMetricsResetSuccess
+    reason: SliceRQSpecificationViolationMetricsResetSuccess
+    action: ResetResourceQuotaMetrics
+    type: Normal
+    reportingController: controller
+    message: All slice level resource quota specifications and violations metrics got reset successfully.
+  - name: ClusterRQSpecificationViolationMetricsResetSuccess
+    reason: ClusterRQSpecificationViolationMetricsResetSuccess
+    action: ResetResourceQuotaMetrics
+    type: Normal
+    reportingController: controller
+    message: All cluster level resource quota specifications and violations metrics got reset successfully.
+  - name: OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess
+    reason: OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess
+    action: ResetResourceQuotaMetrics
+    type: Normal
+    reportingController: controller
+    message: All outdated namespace level resource quota specifications and violations metrics got reset successfully.
+  - name: OutdatedClusterRQSpecificationViolationMetricsResetSuccess
+    reason: OutdatedClusterRQSpecificationViolationMetricsResetSuccess
+    action: ResetResourceQuotaMetrics
+    type: Normal
+    reportingController: controller
+    message: All outdated cluster level resource quota specifications and violations metrics got reset successfully.
+  - name: SliceRoleBindingDeletingFailed
+    reason: SliceRoleBindingDeletingFailed
+    action: DeleteSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Slice role binding deletion failed.
+  - name: SliceRoleBindingDeleted
+    reason: SliceRoleBindingDeleted
+    action: DeleteSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Slice role binding got deleted.
+  - name: SetSliceConfigAsOwnerOfSliceRoleBindingFailed
+    reason: SetSliceConfigAsOwnerOfSliceRoleBindingFailed
+    action: SetSliceConfigAsOwnerOfSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Failed to set slice config as owner of slice role binding.
+  - name: SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded
+    reason: SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded
+    action: SetSliceConfigAsOwnerOfSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Successfully set slice config as owner of slice role binding.
+  - name: SliceRoleTemplateDeletionFailed
+    reason: SliceRoleTemplateDeletionFailed
+    action: DeleteSliceRoleTemplate
+    type: Warning
+    reportingController: controller
+    message: Slice role template deletion failed.
+  - name: SliceRoleTemplateDeleted
+    reason: SliceRoleTemplateDeleted
+    action: DeleteSliceRoleTemplate
+    type: Normal
+    reportingController: controller
+    message: Slice role template got deleted.
+  - name: WorkerSliceRoleBindingReconciliationSuccess
+    reason: WorkerSliceRoleBindingReconciliationSuccess
+    action: ReconcileWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Reconciliation of worker slice role binding is successful due to the change in slice role template.
+  - name: WorkerSliceNodeAffinityDeletedForcefully
+    reason: WorkerSliceNodeAffinityDeletedForcefully
+    action: DeleteWorkerSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Worker slice node affinity got deleted forcefully.
+  - name: WorkerSliceNodeAffinityRecreationFailed
+    reason: WorkerSliceNodeAffinityRecreationFailed
+    action: CreateWorkerSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Worker slice node affinity recreation failed after forceful deletion.
+  - name: WorkerSliceNodeAffinityRecreated
+    reason: WorkerSliceNodeAffinityRecreated
+    action: CreateWorkerSliceNodeAffinity
+    type: Normal
+    reportingController: controller
+    message: Worker slice node affinity got recreated after forceful deletion.
+  - name: NodeAffinityRilesExpansionFailed
+    reason: NodeAffinityRilesExpansionFailed
+    action: ExpandNodeAffinityRules
+    type: Warning
+    reportingController: controller
+    message: Node affinity rules expansion failed.
+  - name: SliceNodeAffinityConfigDeepCopyFailed
+    reason: SliceNodeAffinityConfigDeepCopyFailed
+    action: DeepCopySliceNodeAffinityConfig
+    type: Warning
+    reportingController: controller
+    message: Deep copy of slice node affinity configuration got failed.
+  - name: WorkerSliceNodeAffinityCreationFailed
+    reason: WorkerSliceNodeAffinityCreationFailed
+    action: CreateWorkerSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Worker slice node affinity creation failed.
+  - name: WorkerSliceNodeAffinityCreated
+    reason: WorkerSliceNodeAffinityCreated
+    action: CreateWorkerSliceNodeAffinity
+    type: Normal
+    reportingController: controller
+    message: Worker slice node affinity got created successfully.
+  - name: WorkerSliceNodeAffinityUpdateFailed
+    reason: WorkerSliceNodeAffinityUpdateFailed
+    action: UpdateWorkerSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Worker slice node affinity update failed.
+  - name: WorkerSliceNodeAffinityUpdated
+    reason: WorkerSliceNodeAffinityUpdated
+    action: UpdateWorkerSliceNodeAffinity
+    type: Normal
+    reportingController: controller
+    message: Worker slice node affinity got updated successfully.
+  - name: WorkerSliceNodeAffinityDeletionFailed
+    reason: WorkerSliceNodeAffinityDeletionFailed
+    action: DeleteWorkerSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Worker slice node affinity deletion failed.
+  - name: WorkerSliceNodeAffinityDeleted
+    reason: WorkerSliceNodeAffinityDeleted
+    action: DeleteWorkerSliceNodeAffinity
+    type: Normal
+    reportingController: controller
+    message: Worker slice node affinity got deleted successfully.
+  - name: WorkerSliceResourceQuotaDeletedForcefully
+    reason: WorkerSliceResourceQuotaDeletedForcefully
+    action: DeleteWorkerSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Worker slice resource quota got deleted forcefully.
+  - name: WorkerSliceResourceQuotaRecreationFailed
+    reason: WorkerSliceResourceQuotaRecreationFailed
+    action: CreateWorkerSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Worker slice resource quota recreation failed after forceful deletion.
+  - name: WorkerSliceResourceQuotaRecreated
+    reason: WorkerSliceResourceQuotaRecreated
+    action: CreateWorkerSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Worker slice resource quota got recreated after forceful deletion.
+  - name: OffBoardedNamespaceUtilizationMetricsReset
+    reason: OffBoardedNamespaceUtilizationMetricsReset
+    action: ResetOffBoardedNamespaceUtilizationMetrics
+    type: Normal
+    reportingController: controller
+    message: Utilization metrics of off-boarded namespaces got reset successfully.
+  - name: ResourceQuotaMetricsPopulated
+    reason: ResourceQuotaMetricsPopulated
+    action: PopulateResourceQuotaMetrics
+    type: Normal
+    reportingController: controller
+    message: Resource quota metrics got populated successfully.
+  - name: ClusterCPULimitViolated
+    reason: ClusterCPULimitViolated
+    action: ViolateClusterCPULimit
+    type: Warning
+    reportingController: controller
+    message: CPU limit is violated at cluster level.
+  - name: ClusterMemoryLimitViolated
+    reason: ClusterMemoryLimitViolated
+    action: ViolateClusterMemoryLimit
+    type: Warning
+    reportingController: controller
+    message: Memory limit is violated at cluster level.
+  - name: ClusterPodCountViolated
+    reason: ClusterPodCountViolated
+    action: ViolateClusterPodCount
+    type: Warning
+    reportingController: controller
+    message: Pod count is violated at cluster level.
+  - name: ClusterEphemeralStorageLimitViolated
+    reason: ClusterEphemeralStorageLimitViolated
+    action: ViolateClusterEphemeralStorageLimit
+    type: Warning
+    reportingController: controller
+    message: Ephemeral storage limit is violated at cluster level.
+  - name: ClusterCPURequestViolated
+    reason: ClusterCPURequestViolated
+    action: ViolateClusterCPURequest
+    type: Warning
+    reportingController: controller
+    message: CPU request is violated at cluster level.
+  - name: ClusterMemoryRequestViolated
+    reason: ClusterMemoryRequestViolated
+    action: ViolateClusterMemoryRequest
+    type: Warning
+    reportingController: controller
+    message: Memory request is violated at cluster level.
+  - name: ClusterEphemeralStorageRequestViolated
+    reason: ClusterEphemeralStorageRequestViolated
+    action: ViolateClusterEphemeralStorageRequest
+    type: Warning
+    reportingController: controller
+    message: Ephemeral storage request is violated at cluster level.
+  - name: NamespaceCPULimitViolated
+    reason: NamespaceCPULimitViolated
+    action: ViolateNamespaceCPULimit
+    type: Warning
+    reportingController: controller
+    message: CPU limit is violated at namespace level.
+  - name: NamespaceMemoryLimitViolated
+    reason: NamespaceMemoryLimitViolated
+    action: ViolateNamespaceMemoryLimit
+    type: Warning
+    reportingController: controller
+    message: Memory limit is violated at namespace level.
+  - name: NamespacePodCountViolated
+    reason: NamespacePodCountViolated
+    action: ViolateNamespacePodCount
+    type: Warning
+    reportingController: controller
+    message: Pod count is violated at namespace level.
+  - name: NamespaceEphemeralStorageLimitViolated
+    reason: NamespaceEphemeralStorageLimitViolated
+    action: ViolateNamespaceEphemeralStorageLimit
+    type: Warning
+    reportingController: controller
+    message: Ephemeral storage limit is violated at namespace level.
+  - name: NamespaceCPURequestViolated
+    reason: NamespaceCPURequestViolated
+    action: ViolateNamespaceCPURequest
+    type: Warning
+    reportingController: controller
+    message: CPU request is violated at namespace level.
+  - name: NamespaceMemoryRequestViolated
+    reason: NamespaceMemoryRequestViolated
+    action: ViolateNamespaceMemoryRequest
+    type: Warning
+    reportingController: controller
+    message: Memory request is violated at namespace level.
+  - name: NamespaceEphemeralStorageRequestViolated
+    reason: NamespaceEphemeralStorageRequestViolated
+    action: ViolateNamespaceEphemeralStorageRequest
+    type: Warning
+    reportingController: controller
+    message: Ephemeral storage request is violated at namespace level.
+  - name: SliceCPULimitViolated
+    reason: SliceCPULimitViolated
+    action: ViolateSliceCPULimit
+    type: Warning
+    reportingController: controller
+    message: CPU limit is violated at slice level.
+  - name: SliceMemoryLimitViolated
+    reason: SliceMemoryLimitViolated
+    action: ViolateSliceMemoryLimit
+    type: Warning
+    reportingController: controller
+    message: Memory limit is violated at slice level.
+  - name: SlicePodCountViolated
+    reason: SlicePodCountViolated
+    action: ViolateSlicePodCount
+    type: Warning
+    reportingController: controller
+    message: Pod count is violated at slice level.
+  - name: SliceEphemeralStorageLimitViolated
+    reason: SliceEphemeralStorageLimitViolated
+    action: ViolateSliceEphemeralStorageLimit
+    type: Warning
+    reportingController: controller
+    message: Ephemeral storage limit is violated at slice level.
+  - name: SliceCPURequestViolated
+    reason: SliceCPURequestViolated
+    action: ViolateSliceCPURequest
+    type: Warning
+    reportingController: controller
+    message: CPU request is violated at slice level.
+  - name: SliceMemoryRequestViolated
+    reason: SliceMemoryRequestViolated
+    action: ViolateSliceMemoryRequest
+    type: Warning
+    reportingController: controller
+    message: Memory request is violated at slice level.
+  - name: SliceEphemeralStorageRequestViolated
+    reason: SliceEphemeralStorageRequestViolated
+    action: ViolateSliceEphemeralStorageRequest
+    type: Warning
+    reportingController: controller
+    message: Ephemeral storage request is violated at slice level.
+  - name: WorkerSliceResourceQuotaCreationFailed
+    reason: WorkerSliceResourceQuotaCreationFailed
+    action: CreateWorkerSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Worker slice resource quota creation failed.
+  - name: WorkerSliceResourceQuotaCreated
+    reason: WorkerSliceResourceQuotaCreated
+    action: CreateWorkerSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Worker slice resource quota got created successfully.
+  - name: WorkerSliceResourceQuotaUpdateFailed
+    reason: WorkerSliceResourceQuotaUpdateFailed
+    action: UpdateWorkerSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Worker slice resource quota update failed.
+  - name: WorkerSliceResourceQuotaUpdated
+    reason: WorkerSliceResourceQuotaUpdated
+    action: UpdateWorkerSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Worker slice resource quota got updated successfully.
+  - name: WorkerSliceResourceQuotaDeletionFailed
+    reason: WorkerSliceResourceQuotaDeletionFailed
+    action: DeleteWorkerSliceResourceQuota
+    type: Warning
+    reportingController: controller
+    message: Worker slice resource quota deletion failed.
+  - name: WorkerSliceResourceQuotaDeleted
+    reason: WorkerSliceResourceQuotaDeleted
+    action: DeleteWorkerSliceResourceQuota
+    type: Normal
+    reportingController: controller
+    message: Worker slice resource quota got deleted successfully.
+  - name: WorkerSliceRoleBindingDeletedForcefully
+    reason: WorkerSliceRoleBindingDeletedForcefully
+    action: DeleteWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding got deleted forcefully.
+  - name: WorkerSliceRoleBindingRecreationFailed
+    reason: WorkerSliceRoleBindingRecreationFailed
+    action: CreateWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding recreation failed after forceful deletion.
+  - name: WorkerSliceRoleBindingRecreated
+    reason: WorkerSliceRoleBindingRecreated
+    action: CreateWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got recreated after forceful deletion.
+  - name: WorkerSliceRoleBindingCreationFailed
+    reason: WorkerSliceRoleBindingCreationFailed
+    action: CreateWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding creation failed.
+  - name: WorkerSliceRoleBindingCreated
+    reason: WorkerSliceRoleBindingCreated
+    action: CreateWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got created successfully.
+  - name: WorkerSliceRoleBindingUpdateFailed
+    reason: WorkerSliceRoleBindingUpdateFailed
+    action: UpdateWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding update failed.
+  - name: WorkerSliceRoleBindingUpdated
+    reason: WorkerSliceRoleBindingUpdated
+    action: UpdateWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got updated successfully.
+  - name: WorkerSliceRoleBindingDeletionFailed
+    reason: WorkerSliceRoleBindingDeletionFailed
+    action: DeleteWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding deletion failed.
+  - name: WorkerSliceRoleBindingDeleted
+    reason: WorkerSliceRoleBindingDeleted
+    action: DeleteWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got deleted successfully.
