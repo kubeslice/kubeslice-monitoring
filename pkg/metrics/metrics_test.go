@@ -1,10 +1,9 @@
-package metrics
+package metrics_test
 
 import (
 	"context"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
+	"github.com/kubeslice/kubeslice-monitoring/pkg/metrics"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
-	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
 )
@@ -17,17 +16,17 @@ var (
 )
 
 func TestRecordGaugeMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
+	recorder := metrics.NewMetricRecorder(metrics.MetricRecorderOptions{
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
 		Namespace: namespace,
-		Subsystem: "controller",
-	}
+		Subsystem: "test-subsystem",
+		Component: "controller",
+	})
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeGauge,
+	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
+		Type:  metrics.MetricTypeGauge,
 		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
@@ -35,21 +34,23 @@ func TestRecordGaugeMetric(t *testing.T) {
 			"test_key": "test_value",
 		},
 	})
-	require.Nil(t, err)
+	if err != nil {
+		t.Error("metric recording failed")
+	}
 }
 
 func TestRecordCounterMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
+	recorder := metrics.NewMetricRecorder(metrics.MetricRecorderOptions{
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
 		Namespace: namespace,
-		Subsystem: "controller",
-	}
+		Subsystem: "test-subsystem",
+		Component: "controller",
+	})
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeCounter,
+	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
+		Type:  metrics.MetricTypeCounter,
 		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
@@ -57,21 +58,23 @@ func TestRecordCounterMetric(t *testing.T) {
 			"test_key": "test_value",
 		},
 	})
-	require.Nil(t, err)
+	if err != nil {
+		t.Error("metric recording failed")
+	}
 }
 
 func TestRecordHistogramMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
+	recorder := metrics.NewMetricRecorder(metrics.MetricRecorderOptions{
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
 		Namespace: namespace,
-		Subsystem: "controller",
-	}
+		Subsystem: "test-subsystem",
+		Component: "controller",
+	})
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeHistogram,
+	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
+		Type:  metrics.MetricTypeHistogram,
 		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
@@ -81,21 +84,23 @@ func TestRecordHistogramMetric(t *testing.T) {
 		HistogramBuckets: []float64{1, 2, 3},
 		Time:             time.Now(),
 	})
-	require.Nil(t, err)
+	if err != nil {
+		t.Error("metric recording failed")
+	}
 }
 
 func TestRecordSummaryMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
+	recorder := metrics.NewMetricRecorder(metrics.MetricRecorderOptions{
 		Project:   project,
 		Cluster:   clusterName,
 		Slice:     sliceName,
 		Namespace: namespace,
-		Subsystem: "controller",
-	}
+		Subsystem: "test-subsystem",
+		Component: "controller",
+	})
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeSummary,
+	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
+		Type:  metrics.MetricTypeSummary,
 		Name:  schema.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
@@ -104,5 +109,7 @@ func TestRecordSummaryMetric(t *testing.T) {
 		},
 		Time: time.Now(),
 	})
-	require.Nil(t, err)
+	if err != nil {
+		t.Error("metric recording failed")
+	}
 }
