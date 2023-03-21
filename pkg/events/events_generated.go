@@ -524,6 +524,238 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "Service account deletion failed.",
 	},
+	"WorkerServiceImportDeletedForcefully": {
+		Name:                "WorkerServiceImportDeletedForcefully",
+		Reason:              "WorkerServiceImportDeletedForcefully",
+		Action:              "DeleteWorkerServiceImport",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker service import got deleted forcefully.",
+	},
+	"WorkerServiceImportRecreationFailed": {
+		Name:                "WorkerServiceImportRecreationFailed",
+		Reason:              "WorkerServiceImportRecreationFailed",
+		Action:              "CreateWorkerServiceImport",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker service import recreation failed after forceful deletion.",
+	},
+	"WorkerServiceImportRecreated": {
+		Name:                "WorkerServiceImportRecreated",
+		Reason:              "WorkerServiceImportRecreated",
+		Action:              "CreateWorkerServiceImport",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker service import got recreated after forceful deletion.",
+	},
+	"WorkerServiceImportCreationFailed": {
+		Name:                "WorkerServiceImportCreationFailed",
+		Reason:              "WorkerServiceImportCreationFailed",
+		Action:              "CreateWorkerServiceImport",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker service import creation failed.",
+	},
+	"WorkerServiceImportCreated": {
+		Name:                "WorkerServiceImportCreated",
+		Reason:              "WorkerServiceImportCreated",
+		Action:              "CreateWorkerServiceImport",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker service import got created.",
+	},
+	"WorkerServiceImportUpdateFailed": {
+		Name:                "WorkerServiceImportUpdateFailed",
+		Reason:              "WorkerServiceImportUpdateFailed",
+		Action:              "UpdateWorkerServiceImport",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker service import update failed.",
+	},
+	"WorkerServiceImportUpdated": {
+		Name:                "WorkerServiceImportUpdated",
+		Reason:              "WorkerServiceImportUpdated",
+		Action:              "UpdateWorkerServiceImport",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker service import got updated.",
+	},
+	"WorkerServiceImportDeleted": {
+		Name:                "WorkerServiceImportDeleted",
+		Reason:              "WorkerServiceImportDeleted",
+		Action:              "DeleteWorkerServiceImport",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker service import got deleted.",
+	},
+	"WorkerServiceImportDeletionFailed": {
+		Name:                "WorkerServiceImportDeletionFailed",
+		Reason:              "WorkerServiceImportDeletionFailed",
+		Action:              "DeleteWorkerServiceImport",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker service import deletion failed.",
+	},
+	"WorkerSliceConfigDeletedForcefully": {
+		Name:                "WorkerSliceConfigDeletedForcefully",
+		Reason:              "WorkerSliceConfigDeletedForcefully",
+		Action:              "DeleteWorkerSliceConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice config got deleted forcefully.",
+	},
+	"WorkerSliceConfigRecreationFailed": {
+		Name:                "WorkerSliceConfigRecreationFailed",
+		Reason:              "WorkerSliceConfigRecreationFailed",
+		Action:              "CreateWorkerSliceConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice config recreation failed after forceful deletion.",
+	},
+	"WorkerSliceConfigRecreated": {
+		Name:                "WorkerSliceConfigRecreated",
+		Reason:              "WorkerSliceConfigRecreated",
+		Action:              "CreateWorkerSliceConfig",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice config got recreated after forceful deletion.",
+	},
+	"WorkerSliceConfigCreationFailed": {
+		Name:                "WorkerSliceConfigCreationFailed",
+		Reason:              "WorkerSliceConfigCreationFailed",
+		Action:              "CreateWorkerSliceConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice config creation failed.",
+	},
+	"WorkerSliceConfigCreated": {
+		Name:                "WorkerSliceConfigCreated",
+		Reason:              "WorkerSliceConfigCreated",
+		Action:              "CreateWorkerSliceConfig",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice config got created.",
+	},
+	"WorkerSliceConfigUpdateFailed": {
+		Name:                "WorkerSliceConfigUpdateFailed",
+		Reason:              "WorkerSliceConfigUpdateFailed",
+		Action:              "UpdateWorkerSliceConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice config update failed.",
+	},
+	"WorkerSliceConfigUpdated": {
+		Name:                "WorkerSliceConfigUpdated",
+		Reason:              "WorkerSliceConfigUpdated",
+		Action:              "UpdateWorkerSliceConfig",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice config got updated.",
+	},
+	"WorkerSliceConfigDeleted": {
+		Name:                "WorkerSliceConfigDeleted",
+		Reason:              "WorkerSliceConfigDeleted",
+		Action:              "DeleteWorkerSliceConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice config got deleted.",
+	},
+	"WorkerSliceConfigDeletionFailed": {
+		Name:                "WorkerSliceConfigDeletionFailed",
+		Reason:              "WorkerSliceConfigDeletionFailed",
+		Action:              "DeleteWorkerSliceConfig",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice config deletion failed.",
+	},
+	"WorkerSliceGatewaySecretDeletionFailed": {
+		Name:                "WorkerSliceGatewaySecretDeletionFailed",
+		Reason:              "WorkerSliceGatewaySecretDeletionFailed",
+		Action:              "DeleteWorkerSliceGatewaySecret",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway secret deletion failed while deleting worker slice gateway.",
+	},
+	"WorkerSliceGatewaySecretDeleted": {
+		Name:                "WorkerSliceGatewaySecretDeleted",
+		Reason:              "WorkerSliceGatewaySecretDeleted",
+		Action:              "DeleteWorkerSliceGatewaySecret",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway secret got deleted while deleting worker slice gateway.",
+	},
+	"WorkerSliceGatewayDeletedForcefully": {
+		Name:                "WorkerSliceGatewayDeletedForcefully",
+		Reason:              "WorkerSliceGatewayDeletedForcefully",
+		Action:              "DeleteWorkerSliceGateway",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway got deleted forcefully.",
+	},
+	"WorkerSliceGatewayRecreationFailed": {
+		Name:                "WorkerSliceGatewayRecreationFailed",
+		Reason:              "WorkerSliceGatewayRecreationFailed",
+		Action:              "CreateWorkerSliceGateway",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway recreation failed after forceful deletion.",
+	},
+	"WorkerSliceGatewayRecreated": {
+		Name:                "WorkerSliceGatewayRecreated",
+		Reason:              "WorkerSliceGatewayRecreated",
+		Action:              "CreateWorkerSliceGateway",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway got recreated after forceful deletion.",
+	},
+	"WorkerSliceGatewayDeletionFailed": {
+		Name:                "WorkerSliceGatewayDeletionFailed",
+		Reason:              "WorkerSliceGatewayDeletionFailed",
+		Action:              "DeleteWorkerSliceGateway",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway deletion failed.",
+	},
+	"WorkerSliceGatewayDeleted": {
+		Name:                "WorkerSliceGatewayDeleted",
+		Reason:              "WorkerSliceGatewayDeleted",
+		Action:              "DeleteWorkerSliceGateway",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway got deleted.",
+	},
+	"WorkerSliceGatewayCreationFailed": {
+		Name:                "WorkerSliceGatewayCreationFailed",
+		Reason:              "WorkerSliceGatewayCreationFailed",
+		Action:              "CreateWorkerSliceGateway",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway creation failed.",
+	},
+	"WorkerSliceGatewayCreated": {
+		Name:                "WorkerSliceGatewayCreated",
+		Reason:              "WorkerSliceGatewayCreated",
+		Action:              "CreateWorkerSliceGateway",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice gateway got created.",
+	},
+	"SliceGatewayJobCreationFailed": {
+		Name:                "SliceGatewayJobCreationFailed",
+		Reason:              "SliceGatewayJobCreationFailed",
+		Action:              "CreateSliceGatewayJob",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice gateway job creation failed.",
+	},
+	"SliceGatewayJobCreated": {
+		Name:                "SliceGatewayJobCreated",
+		Reason:              "SliceGatewayJobCreated",
+		Action:              "CreateSliceGatewayJob",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice gateway job got created.",
+	},
 	"DefaultDeploymentSliceRoleTemplateCreationFailed": {
 		Name:                "DefaultDeploymentSliceRoleTemplateCreationFailed",
 		Reason:              "DefaultDeploymentSliceRoleTemplateCreationFailed",
@@ -1270,6 +1502,35 @@ var (
 	EventInactiveServiceAccountDeletionFailed                         EventName = "InactiveServiceAccountDeletionFailed"
 	EventServiceAccountDeleted                                        EventName = "ServiceAccountDeleted"
 	EventServiceAccountDeletionFailed                                 EventName = "ServiceAccountDeletionFailed"
+	EventWorkerServiceImportDeletedForcefully                         EventName = "WorkerServiceImportDeletedForcefully"
+	EventWorkerServiceImportRecreationFailed                          EventName = "WorkerServiceImportRecreationFailed"
+	EventWorkerServiceImportRecreated                                 EventName = "WorkerServiceImportRecreated"
+	EventWorkerServiceImportCreationFailed                            EventName = "WorkerServiceImportCreationFailed"
+	EventWorkerServiceImportCreated                                   EventName = "WorkerServiceImportCreated"
+	EventWorkerServiceImportUpdateFailed                              EventName = "WorkerServiceImportUpdateFailed"
+	EventWorkerServiceImportUpdated                                   EventName = "WorkerServiceImportUpdated"
+	EventWorkerServiceImportDeleted                                   EventName = "WorkerServiceImportDeleted"
+	EventWorkerServiceImportDeletionFailed                            EventName = "WorkerServiceImportDeletionFailed"
+	EventWorkerSliceConfigDeletedForcefully                           EventName = "WorkerSliceConfigDeletedForcefully"
+	EventWorkerSliceConfigRecreationFailed                            EventName = "WorkerSliceConfigRecreationFailed"
+	EventWorkerSliceConfigRecreated                                   EventName = "WorkerSliceConfigRecreated"
+	EventWorkerSliceConfigCreationFailed                              EventName = "WorkerSliceConfigCreationFailed"
+	EventWorkerSliceConfigCreated                                     EventName = "WorkerSliceConfigCreated"
+	EventWorkerSliceConfigUpdateFailed                                EventName = "WorkerSliceConfigUpdateFailed"
+	EventWorkerSliceConfigUpdated                                     EventName = "WorkerSliceConfigUpdated"
+	EventWorkerSliceConfigDeleted                                     EventName = "WorkerSliceConfigDeleted"
+	EventWorkerSliceConfigDeletionFailed                              EventName = "WorkerSliceConfigDeletionFailed"
+	EventWorkerSliceGatewaySecretDeletionFailed                       EventName = "WorkerSliceGatewaySecretDeletionFailed"
+	EventWorkerSliceGatewaySecretDeleted                              EventName = "WorkerSliceGatewaySecretDeleted"
+	EventWorkerSliceGatewayDeletedForcefully                          EventName = "WorkerSliceGatewayDeletedForcefully"
+	EventWorkerSliceGatewayRecreationFailed                           EventName = "WorkerSliceGatewayRecreationFailed"
+	EventWorkerSliceGatewayRecreated                                  EventName = "WorkerSliceGatewayRecreated"
+	EventWorkerSliceGatewayDeletionFailed                             EventName = "WorkerSliceGatewayDeletionFailed"
+	EventWorkerSliceGatewayDeleted                                    EventName = "WorkerSliceGatewayDeleted"
+	EventWorkerSliceGatewayCreationFailed                             EventName = "WorkerSliceGatewayCreationFailed"
+	EventWorkerSliceGatewayCreated                                    EventName = "WorkerSliceGatewayCreated"
+	EventSliceGatewayJobCreationFailed                                EventName = "SliceGatewayJobCreationFailed"
+	EventSliceGatewayJobCreated                                       EventName = "SliceGatewayJobCreated"
 	EventDefaultDeploymentSliceRoleTemplateCreationFailed             EventName = "DefaultDeploymentSliceRoleTemplateCreationFailed"
 	EventDefaultDeploymentSliceRoleTemplateCreated                    EventName = "DefaultDeploymentSliceRoleTemplateCreated"
 	EventDefaultReaderSliceRoleTemplateCreationFailed                 EventName = "DefaultReaderSliceRoleTemplateCreationFailed"
