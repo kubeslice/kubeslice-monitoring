@@ -16,8 +16,8 @@
  *  limitations under the License.
  */
 
-package schema
+package metrics
 
-var (
+const (
 	MetricNetPolViolation = "net_pol_violation"
 )

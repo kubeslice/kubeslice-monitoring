@@ -3,7 +3,6 @@ package metrics_test
 import (
 	"context"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/metrics"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"testing"
 	"time"
 )
@@ -27,7 +26,7 @@ func TestRecordGaugeMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
 		Type:  metrics.MetricTypeGauge,
-		Name:  schema.MetricNetPolViolation,
+		Name:  metrics.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{
@@ -51,7 +50,7 @@ func TestRecordCounterMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
 		Type:  metrics.MetricTypeCounter,
-		Name:  schema.MetricNetPolViolation,
+		Name:  metrics.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{
@@ -75,7 +74,7 @@ func TestRecordHistogramMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
 		Type:  metrics.MetricTypeHistogram,
-		Name:  schema.MetricNetPolViolation,
+		Name:  metrics.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{
@@ -101,7 +100,7 @@ func TestRecordSummaryMetric(t *testing.T) {
 
 	err := recorder.RecordMetric(context.Background(), &metrics.Metric{
 		Type:  metrics.MetricTypeSummary,
-		Name:  schema.MetricNetPolViolation,
+		Name:  metrics.MetricNetPolViolation,
 		Help:  "test metric help",
 		Value: 1,
 		Labels: map[string]string{

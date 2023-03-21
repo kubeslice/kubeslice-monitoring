@@ -65,7 +65,7 @@ err := recorder.RecordEvent(ctx, &events.Event{
 })
 ```
 
-4. Raise events with slice/namespace name added at the time of raising events
+4. Raise events with slice/namespace/project name added at the time of raising events
 
 In some cases, the recorder will be part of a controller which manages multiple namespaces. In that case,
 events can be raises by providing namespace like below instead of Initializing the recorder with specific namespace name.
@@ -74,4 +74,59 @@ events can be raises by providing namespace like below instead of Initializing t
 recorder.WithNamespace(ns).RecordEvent(...)
 
 recorder.WithSlice(sliceName).RecordEvent(...)
+
+recorder.WithProject(projectName).RecordEvent(...)
+```
+
+
+## Using metrics framework in your component
+
+
+1. Import metrics package
+
+```
+import(
+    "github.com/kubeslice/kubeslice-monitoring/pkg/metrics"
+)
+```
+
+2. Initialize metric recorder
+
+
+```
+recorder := metrics.NewMetricRecorder(metrics.MetricRecorderOptions{
+    Project:   "test-project",
+    Cluster:   "cluster-1",
+    Slice:     "test-slice",
+    Namespace: "test-namepsace",
+    Subsystem: "test-subsystem",
+    Component: "controller",
+})
+```
+
+3. Record metric
+
+```
+err := recorder.RecordMetric(context.Background(), &metrics.Metric{
+    Type:  metrics.MetricTypeGauge,
+    Name:  metrics.MetricNetPolViolation,
+    Help:  "test metric help",
+    Value: 1,
+    Labels: map[string]string{
+        "test_key": "test_value",
+    },
+})
+```
+
+4. Record metric with slice/namespace/project name added at the time of recording metrics
+
+In some cases, the recorder will be part of a controller which manages multiple namespaces. In that case,
+metrics can be recorded by providing namespace like below instead of Initializing the recorder with specific namespace name.
+
+```
+recorder.WithNamespace(ns).RecordMetric(...)
+
+recorder.WithSlice(sliceName).RecordMetric(...)
+
+recorder.WithProject(projectName).RecordMetric(...)
 ```
