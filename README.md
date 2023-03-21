@@ -4,7 +4,8 @@ kubeslice-monitoring : Repository for kubeslice-monitoring package
 
 ## Using event schema
 
-Event schema files are located in `config/events/controller.yaml` and `config/events/worker.yaml` respectively. It contains the following fields for each event
+Event schema files are located in `config/events/controller.yaml` and `config/events/worker.yaml` respectively. It
+contains the following fields for each event
 
 * name: Name of the event
 * reason: Reason for raising the event
@@ -16,6 +17,7 @@ Event schema files are located in `config/events/controller.yaml` and `config/ev
 make sure to run `make generate` after modifying the above files
 
 ## Disabling events
+
 TODO: fill this section
 
 ## Generate parsed event schema code
@@ -28,21 +30,18 @@ make generate
 
 ## Using events framework in your component
 
-
-1. Import events package and schema
+1. Import events package
 
 ```
 import(
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 )
 ```
 
 2. Initialize event recorder
 
-
 ```
-recorder := events.NewEventRecorder(k8sClient, schema, events.EventRecorderOptions{
+recorder := events.NewEventRecorder(k8sClient, scheme, events.EventRecorderOptions{
   Version:   "1",
   Cluster:   "cluster-1",
   Component: "controller",
@@ -61,14 +60,15 @@ err := recorder.RecordEvent(ctx, &events.Event{
   Object:            obj,
   RelatedObject:     robj,
   ReportingInstance: "controller",
-  Name:              schema.EventSliceConfigDeletionFailed,
+  Name:              events.EventSliceConfigDeletionFailed,
 })
 ```
 
 4. Raise events with slice/namespace/project name added at the time of raising events
 
 In some cases, the recorder will be part of a controller which manages multiple namespaces. In that case,
-events can be raises by providing namespace like below instead of Initializing the recorder with specific namespace name.
+events can be raises by providing namespace like below instead of Initializing the recorder with specific namespace
+name.
 
 ```
 recorder.WithNamespace(ns).RecordEvent(...)
@@ -78,9 +78,7 @@ recorder.WithSlice(sliceName).RecordEvent(...)
 recorder.WithProject(projectName).RecordEvent(...)
 ```
 
-
 ## Using metrics framework in your component
-
 
 1. Import metrics package
 
@@ -91,7 +89,6 @@ import(
 ```
 
 2. Initialize metric recorder
-
 
 ```
 recorder := metrics.NewMetricRecorder(metrics.MetricRecorderOptions{
@@ -121,7 +118,8 @@ err := recorder.RecordMetric(context.Background(), &metrics.Metric{
 4. Record metric with slice/namespace/project name added at the time of recording metrics
 
 In some cases, the recorder will be part of a controller which manages multiple namespaces. In that case,
-metrics can be recorded by providing namespace like below instead of Initializing the recorder with specific namespace name.
+metrics can be recorded by providing namespace like below instead of Initializing the recorder with specific namespace
+name.
 
 ```
 recorder.WithNamespace(ns).RecordMetric(...)
