@@ -115,6 +115,7 @@ events:
     reportingController: kubeslice-controller
     message: Successfully created license secret.
     #Controller OSS Events
+    ## Project Events
   - name: ProjectDeleted
     reason: ProjectDeleted
     action: DeleteProject
@@ -379,6 +380,7 @@ events:
     type: Warning
     reportingController: controller
     message: Service account deletion failed.
+    ## Worker Service Import
   - name: WorkerServiceImportDeletedForcefully
     reason: WorkerServiceImportDeletedForcefully
     action: DeleteWorkerServiceImport
@@ -433,6 +435,7 @@ events:
     type: Warning
     reportingController: controller
     message: Worker service import deletion failed.
+    ## Worker Slice Config
   - name: WorkerSliceConfigDeletedForcefully
     reason: WorkerSliceConfigDeletedForcefully
     action: DeleteWorkerSliceConfig
@@ -487,18 +490,7 @@ events:
     type: Warning
     reportingController: controller
     message: Worker slice config deletion failed.
-  - name: WorkerSliceGatewaySecretDeletionFailed
-    reason: WorkerSliceGatewaySecretDeletionFailed
-    action: DeleteWorkerSliceGatewaySecret
-    type: Warning
-    reportingController: controller
-    message: Worker slice gateway secret deletion failed while deleting worker slice gateway.
-  - name: WorkerSliceGatewaySecretDeleted
-    reason: WorkerSliceGatewaySecretDeleted
-    action: DeleteWorkerSliceGatewaySecret
-    type: Warning
-    reportingController: controller
-    message: Worker slice gateway secret got deleted while deleting worker slice gateway.
+    ## Worker Slice Gateway
   - name: WorkerSliceGatewayDeletedForcefully
     reason: WorkerSliceGatewayDeletedForcefully
     action: DeleteWorkerSliceGateway
@@ -553,7 +545,8 @@ events:
     type: Normal
     reportingController: controller
     message: Slice gateway job got created.
-  #Controller Enterprise Events
+    #Controller Enterprise Events
+    ## Slice Role Template
   - name: DefaultDeploymentSliceRoleTemplateCreationFailed
     reason: DefaultDeploymentSliceRoleTemplateCreationFailed
     action: CreateSliceRoleTemplate
@@ -578,6 +571,19 @@ events:
     type: Normal
     reportingController: controller
     message: Default reader slice role template got created.
+  - name: SliceRoleTemplateDeletionFailed
+    reason: SliceRoleTemplateDeletionFailed
+    action: DeleteSliceRoleTemplate
+    type: Warning
+    reportingController: controller
+    message: Slice role template deletion failed.
+  - name: SliceRoleTemplateDeleted
+    reason: SliceRoleTemplateDeleted
+    action: DeleteSliceRoleTemplate
+    type: Normal
+    reportingController: controller
+    message: Slice role template got deleted.
+    ##Slice Resource Quota Config
   - name: SliceResourceQuotaCreationFailed
     reason: SliceResourceQuotaCreationFailed
     action: CreateSliceResourceQuota
@@ -590,30 +596,6 @@ events:
     type: Normal
     reportingController: controller
     message: Slice resource quota got created while creating slice config.
-  - name: SliceNodeAffinityDeletionFailed
-    reason: SliceNodeAffinityDeletionFailed
-    action: DeleteSliceNodeAffinity
-    type: Warning
-    reportingController: controller
-    message: Slice node affinity deletion failed.
-  - name: SliceNodeAffinityDeleted
-    reason: SliceNodeAffinityDeleted
-    action: DeleteSliceNodeAffinity
-    type: Warning
-    reportingController: controller
-    message: Slice node affinity got deleted.
-  - name: SetSliceConfigAsOwnerOfSliceNodeAffinityFailed
-    reason: SetSliceConfigAsOwnerOfSliceNodeAffinityFailed
-    action: SetSliceConfigAsOwnerOfSliceNodeAffinity
-    type: Warning
-    reportingController: controller
-    message: Failed to set slice config as owner of slice node affinity.
-  - name: SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded
-    reason: SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded
-    action: SetSliceConfigAsOwnerOfSliceNodeAffinity
-    type: Normal
-    reportingController: controller
-    message: Successfully set slice config as owner of slice node affinity.
   - name: SliceResourceQuotaDeletionFailed
     reason: SliceResourceQuotaDeletionFailed
     action: DeleteSliceResourceQuota
@@ -692,6 +674,32 @@ events:
     type: Normal
     reportingController: controller
     message: All outdated cluster level resource quota specifications and violations metrics got reset successfully.
+   ##Slice Node Affinity
+  - name: SliceNodeAffinityDeletionFailed
+    reason: SliceNodeAffinityDeletionFailed
+    action: DeleteSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Slice node affinity deletion failed.
+  - name: SliceNodeAffinityDeleted
+    reason: SliceNodeAffinityDeleted
+    action: DeleteSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Slice node affinity got deleted.
+  - name: SetSliceConfigAsOwnerOfSliceNodeAffinityFailed
+    reason: SetSliceConfigAsOwnerOfSliceNodeAffinityFailed
+    action: SetSliceConfigAsOwnerOfSliceNodeAffinity
+    type: Warning
+    reportingController: controller
+    message: Failed to set slice config as owner of slice node affinity.
+  - name: SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded
+    reason: SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded
+    action: SetSliceConfigAsOwnerOfSliceNodeAffinity
+    type: Normal
+    reportingController: controller
+    message: Successfully set slice config as owner of slice node affinity.
+    ##Slice Role Binding
   - name: SliceRoleBindingDeletingFailed
     reason: SliceRoleBindingDeletingFailed
     action: DeleteSliceRoleBinding
@@ -716,24 +724,68 @@ events:
     type: Normal
     reportingController: controller
     message: Successfully set slice config as owner of slice role binding.
-  - name: SliceRoleTemplateDeletionFailed
-    reason: SliceRoleTemplateDeletionFailed
-    action: DeleteSliceRoleTemplate
-    type: Warning
-    reportingController: controller
-    message: Slice role template deletion failed.
-  - name: SliceRoleTemplateDeleted
-    reason: SliceRoleTemplateDeleted
-    action: DeleteSliceRoleTemplate
-    type: Normal
-    reportingController: controller
-    message: Slice role template got deleted.
+    ##Worker Slice Role Binding
   - name: WorkerSliceRoleBindingReconciliationSuccess
     reason: WorkerSliceRoleBindingReconciliationSuccess
     action: ReconcileWorkerSliceRoleBinding
     type: Normal
     reportingController: controller
     message: Reconciliation of worker slice role binding is successful due to the change in slice role template.
+  - name: WorkerSliceRoleBindingDeletedForcefully
+    reason: WorkerSliceRoleBindingDeletedForcefully
+    action: DeleteWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding got deleted forcefully.
+  - name: WorkerSliceRoleBindingRecreationFailed
+    reason: WorkerSliceRoleBindingRecreationFailed
+    action: CreateWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding recreation failed after forceful deletion.
+  - name: WorkerSliceRoleBindingRecreated
+    reason: WorkerSliceRoleBindingRecreated
+    action: CreateWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got recreated after forceful deletion.
+  - name: WorkerSliceRoleBindingCreationFailed
+    reason: WorkerSliceRoleBindingCreationFailed
+    action: CreateWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding creation failed.
+  - name: WorkerSliceRoleBindingCreated
+    reason: WorkerSliceRoleBindingCreated
+    action: CreateWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got created successfully.
+  - name: WorkerSliceRoleBindingUpdateFailed
+    reason: WorkerSliceRoleBindingUpdateFailed
+    action: UpdateWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding update failed.
+  - name: WorkerSliceRoleBindingUpdated
+    reason: WorkerSliceRoleBindingUpdated
+    action: UpdateWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got updated successfully.
+  - name: WorkerSliceRoleBindingDeletionFailed
+    reason: WorkerSliceRoleBindingDeletionFailed
+    action: DeleteWorkerSliceRoleBinding
+    type: Warning
+    reportingController: controller
+    message: Worker slice role binding deletion failed.
+  - name: WorkerSliceRoleBindingDeleted
+    reason: WorkerSliceRoleBindingDeleted
+    action: DeleteWorkerSliceRoleBinding
+    type: Normal
+    reportingController: controller
+    message: Worker slice role binding got deleted successfully.
+    ##Worker Slice Node Affinity
   - name: WorkerSliceNodeAffinityDeletedForcefully
     reason: WorkerSliceNodeAffinityDeletedForcefully
     action: DeleteWorkerSliceNodeAffinity
@@ -800,6 +852,7 @@ events:
     type: Normal
     reportingController: controller
     message: Worker slice node affinity got deleted successfully.
+    ##Worker Slice Resource Quota
   - name: WorkerSliceResourceQuotaDeletedForcefully
     reason: WorkerSliceResourceQuotaDeletedForcefully
     action: DeleteWorkerSliceResourceQuota
@@ -992,57 +1045,3 @@ events:
     type: Normal
     reportingController: controller
     message: Worker slice resource quota got deleted successfully.
-  - name: WorkerSliceRoleBindingDeletedForcefully
-    reason: WorkerSliceRoleBindingDeletedForcefully
-    action: DeleteWorkerSliceRoleBinding
-    type: Warning
-    reportingController: controller
-    message: Worker slice role binding got deleted forcefully.
-  - name: WorkerSliceRoleBindingRecreationFailed
-    reason: WorkerSliceRoleBindingRecreationFailed
-    action: CreateWorkerSliceRoleBinding
-    type: Warning
-    reportingController: controller
-    message: Worker slice role binding recreation failed after forceful deletion.
-  - name: WorkerSliceRoleBindingRecreated
-    reason: WorkerSliceRoleBindingRecreated
-    action: CreateWorkerSliceRoleBinding
-    type: Normal
-    reportingController: controller
-    message: Worker slice role binding got recreated after forceful deletion.
-  - name: WorkerSliceRoleBindingCreationFailed
-    reason: WorkerSliceRoleBindingCreationFailed
-    action: CreateWorkerSliceRoleBinding
-    type: Warning
-    reportingController: controller
-    message: Worker slice role binding creation failed.
-  - name: WorkerSliceRoleBindingCreated
-    reason: WorkerSliceRoleBindingCreated
-    action: CreateWorkerSliceRoleBinding
-    type: Normal
-    reportingController: controller
-    message: Worker slice role binding got created successfully.
-  - name: WorkerSliceRoleBindingUpdateFailed
-    reason: WorkerSliceRoleBindingUpdateFailed
-    action: UpdateWorkerSliceRoleBinding
-    type: Warning
-    reportingController: controller
-    message: Worker slice role binding update failed.
-  - name: WorkerSliceRoleBindingUpdated
-    reason: WorkerSliceRoleBindingUpdated
-    action: UpdateWorkerSliceRoleBinding
-    type: Normal
-    reportingController: controller
-    message: Worker slice role binding got updated successfully.
-  - name: WorkerSliceRoleBindingDeletionFailed
-    reason: WorkerSliceRoleBindingDeletionFailed
-    action: DeleteWorkerSliceRoleBinding
-    type: Warning
-    reportingController: controller
-    message: Worker slice role binding deletion failed.
-  - name: WorkerSliceRoleBindingDeleted
-    reason: WorkerSliceRoleBindingDeleted
-    action: DeleteWorkerSliceRoleBinding
-    type: Normal
-    reportingController: controller
-    message: Worker slice role binding got deleted successfully.

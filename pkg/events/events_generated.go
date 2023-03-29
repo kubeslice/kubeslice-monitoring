@@ -668,22 +668,6 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "Worker slice config deletion failed.",
 	},
-	"WorkerSliceGatewaySecretDeletionFailed": {
-		Name:                "WorkerSliceGatewaySecretDeletionFailed",
-		Reason:              "WorkerSliceGatewaySecretDeletionFailed",
-		Action:              "DeleteWorkerSliceGatewaySecret",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice gateway secret deletion failed while deleting worker slice gateway.",
-	},
-	"WorkerSliceGatewaySecretDeleted": {
-		Name:                "WorkerSliceGatewaySecretDeleted",
-		Reason:              "WorkerSliceGatewaySecretDeleted",
-		Action:              "DeleteWorkerSliceGatewaySecret",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice gateway secret got deleted while deleting worker slice gateway.",
-	},
 	"WorkerSliceGatewayDeletedForcefully": {
 		Name:                "WorkerSliceGatewayDeletedForcefully",
 		Reason:              "WorkerSliceGatewayDeletedForcefully",
@@ -788,6 +772,22 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "Default reader slice role template got created.",
 	},
+	"SliceRoleTemplateDeletionFailed": {
+		Name:                "SliceRoleTemplateDeletionFailed",
+		Reason:              "SliceRoleTemplateDeletionFailed",
+		Action:              "DeleteSliceRoleTemplate",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice role template deletion failed.",
+	},
+	"SliceRoleTemplateDeleted": {
+		Name:                "SliceRoleTemplateDeleted",
+		Reason:              "SliceRoleTemplateDeleted",
+		Action:              "DeleteSliceRoleTemplate",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Slice role template got deleted.",
+	},
 	"SliceResourceQuotaCreationFailed": {
 		Name:                "SliceResourceQuotaCreationFailed",
 		Reason:              "SliceResourceQuotaCreationFailed",
@@ -803,38 +803,6 @@ var eventsMap = map[EventName]*EventSchema{
 		Type:                EventTypeNormal,
 		ReportingController: "controller",
 		Message:             "Slice resource quota got created while creating slice config.",
-	},
-	"SliceNodeAffinityDeletionFailed": {
-		Name:                "SliceNodeAffinityDeletionFailed",
-		Reason:              "SliceNodeAffinityDeletionFailed",
-		Action:              "DeleteSliceNodeAffinity",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Slice node affinity deletion failed.",
-	},
-	"SliceNodeAffinityDeleted": {
-		Name:                "SliceNodeAffinityDeleted",
-		Reason:              "SliceNodeAffinityDeleted",
-		Action:              "DeleteSliceNodeAffinity",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Slice node affinity got deleted.",
-	},
-	"SetSliceConfigAsOwnerOfSliceNodeAffinityFailed": {
-		Name:                "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
-		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
-		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Failed to set slice config as owner of slice node affinity.",
-	},
-	"SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded": {
-		Name:                "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
-		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
-		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
-		Type:                EventTypeNormal,
-		ReportingController: "controller",
-		Message:             "Successfully set slice config as owner of slice node affinity.",
 	},
 	"SliceResourceQuotaDeletionFailed": {
 		Name:                "SliceResourceQuotaDeletionFailed",
@@ -940,6 +908,38 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "All outdated cluster level resource quota specifications and violations metrics got reset successfully.",
 	},
+	"SliceNodeAffinityDeletionFailed": {
+		Name:                "SliceNodeAffinityDeletionFailed",
+		Reason:              "SliceNodeAffinityDeletionFailed",
+		Action:              "DeleteSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice node affinity deletion failed.",
+	},
+	"SliceNodeAffinityDeleted": {
+		Name:                "SliceNodeAffinityDeleted",
+		Reason:              "SliceNodeAffinityDeleted",
+		Action:              "DeleteSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Slice node affinity got deleted.",
+	},
+	"SetSliceConfigAsOwnerOfSliceNodeAffinityFailed": {
+		Name:                "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
+		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed",
+		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Failed to set slice config as owner of slice node affinity.",
+	},
+	"SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded": {
+		Name:                "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
+		Reason:              "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded",
+		Action:              "SetSliceConfigAsOwnerOfSliceNodeAffinity",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Successfully set slice config as owner of slice node affinity.",
+	},
 	"SliceRoleBindingDeletingFailed": {
 		Name:                "SliceRoleBindingDeletingFailed",
 		Reason:              "SliceRoleBindingDeletingFailed",
@@ -972,22 +972,6 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "Successfully set slice config as owner of slice role binding.",
 	},
-	"SliceRoleTemplateDeletionFailed": {
-		Name:                "SliceRoleTemplateDeletionFailed",
-		Reason:              "SliceRoleTemplateDeletionFailed",
-		Action:              "DeleteSliceRoleTemplate",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Slice role template deletion failed.",
-	},
-	"SliceRoleTemplateDeleted": {
-		Name:                "SliceRoleTemplateDeleted",
-		Reason:              "SliceRoleTemplateDeleted",
-		Action:              "DeleteSliceRoleTemplate",
-		Type:                EventTypeNormal,
-		ReportingController: "controller",
-		Message:             "Slice role template got deleted.",
-	},
 	"WorkerSliceRoleBindingReconciliationSuccess": {
 		Name:                "WorkerSliceRoleBindingReconciliationSuccess",
 		Reason:              "WorkerSliceRoleBindingReconciliationSuccess",
@@ -995,6 +979,78 @@ var eventsMap = map[EventName]*EventSchema{
 		Type:                EventTypeNormal,
 		ReportingController: "controller",
 		Message:             "Reconciliation of worker slice role binding is successful due to the change in slice role template.",
+	},
+	"WorkerSliceRoleBindingDeletedForcefully": {
+		Name:                "WorkerSliceRoleBindingDeletedForcefully",
+		Reason:              "WorkerSliceRoleBindingDeletedForcefully",
+		Action:              "DeleteWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got deleted forcefully.",
+	},
+	"WorkerSliceRoleBindingRecreationFailed": {
+		Name:                "WorkerSliceRoleBindingRecreationFailed",
+		Reason:              "WorkerSliceRoleBindingRecreationFailed",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding recreation failed after forceful deletion.",
+	},
+	"WorkerSliceRoleBindingRecreated": {
+		Name:                "WorkerSliceRoleBindingRecreated",
+		Reason:              "WorkerSliceRoleBindingRecreated",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got recreated after forceful deletion.",
+	},
+	"WorkerSliceRoleBindingCreationFailed": {
+		Name:                "WorkerSliceRoleBindingCreationFailed",
+		Reason:              "WorkerSliceRoleBindingCreationFailed",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding creation failed.",
+	},
+	"WorkerSliceRoleBindingCreated": {
+		Name:                "WorkerSliceRoleBindingCreated",
+		Reason:              "WorkerSliceRoleBindingCreated",
+		Action:              "CreateWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got created successfully.",
+	},
+	"WorkerSliceRoleBindingUpdateFailed": {
+		Name:                "WorkerSliceRoleBindingUpdateFailed",
+		Reason:              "WorkerSliceRoleBindingUpdateFailed",
+		Action:              "UpdateWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding update failed.",
+	},
+	"WorkerSliceRoleBindingUpdated": {
+		Name:                "WorkerSliceRoleBindingUpdated",
+		Reason:              "WorkerSliceRoleBindingUpdated",
+		Action:              "UpdateWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got updated successfully.",
+	},
+	"WorkerSliceRoleBindingDeletionFailed": {
+		Name:                "WorkerSliceRoleBindingDeletionFailed",
+		Reason:              "WorkerSliceRoleBindingDeletionFailed",
+		Action:              "DeleteWorkerSliceRoleBinding",
+		Type:                EventTypeWarning,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding deletion failed.",
+	},
+	"WorkerSliceRoleBindingDeleted": {
+		Name:                "WorkerSliceRoleBindingDeleted",
+		Reason:              "WorkerSliceRoleBindingDeleted",
+		Action:              "DeleteWorkerSliceRoleBinding",
+		Type:                EventTypeNormal,
+		ReportingController: "controller",
+		Message:             "Worker slice role binding got deleted successfully.",
 	},
 	"WorkerSliceNodeAffinityDeletedForcefully": {
 		Name:                "WorkerSliceNodeAffinityDeletedForcefully",
@@ -1340,78 +1396,6 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "controller",
 		Message:             "Worker slice resource quota got deleted successfully.",
 	},
-	"WorkerSliceRoleBindingDeletedForcefully": {
-		Name:                "WorkerSliceRoleBindingDeletedForcefully",
-		Reason:              "WorkerSliceRoleBindingDeletedForcefully",
-		Action:              "DeleteWorkerSliceRoleBinding",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding got deleted forcefully.",
-	},
-	"WorkerSliceRoleBindingRecreationFailed": {
-		Name:                "WorkerSliceRoleBindingRecreationFailed",
-		Reason:              "WorkerSliceRoleBindingRecreationFailed",
-		Action:              "CreateWorkerSliceRoleBinding",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding recreation failed after forceful deletion.",
-	},
-	"WorkerSliceRoleBindingRecreated": {
-		Name:                "WorkerSliceRoleBindingRecreated",
-		Reason:              "WorkerSliceRoleBindingRecreated",
-		Action:              "CreateWorkerSliceRoleBinding",
-		Type:                EventTypeNormal,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding got recreated after forceful deletion.",
-	},
-	"WorkerSliceRoleBindingCreationFailed": {
-		Name:                "WorkerSliceRoleBindingCreationFailed",
-		Reason:              "WorkerSliceRoleBindingCreationFailed",
-		Action:              "CreateWorkerSliceRoleBinding",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding creation failed.",
-	},
-	"WorkerSliceRoleBindingCreated": {
-		Name:                "WorkerSliceRoleBindingCreated",
-		Reason:              "WorkerSliceRoleBindingCreated",
-		Action:              "CreateWorkerSliceRoleBinding",
-		Type:                EventTypeNormal,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding got created successfully.",
-	},
-	"WorkerSliceRoleBindingUpdateFailed": {
-		Name:                "WorkerSliceRoleBindingUpdateFailed",
-		Reason:              "WorkerSliceRoleBindingUpdateFailed",
-		Action:              "UpdateWorkerSliceRoleBinding",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding update failed.",
-	},
-	"WorkerSliceRoleBindingUpdated": {
-		Name:                "WorkerSliceRoleBindingUpdated",
-		Reason:              "WorkerSliceRoleBindingUpdated",
-		Action:              "UpdateWorkerSliceRoleBinding",
-		Type:                EventTypeNormal,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding got updated successfully.",
-	},
-	"WorkerSliceRoleBindingDeletionFailed": {
-		Name:                "WorkerSliceRoleBindingDeletionFailed",
-		Reason:              "WorkerSliceRoleBindingDeletionFailed",
-		Action:              "DeleteWorkerSliceRoleBinding",
-		Type:                EventTypeWarning,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding deletion failed.",
-	},
-	"WorkerSliceRoleBindingDeleted": {
-		Name:                "WorkerSliceRoleBindingDeleted",
-		Reason:              "WorkerSliceRoleBindingDeleted",
-		Action:              "DeleteWorkerSliceRoleBinding",
-		Type:                EventTypeNormal,
-		ReportingController: "controller",
-		Message:             "Worker slice role binding got deleted successfully.",
-	},
 	"NetPolViolation": {
 		Name:                "NetPolViolation",
 		Reason:              "PolicyViolation",
@@ -1520,8 +1504,6 @@ var (
 	EventWorkerSliceConfigUpdated                                     EventName = "WorkerSliceConfigUpdated"
 	EventWorkerSliceConfigDeleted                                     EventName = "WorkerSliceConfigDeleted"
 	EventWorkerSliceConfigDeletionFailed                              EventName = "WorkerSliceConfigDeletionFailed"
-	EventWorkerSliceGatewaySecretDeletionFailed                       EventName = "WorkerSliceGatewaySecretDeletionFailed"
-	EventWorkerSliceGatewaySecretDeleted                              EventName = "WorkerSliceGatewaySecretDeleted"
 	EventWorkerSliceGatewayDeletedForcefully                          EventName = "WorkerSliceGatewayDeletedForcefully"
 	EventWorkerSliceGatewayRecreationFailed                           EventName = "WorkerSliceGatewayRecreationFailed"
 	EventWorkerSliceGatewayRecreated                                  EventName = "WorkerSliceGatewayRecreated"
@@ -1535,12 +1517,10 @@ var (
 	EventDefaultDeploymentSliceRoleTemplateCreated                    EventName = "DefaultDeploymentSliceRoleTemplateCreated"
 	EventDefaultReaderSliceRoleTemplateCreationFailed                 EventName = "DefaultReaderSliceRoleTemplateCreationFailed"
 	EventDefaultReaderSliceRoleTemplateCreated                        EventName = "DefaultReaderSliceRoleTemplateCreated"
+	EventSliceRoleTemplateDeletionFailed                              EventName = "SliceRoleTemplateDeletionFailed"
+	EventSliceRoleTemplateDeleted                                     EventName = "SliceRoleTemplateDeleted"
 	EventSliceResourceQuotaCreationFailed                             EventName = "SliceResourceQuotaCreationFailed"
 	EventSliceResourceQuotaCreatedOnSliceConfigCreation               EventName = "SliceResourceQuotaCreatedOnSliceConfigCreation"
-	EventSliceNodeAffinityDeletionFailed                              EventName = "SliceNodeAffinityDeletionFailed"
-	EventSliceNodeAffinityDeleted                                     EventName = "SliceNodeAffinityDeleted"
-	EventSetSliceConfigAsOwnerOfSliceNodeAffinityFailed               EventName = "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed"
-	EventSetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded            EventName = "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded"
 	EventSliceResourceQuotaDeletionFailed                             EventName = "SliceResourceQuotaDeletionFailed"
 	EventSliceResourceQuotaDeleted                                    EventName = "SliceResourceQuotaDeleted"
 	EventSliceResourceQuotaRecreationFailed                           EventName = "SliceResourceQuotaRecreationFailed"
@@ -1554,13 +1534,24 @@ var (
 	EventClusterRQSpecificationViolationMetricsResetSuccess           EventName = "ClusterRQSpecificationViolationMetricsResetSuccess"
 	EventOutdatedNamespaceRQSpecificationViolationMetricsResetSuccess EventName = "OutdatedNamespaceRQSpecificationViolationMetricsResetSuccess"
 	EventOutdatedClusterRQSpecificationViolationMetricsResetSuccess   EventName = "OutdatedClusterRQSpecificationViolationMetricsResetSuccess"
+	EventSliceNodeAffinityDeletionFailed                              EventName = "SliceNodeAffinityDeletionFailed"
+	EventSliceNodeAffinityDeleted                                     EventName = "SliceNodeAffinityDeleted"
+	EventSetSliceConfigAsOwnerOfSliceNodeAffinityFailed               EventName = "SetSliceConfigAsOwnerOfSliceNodeAffinityFailed"
+	EventSetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded            EventName = "SetSliceConfigAsOwnerOfSliceNodeAffinitySucceeded"
 	EventSliceRoleBindingDeletingFailed                               EventName = "SliceRoleBindingDeletingFailed"
 	EventSliceRoleBindingDeleted                                      EventName = "SliceRoleBindingDeleted"
 	EventSetSliceConfigAsOwnerOfSliceRoleBindingFailed                EventName = "SetSliceConfigAsOwnerOfSliceRoleBindingFailed"
 	EventSetSliceConfigAsOwnerOfSliceRoleBindingSucceeded             EventName = "SetSliceConfigAsOwnerOfSliceRoleBindingSucceeded"
-	EventSliceRoleTemplateDeletionFailed                              EventName = "SliceRoleTemplateDeletionFailed"
-	EventSliceRoleTemplateDeleted                                     EventName = "SliceRoleTemplateDeleted"
 	EventWorkerSliceRoleBindingReconciliationSuccess                  EventName = "WorkerSliceRoleBindingReconciliationSuccess"
+	EventWorkerSliceRoleBindingDeletedForcefully                      EventName = "WorkerSliceRoleBindingDeletedForcefully"
+	EventWorkerSliceRoleBindingRecreationFailed                       EventName = "WorkerSliceRoleBindingRecreationFailed"
+	EventWorkerSliceRoleBindingRecreated                              EventName = "WorkerSliceRoleBindingRecreated"
+	EventWorkerSliceRoleBindingCreationFailed                         EventName = "WorkerSliceRoleBindingCreationFailed"
+	EventWorkerSliceRoleBindingCreated                                EventName = "WorkerSliceRoleBindingCreated"
+	EventWorkerSliceRoleBindingUpdateFailed                           EventName = "WorkerSliceRoleBindingUpdateFailed"
+	EventWorkerSliceRoleBindingUpdated                                EventName = "WorkerSliceRoleBindingUpdated"
+	EventWorkerSliceRoleBindingDeletionFailed                         EventName = "WorkerSliceRoleBindingDeletionFailed"
+	EventWorkerSliceRoleBindingDeleted                                EventName = "WorkerSliceRoleBindingDeleted"
 	EventWorkerSliceNodeAffinityDeletedForcefully                     EventName = "WorkerSliceNodeAffinityDeletedForcefully"
 	EventWorkerSliceNodeAffinityRecreationFailed                      EventName = "WorkerSliceNodeAffinityRecreationFailed"
 	EventWorkerSliceNodeAffinityRecreated                             EventName = "WorkerSliceNodeAffinityRecreated"
@@ -1604,15 +1595,6 @@ var (
 	EventWorkerSliceResourceQuotaUpdated                              EventName = "WorkerSliceResourceQuotaUpdated"
 	EventWorkerSliceResourceQuotaDeletionFailed                       EventName = "WorkerSliceResourceQuotaDeletionFailed"
 	EventWorkerSliceResourceQuotaDeleted                              EventName = "WorkerSliceResourceQuotaDeleted"
-	EventWorkerSliceRoleBindingDeletedForcefully                      EventName = "WorkerSliceRoleBindingDeletedForcefully"
-	EventWorkerSliceRoleBindingRecreationFailed                       EventName = "WorkerSliceRoleBindingRecreationFailed"
-	EventWorkerSliceRoleBindingRecreated                              EventName = "WorkerSliceRoleBindingRecreated"
-	EventWorkerSliceRoleBindingCreationFailed                         EventName = "WorkerSliceRoleBindingCreationFailed"
-	EventWorkerSliceRoleBindingCreated                                EventName = "WorkerSliceRoleBindingCreated"
-	EventWorkerSliceRoleBindingUpdateFailed                           EventName = "WorkerSliceRoleBindingUpdateFailed"
-	EventWorkerSliceRoleBindingUpdated                                EventName = "WorkerSliceRoleBindingUpdated"
-	EventWorkerSliceRoleBindingDeletionFailed                         EventName = "WorkerSliceRoleBindingDeletionFailed"
-	EventWorkerSliceRoleBindingDeleted                                EventName = "WorkerSliceRoleBindingDeleted"
 	EventNetPolViolation                                              EventName = "NetPolViolation"
 	EventClusterUnhealthy                                             EventName = "ClusterUnhealthy"
 	EventClusterHealthy                                               EventName = "ClusterHealthy"
