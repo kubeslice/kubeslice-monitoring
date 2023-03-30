@@ -7,9 +7,9 @@ import (
 
 // MetricRecorder is used to record metrics from a component
 type MetricsFactory interface {
-	NewCounter(string, []string) *prometheus.CounterVec
-	NewGauge(string, []string) *prometheus.GaugeVec
-	NewHistogram(string, []string) prometheus.ObserverVec
+	NewCounter(string, string, []string) *prometheus.CounterVec
+	NewGauge(string, string, []string) *prometheus.GaugeVec
+	NewHistogram(string, string, []string) prometheus.ObserverVec
 }
 
 type MetricsFactoryOptions struct {
@@ -47,6 +47,7 @@ func (m *metricsFactory) getCurryLabels(labels []string) ([]string, prometheus.L
 		// Remove labels if value is empty
 		if v == "" {
 			delete(pl, k)
+			continue
 		}
 		// add the new label to original list of labels provided
 		labels = append(labels, k)
@@ -54,26 +55,29 @@ func (m *metricsFactory) getCurryLabels(labels []string) ([]string, prometheus.L
 	return labels, pl
 }
 
-func (m *metricsFactory) NewCounter(name string, labels []string) *prometheus.CounterVec {
+func (m *metricsFactory) NewCounter(name string, help string, labels []string) *prometheus.CounterVec {
 	labels, cl := m.getCurryLabels(labels)
 	return promauto.With(m.Registerer).NewCounterVec(prometheus.CounterOpts{
 		Namespace: "kubeslice",
 		Name:      name,
+		Help:      help,
 	}, labels).MustCurryWith(cl)
 }
 
-func (m *metricsFactory) NewGauge(name string, labels []string) *prometheus.GaugeVec {
+func (m *metricsFactory) NewGauge(name string, help string, labels []string) *prometheus.GaugeVec {
 	labels, cl := m.getCurryLabels(labels)
 	return promauto.With(m.Registerer).NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: "kubeslice",
 		Name:      name,
+		Help:      help,
 	}, labels).MustCurryWith(cl)
 }
 
-func (m *metricsFactory) NewHistogram(name string, labels []string) prometheus.ObserverVec {
+func (m *metricsFactory) NewHistogram(name string, help string, labels []string) prometheus.ObserverVec {
 	labels, cl := m.getCurryLabels(labels)
 	return promauto.With(m.Registerer).NewHistogramVec(prometheus.HistogramOpts{
 		Namespace: "kubeslice",
 		Name:      name,
+		Help:      help,
 	}, labels).MustCurryWith(cl)
 }
