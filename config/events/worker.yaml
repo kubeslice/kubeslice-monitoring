@@ -17,3 +17,15 @@ events:
     type: Normal
     reportingController: worker
     message: Cluster is healthy - Cluster is back to healthy state
+  - name: ClusterNodeIpUpdated
+    reason: ClusterNodeIpUpdated
+    action: None
+    type: Normal
+    reportingController: worker
+    message: Successfully updated cluster as change detected in cluster nodes
+  - name: ClusterNodeIpUpdateFail
+    reason: ClusterNodeIpUpdateFail
+    action: None
+    type: Warning
+    reportingController: worker
+    message: Failed to update node ip in cluster CR
