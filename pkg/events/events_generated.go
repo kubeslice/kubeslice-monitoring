@@ -1420,6 +1420,22 @@ var eventsMap = map[EventName]*EventSchema{
 		ReportingController: "worker",
 		Message:             "Cluster is healthy - Cluster is back to healthy state",
 	},
+	"ClusterNodeIpUpdated": {
+		Name:                "ClusterNodeIpUpdated",
+		Reason:              "ClusterNodeIpUpdated",
+		Action:              "None",
+		Type:                EventTypeNormal,
+		ReportingController: "worker",
+		Message:             "Successfully updated cluster as change detected in cluster nodes",
+	},
+	"ClusterNodeIpUpdateFail": {
+		Name:                "ClusterNodeIpUpdateFail",
+		Reason:              "ClusterNodeIpUpdateFail",
+		Action:              "None",
+		Type:                EventTypeWarning,
+		ReportingController: "worker",
+		Message:             "Successfully updated cluster as change detected in cluster nodes",
+	},
 }
 
 var (
@@ -1598,4 +1614,6 @@ var (
 	EventNetPolViolation                                              EventName = "NetPolViolation"
 	EventClusterUnhealthy                                             EventName = "ClusterUnhealthy"
 	EventClusterHealthy                                               EventName = "ClusterHealthy"
+	EventClusterNodeIpUpdated                                         EventName = "ClusterNodeIpUpdated"
+	EventClusterNodeIpUpdateFail                                      EventName = "ClusterNodeIpUpdateFail"
 )
