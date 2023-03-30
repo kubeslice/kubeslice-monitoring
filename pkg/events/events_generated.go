@@ -1434,7 +1434,7 @@ var eventsMap = map[EventName]*EventSchema{
 		Action:              "None",
 		Type:                EventTypeWarning,
 		ReportingController: "worker",
-		Message:             "Successfully updated cluster as change detected in cluster nodes",
+		Message:             "Failed to update node ip in cluster CR",
 	},
 }
 

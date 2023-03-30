@@ -28,4 +28,4 @@ events:
     action: None
     type: Warning
     reportingController: worker
-    message: Successfully updated cluster as change detected in cluster nodes
+    message: Failed to update node ip in cluster CR
