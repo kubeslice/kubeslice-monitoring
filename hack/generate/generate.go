@@ -13,18 +13,12 @@ import (
 func main() {
 	fmt.Println("generating event schema code from schema file")
 
-	file1 := "controller.yaml"
-	file2 := "worker.yaml"
+	file1 := "example.yaml"
 	pwd, err := os.Getwd()
 	handleError(err)
 	controllerFilePath := path.Join(pwd, "config/events", file1)
-	workerFilePath := path.Join(pwd, "config/events", file2)
-	controllerEvents, err := parseEvent(controllerFilePath)
+	events, err := parseEvent(controllerFilePath)
 	handleError(err)
-	workerEvents, err := parseEvent(workerFilePath)
-	handleError(err)
-
-	events := append(controllerEvents, workerEvents...)
 
 	t, err := template.ParseFiles("hack/templates/schema.tmpl")
 	handleError(err)

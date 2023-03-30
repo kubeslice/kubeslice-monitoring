@@ -52,7 +52,7 @@ func TestRecordEvent(t *testing.T) {
 		Object:            pod,
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
-		Name:              events.EventSliceConfigDeletionFailed,
+		Name:              events.EventExampleEvent,
 	})
 	if err != nil {
 		t.Error("event not recorded")

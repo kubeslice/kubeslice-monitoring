@@ -31,7 +31,7 @@ type EventSchema struct {
 
 func GetEvent(name EventName) (*EventSchema, error) {
 	if _, ok := eventsMap[name]; !ok {
-		return nil, fmt.Errorf("Invalid event")
+		return nil, fmt.Errorf("invalid event")
 	}
 	return eventsMap[name], nil
 }
