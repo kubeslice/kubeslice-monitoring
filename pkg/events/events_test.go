@@ -53,7 +53,7 @@ func TestRecordEvent(t *testing.T) {
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
 		Name:              events.EventExampleEvent,
-	})
+	}, events.EventsMap)
 	if err != nil {
 		t.Error("event not recorded")
 	}

@@ -19,7 +19,7 @@ package events
  *  limitations under the License.
 */
 
-var eventsMap = map[EventName]*EventSchema{
+var EventsMap = map[EventName]*EventSchema{
 {{ range . }}"{{.Name}}": {
   Name: "{{.Name}}",
   Reason: "{{.Reason}}",

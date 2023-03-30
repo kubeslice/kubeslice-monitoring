@@ -29,7 +29,7 @@ type EventSchema struct {
 	Message             string
 }
 
-func GetEvent(name EventName) (*EventSchema, error) {
+func GetEvent(name EventName, eventsMap map[EventName]*EventSchema) (*EventSchema, error) {
 	if _, ok := eventsMap[name]; !ok {
 		return nil, fmt.Errorf("invalid event")
 	}
