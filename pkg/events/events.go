@@ -35,7 +35,7 @@ import (
 // EventRecorder is used to record events from a component
 type EventRecorder interface {
 	// RecordEvent is used to record a new event
-	RecordEvent(context.Context, *Event, map[EventName]*EventSchema) error
+	RecordEvent(context.Context, *Event) error
 	// WithSlice returns a new recorder with slice name added
 	WithSlice(string) EventRecorder
 	// WithNamespace returns a new recorder with namespace name added
@@ -81,17 +81,19 @@ type Event struct {
 }
 
 type eventRecorder struct {
-	Client  client.Writer
-	Logger  *zap.SugaredLogger
-	Scheme  *runtime.Scheme
-	Options EventRecorderOptions
+	Client    client.Writer
+	Logger    *zap.SugaredLogger
+	Scheme    *runtime.Scheme
+	EventsMap map[EventName]*EventSchema
+	Options   EventRecorderOptions
 }
 
 func (er *eventRecorder) Copy() *eventRecorder {
 	return &eventRecorder{
-		Client: er.Client,
-		Logger: er.Logger,
-		Scheme: er.Scheme,
+		Client:    er.Client,
+		Logger:    er.Logger,
+		Scheme:    er.Scheme,
+		EventsMap: er.EventsMap,
 		Options: EventRecorderOptions{
 			Version:   er.Options.Version,
 			Cluster:   er.Options.Cluster,
@@ -127,7 +129,7 @@ func (er *eventRecorder) WithProject(project string) EventRecorder {
 
 // RecordEvent raises a new event with the given fields
 // TODO: events caching and aggregation
-func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event, eventMap map[EventName]*EventSchema) error {
+func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	ref, err := reference.GetReference(er.Scheme, e.Object)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to parse event obj reference")
@@ -144,7 +146,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event, eventMap map
 		return nil
 	}
 
-	event, err := GetEvent(e.Name, eventMap)
+	event, err := GetEvent(e.Name, er.EventsMap)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to get event")
 		return err
