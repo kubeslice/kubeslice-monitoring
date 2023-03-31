@@ -55,7 +55,7 @@ This will generate `events_generated.go` file in the events directory. (Check fi
 
 5. Import events package from monitoring framework and the generated Events Map from your component.
 
-```
+```go
 import(
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
 	componentEvents "github.com/kubeslice/<YOUR-COMPONENT>/events"
@@ -65,7 +65,7 @@ import(
 2. Initialize event recorder
 
 
-```
+```go
 recorder := events.NewEventRecorder(k8sClient, schema, componentEvents.EventsMap, events.EventRecorderOptions{
   Version:   "1",
   Cluster:   "cluster-1",
@@ -80,7 +80,7 @@ Slice and Namespace names are optional if the recorder is not part of a slice sp
 
 3. Raise events
 
-```
+```go
 err := recorder.RecordEvent(ctx, &events.Event{
   Object:            obj,
   RelatedObject:     robj,
@@ -94,7 +94,7 @@ err := recorder.RecordEvent(ctx, &events.Event{
 In some cases, the recorder will be part of a controller which manages multiple namespaces. In that case,
 events can be raises by providing namespace like below instead of Initializing the recorder with specific namespace name.
 
-```
+```go
 recorder.WithNamespace(ns).RecordEvent(...)
 
 recorder.WithSlice(sliceName).RecordEvent(...)
