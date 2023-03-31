@@ -44,13 +44,14 @@ type EventRecorder interface {
 	WithProject(string) EventRecorder
 }
 
-func NewEventRecorder(c client.Writer, s *runtime.Scheme, o EventRecorderOptions) EventRecorder {
+func NewEventRecorder(c client.Writer, s *runtime.Scheme, em map[EventName]*EventSchema, o EventRecorderOptions) EventRecorder {
 	log := logger.NewLogger().With("name", o.Component)
 	return &eventRecorder{
-		Client:  c,
-		Scheme:  s,
-		Options: o,
-		Logger:  log,
+		Client:    c,
+		Scheme:    s,
+		EventsMap: em,
+		Options:   o,
+		Logger:    log,
 	}
 }
 
