@@ -39,7 +39,7 @@ func (o *k8sClientMock) DeleteAllOf(ctx context.Context, obj client.Object, opts
 func TestRecordEvent(t *testing.T) {
 	clientMock := &k8sClientMock{}
 
-	recorder := events.NewEventRecorder(clientMock, newTestScheme(), events.EventRecorderOptions{
+	recorder := events.NewEventRecorder(clientMock, newTestScheme(), events.EventsMap, events.EventRecorderOptions{
 		Version:   "1",
 		Cluster:   "cluster-1",
 		Component: "controller",
@@ -53,7 +53,7 @@ func TestRecordEvent(t *testing.T) {
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
 		Name:              events.EventExampleEvent,
-	}, events.EventsMap)
+	})
 	if err != nil {
 		t.Error("event not recorded")
 	}

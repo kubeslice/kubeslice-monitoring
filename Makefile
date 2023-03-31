@@ -1,7 +1,3 @@
-.PHONY: generate
-generate:
-	go run hack/generate/generate.go
-	go fmt ./...
 
 .PHONY: test
 test:
