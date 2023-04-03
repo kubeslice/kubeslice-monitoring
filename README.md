@@ -62,7 +62,7 @@ import(
 )
 ```
 
-2. Initialize event recorder
+6. Initialize event recorder
 
 
 ```go
@@ -78,7 +78,7 @@ recorder := events.NewEventRecorder(k8sClient, schema, componentEvents.EventsMap
 
 Slice and Namespace names are optional if the recorder is not part of a slice specific or namespace specific component.
 
-3. Raise events
+7. Raise events
 
 ```go
 err := recorder.RecordEvent(ctx, &events.Event{
@@ -89,7 +89,7 @@ err := recorder.RecordEvent(ctx, &events.Event{
 })
 ```
 
-4. Raise events with slice/namespace name added at the time of raising events
+8. Raise events with slice/namespace name added at the time of raising events
 
 In some cases, the recorder will be part of a controller which manages multiple namespaces. In that case,
 events can be raises by providing namespace like below instead of Initializing the recorder with specific namespace name.
@@ -101,8 +101,5 @@ recorder.WithSlice(sliceName).RecordEvent(...)
 ```
 
 
-
 ## Disabling events
 TODO: fill this section
-
-
