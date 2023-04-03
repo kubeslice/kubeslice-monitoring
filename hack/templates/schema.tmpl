@@ -19,12 +19,15 @@ package events
  *  limitations under the License.
 */
 
-var eventsMap = map[EventName]*EventSchema{
+import "github.com/kubeslice/kubeslice-monitoring/pkg/events"
+
+
+var EventsMap = map[events.EventName]*events.EventSchema{
 {{ range . }}"{{.Name}}": {
   Name: "{{.Name}}",
   Reason: "{{.Reason}}",
   Action: "{{.Action}}",
-  Type: EventType{{.Type}},
+  Type: events.EventType{{.Type}},
   ReportingController: "{{.ReportingController}}",
   Message: "{{.Message}}",
 },
@@ -32,6 +35,6 @@ var eventsMap = map[EventName]*EventSchema{
 }
 
 var (
-{{ range . }}	Event{{.Name}}  EventName = "{{.Name}}"
+{{ range . }}	Event{{.Name}}  events.EventName = "{{.Name}}"
 {{ end }}
 )

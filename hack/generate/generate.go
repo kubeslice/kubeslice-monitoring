@@ -3,33 +3,30 @@ package main
 import (
 	"fmt"
 	"os"
-	"path"
 	"text/template"
 
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
 	"gopkg.in/yaml.v2"
 )
 
+var (
+	templateFilePath = "hack/templates/schema.tmpl"
+	outputFilePath   = "events/events_generated.go"
+)
+
 func main() {
 	fmt.Println("generating event schema code from schema file")
+	if len(os.Args) < 2 {
+		handleError(fmt.Errorf("must pass schema file path"))
+	}
 
-	file1 := "controller.yaml"
-	file2 := "worker.yaml"
-	pwd, err := os.Getwd()
-	handleError(err)
-	controllerFilePath := path.Join(pwd, "config/events", file1)
-	workerFilePath := path.Join(pwd, "config/events", file2)
-	controllerEvents, err := parseEvent(controllerFilePath)
-	handleError(err)
-	workerEvents, err := parseEvent(workerFilePath)
+	events, err := parseEvent(os.Args[1])
 	handleError(err)
 
-	events := append(controllerEvents, workerEvents...)
-
-	t, err := template.ParseFiles("hack/templates/schema.tmpl")
+	t, err := template.ParseFiles(templateFilePath)
 	handleError(err)
 
-	f, err := os.Create("pkg/events/events_generated.go")
+	f, err := os.Create(outputFilePath)
 	handleError(err)
 	t.Execute(f, events)
 }
