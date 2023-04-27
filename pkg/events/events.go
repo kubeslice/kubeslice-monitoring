@@ -19,7 +19,6 @@
 package events
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 	"sync"
