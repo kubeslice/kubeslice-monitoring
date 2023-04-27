@@ -228,8 +228,8 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	}
 	key := getEventKey(ev)
 	er.cacheLock.Lock()
+	defer er.cacheLock.Unlock()
 	lastSeenEvent,ok := er.cache.Get(key)
-	er.cacheLock.Unlock()
 	if !ok{
 		ev.FirstTimestamp = t
 		if err := er.Client.Create(ctx, ev); err != nil {
