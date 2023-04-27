@@ -19,6 +19,7 @@
 package events
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -222,6 +223,9 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	}
 
 	// Check if there is already an event of the same type in the cache
+	if er.cache == nil {
+		return errors.New("No Cache initialized")
+	}
 	key := getEventKey(ev)
 	er.cacheLock.Lock()
 	lastSeenEvent,ok := er.cache.Get(key)
