@@ -1,0 +1,8 @@
+events:
+  - name: ExampleEvent
+    reason: ExampleEvent
+    action: ExampleEvent
+    type: Warning
+    reportingController: controller
+    message: ExampleEvent message.
+  

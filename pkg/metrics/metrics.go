@@ -1,159 +1,83 @@
 package metrics
 
 import (
-	"context"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 	"github.com/prometheus/client_golang/prometheus"
-	"go.uber.org/zap"
-	"time"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
-// MetricRecorder provides a container with config parameters for the Prometheus Exporter
-type MetricRecorder struct {
-	Logger    *zap.SugaredLogger
-	Project   string
-	Cluster   string
-	Slice     string
-	Namespace string
-	Subsystem string
+// MetricRecorder is used to record metrics from a component
+type MetricsFactory interface {
+	NewCounter(string, string, []string) *prometheus.CounterVec
+	NewGauge(string, string, []string) *prometheus.GaugeVec
+	NewHistogram(string, string, []string) prometheus.ObserverVec
 }
 
-type Metric struct {
-	Type             MetricType
-	Name             string
-	Help             string
-	Value            float64
-	Labels           map[string]string
-	HistogramBuckets []float64
-	Time             time.Time
+type MetricsFactoryOptions struct {
+	Project             string
+	Slice               string
+	Cluster             string
+	Namespace           string
+	ReportingController string
 }
 
-type MetricType string
+type metricsFactory struct {
+	Registerer prometheus.Registerer
+	Options    MetricsFactoryOptions
+}
 
-var fixedLabels = []string{"slice_project", "slice_cluster", "slice_name"}
-
-const (
-	MetricTypeGauge     = "Gauge"
-	MetricTypeCounter   = "Counter"
-	MetricTypeHistogram = "Histogram"
-	MetricTypeSummary   = "Summary"
-)
-
-// Copy returns a Provider that produces Prometheus metrics.
-// Namespace and subsystem are applied to all produced metrics.
-func (mr *MetricRecorder) Copy() *MetricRecorder {
-	return &MetricRecorder{
-		Logger:    mr.Logger,
-		Project:   mr.Project,
-		Cluster:   mr.Cluster,
-		Slice:     mr.Slice,
-		Namespace: mr.Namespace,
-		Subsystem: mr.Subsystem,
+func NewMetricsFactory(r prometheus.Registerer, o MetricsFactoryOptions) (MetricsFactory, error) {
+	mf := &metricsFactory{
+		Registerer: r,
+		Options:    o,
 	}
+	return mf, nil
 }
 
-// RecordMetric records a metric to the Prometheus Exporter
-func (mr *MetricRecorder) RecordMetric(ctx context.Context, m *Metric) error {
-	switch m.Type {
-	case MetricTypeGauge:
-		mr.recordGauge(ctx, m)
-		break
-	case MetricTypeCounter:
-		mr.recordCounter(ctx, m)
-		break
-	case MetricTypeHistogram:
-		mr.recordHistogram(ctx, m)
-		break
-	case MetricTypeSummary:
-		mr.recordSummary(ctx, m)
-		break
-	default:
-		mr.Logger.Errorf("Unknown metric type: %v", m.Type)
+// Adds slice labels to the list of labels provided
+// Returns the new set of labels and slice labels
+func (m *metricsFactory) getCurryLabels(labels []string) ([]string, prometheus.Labels) {
+	pl := prometheus.Labels{
+		"slice_name":                 m.Options.Slice,
+		"slice_project":              m.Options.Project,
+		"slice_cluster":              m.Options.Cluster,
+		"slice_namespace":            m.Options.Namespace,
+		"slice_reporting_controller": m.Options.ReportingController,
 	}
-	return nil
+	for k, v := range pl {
+		// Remove labels if value is empty
+		if v == "" {
+			delete(pl, k)
+			continue
+		}
+		// add the new label to original list of labels provided
+		labels = append(labels, k)
+	}
+	return labels, pl
 }
 
-func (mr *MetricRecorder) recordGauge(ctx context.Context, m *Metric) {
-	mr.Logger.Debugf("Recording gauge metric: %v", m)
-	metric := prometheus.NewGaugeVec(
-		prometheus.GaugeOpts{
-			Namespace: util.FlattenString(mr.Namespace),
-			Subsystem: util.FlattenString(mr.Subsystem),
-			Name:      util.FlattenString(m.Name),
-			Help:      m.Help,
-		},
-		append(fixedLabels, util.KeysFromMap(m.Labels)...),
-	)
-	metric.With(
-		util.MergeMaps(
-			prometheus.Labels{
-				"slice_project": util.FlattenString(mr.Project),
-				"slice_cluster": util.FlattenString(mr.Cluster),
-				"slice_name":    util.FlattenString(mr.Slice),
-			}, util.FlattenMap(m.Labels)),
-	).Set(m.Value)
+func (m *metricsFactory) NewCounter(name string, help string, labels []string) *prometheus.CounterVec {
+	labels, cl := m.getCurryLabels(labels)
+	return promauto.With(m.Registerer).NewCounterVec(prometheus.CounterOpts{
+		Namespace: "kubeslice",
+		Name:      name,
+		Help:      help,
+	}, labels).MustCurryWith(cl)
 }
 
-func (mr *MetricRecorder) recordCounter(ctx context.Context, m *Metric) {
-	mr.Logger.Debugf("Recording counter metric: %v", m)
-	metric := prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Namespace: util.FlattenString(mr.Namespace),
-			Subsystem: util.FlattenString(mr.Subsystem),
-			Name:      util.FlattenString(m.Name),
-			Help:      m.Help,
-		},
-		append(fixedLabels, util.KeysFromMap(m.Labels)...),
-	)
-	metric.With(
-		util.MergeMaps(
-			prometheus.Labels{
-				"slice_project": util.FlattenString(mr.Project),
-				"slice_cluster": util.FlattenString(mr.Cluster),
-				"slice_name":    util.FlattenString(mr.Slice),
-			}, util.FlattenMap(m.Labels)),
-	).Add(m.Value)
+func (m *metricsFactory) NewGauge(name string, help string, labels []string) *prometheus.GaugeVec {
+	labels, cl := m.getCurryLabels(labels)
+	return promauto.With(m.Registerer).NewGaugeVec(prometheus.GaugeOpts{
+		Namespace: "kubeslice",
+		Name:      name,
+		Help:      help,
+	}, labels).MustCurryWith(cl)
 }
 
-func (mr *MetricRecorder) recordHistogram(ctx context.Context, m *Metric) {
-	mr.Logger.Debugf("Recording histogram metric: %v", m)
-	metric := prometheus.NewHistogramVec(
-		prometheus.HistogramOpts{
-			Namespace: util.FlattenString(mr.Namespace),
-			Subsystem: util.FlattenString(mr.Subsystem),
-			Name:      util.FlattenString(m.Name),
-			Help:      m.Help,
-			Buckets:   m.HistogramBuckets,
-		},
-		append(fixedLabels, util.KeysFromMap(m.Labels)...),
-	)
-	metric.With(
-		util.MergeMaps(
-			prometheus.Labels{
-				"slice_project": util.FlattenString(mr.Project),
-				"slice_cluster": util.FlattenString(mr.Cluster),
-				"slice_name":    util.FlattenString(mr.Slice),
-			}, util.FlattenMap(m.Labels)),
-	).Observe(time.Since(m.Time).Seconds())
-}
-
-func (mr *MetricRecorder) recordSummary(ctx context.Context, m *Metric) {
-	mr.Logger.Debugf("Recording summary metric: %v", m)
-	metric := prometheus.NewSummaryVec(
-		prometheus.SummaryOpts{
-			Namespace: util.FlattenString(mr.Namespace),
-			Subsystem: util.FlattenString(mr.Subsystem),
-			Name:      util.FlattenString(m.Name),
-			Help:      m.Help,
-		},
-		append(fixedLabels, util.KeysFromMap(m.Labels)...),
-	)
-	metric.With(
-		util.MergeMaps(
-			prometheus.Labels{
-				"slice_project": util.FlattenString(mr.Project),
-				"slice_cluster": util.FlattenString(mr.Cluster),
-				"slice_name":    util.FlattenString(mr.Slice),
-			}, util.FlattenMap(m.Labels)),
-	).Observe(time.Since(m.Time).Seconds())
+func (m *metricsFactory) NewHistogram(name string, help string, labels []string) prometheus.ObserverVec {
+	labels, cl := m.getCurryLabels(labels)
+	return promauto.With(m.Registerer).NewHistogramVec(prometheus.HistogramOpts{
+		Namespace: "kubeslice",
+		Name:      name,
+		Help:      help,
+	}, labels).MustCurryWith(cl)
 }

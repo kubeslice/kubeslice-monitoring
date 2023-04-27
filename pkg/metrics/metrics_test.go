@@ -1,108 +1,80 @@
-package metrics
+package metrics_test
 
 import (
-	"context"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
-	"github.com/stretchr/testify/require"
 	"testing"
-	"time"
+
+	"github.com/kubeslice/kubeslice-monitoring/pkg/metrics"
+	"github.com/prometheus/client_golang/prometheus"
+	dto "github.com/prometheus/client_model/go"
 )
 
-var (
-	project     = "dummy"
-	sliceName   = "red"
-	clusterName = "cluster-1"
-	namespace   = "kubeslice-dummy"
-)
+// Make sure that missing constant labels are handled when initializing metrics
+func TestMissingLabels(t *testing.T) {
+	r := prometheus.NewRegistry()
+	mf, err := metrics.NewMetricsFactory(r, metrics.MetricsFactoryOptions{
+		Cluster: "test-cluster",
+	})
 
-func TestRecordGaugeMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
-		Project:   project,
-		Cluster:   clusterName,
-		Slice:     sliceName,
-		Namespace: namespace,
-		Subsystem: "controller",
+	if err != nil {
+		t.Error(err, "failed to initialize metrics factory")
 	}
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeGauge,
-		Name:  schema.MetricNetPolViolation,
-		Help:  "test metric help",
-		Value: 1,
-		Labels: map[string]string{
-			"test_key": "test_value",
-		},
-	})
-	require.Nil(t, err)
+	c := mf.NewCounter("test_counter", "help", []string{"a"})
+
+	m := &dto.Metric{}
+	err = c.WithLabelValues("b").Write(m)
+	if err != nil {
+		t.Error(err, "failed to write counter")
+	}
+
+	metrics, _ := r.Gather()
+	if expected, got := "kubeslice_test_counter", *metrics[0].Name; expected != got {
+		t.Errorf("expected %q, got %q", expected, got)
+	}
+	if expected, got := "help", *metrics[0].Help; expected != got {
+		t.Errorf("expected %q, got %q", expected, got)
+	}
+
+	if expected, got := `label:<name:"a" value:"b" > label:<name:"slice_cluster" value:"test-cluster" > counter:<value:0 > `, m.String(); expected != got {
+		t.Errorf("expected %q, got %q", expected, got)
+	}
 }
 
-func TestRecordCounterMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
-		Project:   project,
-		Cluster:   clusterName,
-		Slice:     sliceName,
-		Namespace: namespace,
-		Subsystem: "controller",
+// Make sure constant labels are present in the metric
+func TestCurryLabels(t *testing.T) {
+	r := prometheus.NewRegistry()
+	mf, err := metrics.NewMetricsFactory(r, metrics.MetricsFactoryOptions{
+		Cluster:             "cl",
+		Project:             "pr",
+		Namespace:           "ns",
+		ReportingController: "rc",
+		Slice:               "sl",
+	})
+
+	if err != nil {
+		t.Error(err, "failed to initialize metrics factory")
 	}
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeCounter,
-		Name:  schema.MetricNetPolViolation,
-		Help:  "test metric help",
-		Value: 1,
-		Labels: map[string]string{
-			"test_key": "test_value",
-		},
-	})
-	require.Nil(t, err)
-}
+	c := mf.NewCounter("test_counter", "help", []string{})
+	g := mf.NewGauge("test_gauge", "help", []string{})
 
-func TestRecordHistogramMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
-		Project:   project,
-		Cluster:   clusterName,
-		Slice:     sliceName,
-		Namespace: namespace,
-		Subsystem: "controller",
+	m := &dto.Metric{}
+	err = c.WithLabelValues().Write(m)
+	if err != nil {
+		t.Error(err, "failed to write counter")
 	}
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeHistogram,
-		Name:  schema.MetricNetPolViolation,
-		Help:  "test metric help",
-		Value: 1,
-		Labels: map[string]string{
-			"test_key": "test_value",
-		},
-		HistogramBuckets: []float64{1, 2, 3},
-		Time:             time.Now(),
-	})
-	require.Nil(t, err)
-}
-
-func TestRecordSummaryMetric(t *testing.T) {
-	recorder := MetricRecorder{
-		Logger:    logger.NewLogger(),
-		Project:   project,
-		Cluster:   clusterName,
-		Slice:     sliceName,
-		Namespace: namespace,
-		Subsystem: "controller",
+	if expected, got := `label:<name:"slice_cluster" value:"cl" > label:<name:"slice_name" value:"sl" > label:<name:"slice_namespace" value:"ns" > label:<name:"slice_project" value:"pr" > label:<name:"slice_reporting_controller" value:"rc" > counter:<value:0 > `, m.String(); expected != got {
+		t.Errorf("expected %q, got %q", expected, got)
 	}
 
-	err := recorder.RecordMetric(context.Background(), &Metric{
-		Type:  MetricTypeSummary,
-		Name:  schema.MetricNetPolViolation,
-		Help:  "test metric help",
-		Value: 1,
-		Labels: map[string]string{
-			"test_key": "test_value",
-		},
-		Time: time.Now(),
-	})
-	require.Nil(t, err)
+	m.Reset()
+	err = g.WithLabelValues().Write(m)
+	if err != nil {
+		t.Error(err, "failed to write gauge")
+	}
+
+	if expected, got := `label:<name:"slice_cluster" value:"cl" > label:<name:"slice_name" value:"sl" > label:<name:"slice_namespace" value:"ns" > label:<name:"slice_project" value:"pr" > label:<name:"slice_reporting_controller" value:"rc" > gauge:<value:0 > `, m.String(); expected != got {
+		t.Errorf("expected %q, got %q", expected, got)
+	}
 }

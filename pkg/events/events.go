@@ -27,33 +27,66 @@ import (
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 
+	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
+
 	"go.uber.org/zap"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/reference"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-type EventRecorder struct {
-	Client    util.Client
-	Logger    *zap.SugaredLogger
-	Scheme    *runtime.Scheme
-	Version   string
-	Cluster   string
-	Project   string
-	Slice     string
+// EventRecorder is used to record events from a component
+type EventRecorder interface {
+	// RecordEvent is used to record a new event
+	RecordEvent(context.Context, *Event) error
+	// WithSlice returns a new recorder with slice name added
+	WithSlice(string) EventRecorder
+	// WithNamespace returns a new recorder with namespace name added
+	WithNamespace(string) EventRecorder
+	// WithProject returns a new recorder with project name added
+	WithProject(string) EventRecorder
+}
+
+func NewEventRecorder(c client.Writer, s *runtime.Scheme, em map[EventName]*EventSchema, o EventRecorderOptions) EventRecorder {
+	log := logger.NewLogger().With("name", o.Component)
+	return &eventRecorder{
+		Client:    c,
+		Scheme:    s,
+		EventsMap: em,
+		Options:   o,
+		Logger:    log,
+	}
+}
+
+type EventRecorderOptions struct {
+	// Version is the version of the component
+	Version string
+	// Cluster  is the name of the cluster
+	Cluster string
+	// Project is the name of the project
+	Project string
+	// Slice is the name of the slice (optional)
+	Slice string
+	// Namespace is the namespace this event recorder corresponds to (optional)
 	Namespace string
+	// Component is the component which uses the event recorder
 	Component string
 	cache     *lru.Cache // cache of last seen events
 	cacheLock sync.RWMutex             // mutex to synchronize access to lastSeen
 }
 
 type Event struct {
-	Object            runtime.Object
-	RelatedObject     runtime.Object
+	// Object is the reference of the k8s object which this event corresponds to
+	Object runtime.Object
+	// RelatedObject is the ref to related object (optional)
+	RelatedObject runtime.Object
+	// ReportingInstance is the name of the reporting instance
 	ReportingInstance string
-	Name              string
+	// Name is the name of the event to be looked up in event schema
+	Name EventName
 }
 
 // getEventKey builds unique event key based on source, involvedObject, reason, message
@@ -76,50 +109,73 @@ func getEventKey(event *corev1.Event) string {
 		"")
 }
 
-func (er *EventRecorder) Copy() *EventRecorder {
-	return &EventRecorder{
+type eventRecorder struct {
+	Client    client.Writer
+	Logger    *zap.SugaredLogger
+	Scheme    *runtime.Scheme
+	EventsMap map[EventName]*EventSchema
+	Options   EventRecorderOptions
+}
+
+func (er *eventRecorder) Copy() *eventRecorder {
+	return &eventRecorder{
 		Client:    er.Client,
 		Logger:    er.Logger,
 		Scheme:    er.Scheme,
-		Version:   er.Version,
-		Cluster:   er.Cluster,
-		Project:   er.Project,
-		Slice:     er.Slice,
-		Namespace: er.Namespace,
-		Component: er.Component,
+		EventsMap: er.EventsMap,
+		Options: EventRecorderOptions{
+			Version:   er.Options.Version,
+			Cluster:   er.Options.Cluster,
+			Project:   er.Options.Project,
+			Slice:     er.Options.Slice,
+			Namespace: er.Options.Namespace,
+			Component: er.Options.Component,
+		},
 	}
 }
 
 // WithSlice returns a new recorder with added slice name for raising events
-func (er *EventRecorder) WithSlice(slice string) *EventRecorder {
+func (er *eventRecorder) WithSlice(slice string) EventRecorder {
 	e := er.Copy()
-	e.Slice = slice
+	e.Options.Slice = slice
 	return e
 }
 
 // WithNamespace returns a new recorder with added namespace name
 // If namespace is not provided, recorder will use the object namespace
-func (er *EventRecorder) WithNamespace(ns string) *EventRecorder {
+func (er *eventRecorder) WithNamespace(ns string) EventRecorder {
 	e := er.Copy()
-	e.Namespace = ns
+	e.Options.Namespace = ns
+	return e
+}
+
+// WithProject returns a new recorder with added project name
+func (er *eventRecorder) WithProject(project string) EventRecorder {
+	e := er.Copy()
+	e.Options.Project = project
 	return e
 }
 
 // RecordEvent raises a new event with the given fields
 // TODO: events caching and aggregation
-func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
+func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	ref, err := reference.GetReference(er.Scheme, e.Object)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to parse event obj reference")
 		return err
 	}
 
-	ns := er.Namespace
+	ns := er.Options.Namespace
 	if ns == "" {
 		ns = ref.Namespace
 	}
 
-	event, err := schema.GetEvent(e.Name)
+	if IsEventDisabled(e.Name) {
+		er.Logger.Infof("Event disabled for %s", e.Name)
+		return nil
+	}
+
+	event, err := GetEvent(e.Name, er.EventsMap)
 	if err != nil {
 		er.Logger.With("error", err).Error("Unable to get event")
 		return err
@@ -131,14 +187,15 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 			Name:      fmt.Sprintf("%v.%x", ref.Name, t.UnixNano()),
 			Namespace: ns,
 			Labels: map[string]string{
-				"sliceCluster":            er.Cluster,
+				"sliceCluster":            er.Options.Cluster,
 				"sliceNamespace":          ns,
-				"sliceName":               er.Slice,
-				"sliceProject":            er.Project,
+				"sliceName":               er.Options.Slice,
+				"sliceProject":            er.Options.Project,
 				"reportingControllerName": event.ReportingController,
+				"eventTitle":              string(event.Name),
 			},
 			Annotations: map[string]string{
-				"release": er.Version,
+				"release": er.Options.Version,
 			},
 		},
 		InvolvedObject:      *ref,
@@ -150,7 +207,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ReportingController: event.ReportingController,
 		ReportingInstance:   e.ReportingInstance,
 		Source: corev1.EventSource{
-			Component: er.Component,
+			Component: er.Options.Component,
 		},
 		Action: event.Action,
 		Type:   string(event.Type),
