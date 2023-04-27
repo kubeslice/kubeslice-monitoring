@@ -20,6 +20,10 @@ package events
 
 import (
 	"fmt"
+	"strings"
+	"sync"
+
+	"github.com/golang/groupcache/lru"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 
@@ -41,6 +45,8 @@ type EventRecorder struct {
 	Slice     string
 	Namespace string
 	Component string
+	cache     *lru.Cache // cache of last seen events
+	cacheLock sync.RWMutex             // mutex to synchronize access to lastSeen
 }
 
 type Event struct {
@@ -48,6 +54,26 @@ type Event struct {
 	RelatedObject     runtime.Object
 	ReportingInstance string
 	Name              string
+}
+
+// getEventKey builds unique event key based on source, involvedObject, reason, message
+func getEventKey(event *corev1.Event) string {
+	return strings.Join([]string{
+		event.Source.Component,
+		event.Source.Host,
+		event.InvolvedObject.Kind,
+		event.InvolvedObject.Namespace,
+		event.InvolvedObject.Name,
+		event.InvolvedObject.FieldPath,
+		string(event.InvolvedObject.UID),
+		event.InvolvedObject.APIVersion,
+		event.Type,
+		event.Reason,
+		event.Message,
+		event.Labels["sliceName"],
+		event.Labels["sliceCluster"],
+	},
+		"")
 }
 
 func (er *EventRecorder) Copy() *EventRecorder {
@@ -99,6 +125,7 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		return err
 	}
 	t := metav1.Now()
+
 	ev := &corev1.Event{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      fmt.Sprintf("%v.%x", ref.Name, t.UnixNano()),
@@ -118,7 +145,6 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		EventTime:           metav1.NowMicro(),
 		Reason:              event.Reason,
 		Message:             event.Message,
-		FirstTimestamp:      t,
 		LastTimestamp:       t,
 		Count:               1,
 		ReportingController: event.ReportingController,
@@ -139,10 +165,26 @@ func (er *EventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ev.Related = related
 	}
 
-	er.Logger.Infof("raised event %v", ev)
-
-	if err := er.Client.Create(ctx, ev); err != nil {
-		er.Logger.With("error", err, "event", ev).Error("Unable to create event")
+	// Check if there is already an event of the same type in the cache
+	key := getEventKey(ev)
+	er.cacheLock.Lock()
+	lastSeenEvent,ok := er.cache.Get(key)
+	er.cacheLock.Unlock()
+	if !ok{
+		ev.FirstTimestamp = t
+		if err := er.Client.Create(ctx, ev); err != nil {
+			er.Logger.With("error", err, "event", ev).Error("Unable to create event")
+		} else {
+			er.cache.Add(key,ev)
+		}
+	} else {
+		// event already present in cache
+		e := lastSeenEvent.(*corev1.Event)
+		e.Count++
+		e.LastTimestamp = t
+		if err := er.Client.Update(ctx, e); err != nil {
+			er.Logger.With("error", err, "event", ev).Error("Unable to update event")
+		}
 	}
 	return nil
 }
