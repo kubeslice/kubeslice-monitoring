@@ -224,6 +224,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 
 	// Check if there is already an event of the same type in the cache
 	if er.cache == nil {
+		er.Logger.Info("er",er)
 		return errors.New("No Cache initialized")
 	}
 	key := getEventKey(ev)
