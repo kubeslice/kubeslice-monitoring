@@ -24,8 +24,6 @@ import (
 	"sync"
 
 	"github.com/golang/groupcache/lru"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/schema"
-	"github.com/kubeslice/kubeslice-monitoring/pkg/util"
 
 	"github.com/kubeslice/kubeslice-monitoring/pkg/logger"
 
@@ -58,6 +56,7 @@ func NewEventRecorder(c client.Writer, s *runtime.Scheme, em map[EventName]*Even
 		EventsMap: em,
 		Options:   o,
 		Logger:    log,
+		cache: lru.New(4096),
 	}
 }
 
@@ -74,8 +73,6 @@ type EventRecorderOptions struct {
 	Namespace string
 	// Component is the component which uses the event recorder
 	Component string
-	cache     *lru.Cache // cache of last seen events
-	cacheLock sync.RWMutex             // mutex to synchronize access to lastSeen
 }
 
 type Event struct {
@@ -115,6 +112,8 @@ type eventRecorder struct {
 	Scheme    *runtime.Scheme
 	EventsMap map[EventName]*EventSchema
 	Options   EventRecorderOptions
+	cache     *lru.Cache // cache of last seen events
+	cacheLock sync.RWMutex             // mutex to synchronize access to cache
 }
 
 func (er *eventRecorder) Copy() *eventRecorder {
