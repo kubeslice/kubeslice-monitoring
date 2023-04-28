@@ -26,6 +26,7 @@ func (o *k8sClientMock) Delete(ctx context.Context, obj client.Object, opts ...c
 }
 
 func (o *k8sClientMock) Update(ctx context.Context, obj client.Object, opts ...client.UpdateOption) error {
+	o.createdObject = obj
 	return nil
 }
 
@@ -120,3 +121,47 @@ func TestEventAggregatorByReasonFunc(t *testing.T) {
 	}
 }
 
+func TestRecordEventWithCache(t *testing.T) {
+	clientMock := &k8sClientMock{}
+
+	recorder := events.NewEventRecorder(clientMock, newTestScheme(), events.EventsMap, events.EventRecorderOptions{
+		Version:   "1",
+		Cluster:   "cluster-1",
+		Component: "controller",
+		Namespace: "test-ns",
+	})
+
+	pod := &corev1.Pod{}
+
+	// first-event
+	err := recorder.RecordEvent(context.Background(), &events.Event{
+		Object:            pod,
+		RelatedObject:     nil,
+		ReportingInstance: "controller",
+		Name:              events.EventExampleEvent,
+	})
+	if err != nil {
+		t.Error("event not recorded")
+	}
+
+	e := clientMock.createdObject.(*corev1.Event)
+	if e.Count != 1 {
+		t.Error("invalid Count")
+	}
+
+	// duplicate event
+	err = recorder.RecordEvent(context.Background(), &events.Event{
+		Object:            pod,
+		RelatedObject:     nil,
+		ReportingInstance: "controller",
+		Name:              events.EventExampleEvent,
+	})
+	if err != nil {
+		t.Error("event not recorded")
+	}
+
+	e = clientMock.createdObject.(*corev1.Event)
+	if e.Count != 2 {
+		t.Error("invalid Count")
+	}
+}
