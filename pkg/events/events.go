@@ -88,7 +88,7 @@ type Event struct {
 }
 
 // getEventKey builds unique event key based on source, involvedObject, reason, message
-func getEventKey(event *corev1.Event) string {
+func GetEventKey(event *corev1.Event) string {
 	return strings.Join([]string{
 		event.Source.Component,
 		event.Source.Host,
@@ -226,7 +226,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	if er.cache == nil {
 		er.cache = lru.New(4096)
 	}
-	key := getEventKey(ev)
+	key := GetEventKey(ev)
 	er.cacheLock.Lock()
 	defer er.cacheLock.Unlock()
 	lastSeenEvent,ok := er.cache.Get(key)
@@ -247,7 +247,8 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 			er.Logger.With("error", err, "event", ev).Error("Unable to update event")
 			return err
 		}
-		
+		// update the cache
+		er.cache.Add(key,e)
 	}
 	return nil
 }

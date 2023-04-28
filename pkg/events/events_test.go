@@ -7,6 +7,7 @@ import (
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -72,3 +73,50 @@ func newTestScheme() *runtime.Scheme {
 	_ = controllerv1alpha1.AddToScheme(testScheme)
 	return testScheme
 }
+
+func makeObjectReference(kind, name, namespace string) corev1.ObjectReference {
+	return corev1.ObjectReference{
+		Kind:       kind,
+		Name:       name,
+		Namespace:  namespace,
+		UID:        "C934D34AFB20242",
+		APIVersion: "version",
+		FieldPath:  "spec.containers{mycontainer}",
+	}
+}
+
+func makeEvent(reason, message string, involvedObject corev1.ObjectReference) corev1.Event {
+	eventTime := metav1.Now()
+	event := corev1.Event{
+		Reason:         reason,
+		Message:        message,
+		InvolvedObject: involvedObject,
+		Source: corev1.EventSource{
+			Component: "kubelet",
+			Host:      "kublet.node1",
+		},
+		Count:          1,
+		FirstTimestamp: eventTime,
+		LastTimestamp:  eventTime,
+		Type:           corev1.EventTypeNormal,
+	}
+	return event
+}
+
+func TestEventAggregatorByReasonFunc(t *testing.T) {
+	event1 := makeEvent("end-of-world", "it was fun", makeObjectReference("Pod", "pod1", "other"))
+	event2 := makeEvent("end-of-world", "it was fun", makeObjectReference("Pod", "pod1", "other"))
+	event3 := makeEvent("nevermind", "it was a bug", makeObjectReference("Pod", "pod1", "other"))
+
+	localKey1 := events.GetEventKey(&event1)
+	localKey2 := events.GetEventKey(&event2)
+	localKey3 := events.GetEventKey(&event3)
+
+	if localKey1 != localKey2 {
+		t.Errorf("Expected %v to equal %v", localKey1, localKey2)
+	}
+	if localKey1 == localKey3 {
+		t.Errorf("Expected %v to not equal %v", localKey1, localKey3)
+	}
+}
+
