@@ -234,6 +234,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		ev.FirstTimestamp = t
 		if err := er.Client.Create(ctx, ev); err != nil {
 			er.Logger.With("error", err, "event", ev).Error("Unable to create event")
+			return err
 		} else {
 			er.cache.Add(key,ev)
 		}
@@ -244,7 +245,9 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		e.LastTimestamp = t
 		if err := er.Client.Update(ctx, e); err != nil {
 			er.Logger.With("error", err, "event", ev).Error("Unable to update event")
+			return err
 		}
+		
 	}
 	return nil
 }
