@@ -50,19 +50,17 @@ type EventRecorder interface {
 
 func NewEventRecorder(c client.Writer, s *runtime.Scheme, em map[EventName]*EventSchema, o EventRecorderOptions) EventRecorder {
 	log := logger.NewLogger().With("name", o.Component)
-	cache := lru.New(4096)
 	return &eventRecorder{
 		Client:    c,
 		Scheme:    s,
 		EventsMap: em,
 		Options:   o,
 		Logger:    log,
-		cache: cache,
+		cache: lru.New(4096),
 	}
 }
 
 var _ EventRecorder = (*eventRecorder)(nil)
-
 type EventRecorderOptions struct {
 	// Version is the version of the component
 	Version string
@@ -225,9 +223,9 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	}
 
 	// Check if there is already an event of the same type in the cache
-	// if er.cache == nil {
-	// 	er.cache = lru.New(4096)
-	// }
+	if er.cache == nil {
+		er.cache = lru.New(4096)
+	}
 	key := getEventKey(ev)
 	er.cacheLock.Lock()
 	defer er.cacheLock.Unlock()
