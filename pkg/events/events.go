@@ -103,6 +103,8 @@ func GetEventKey(event *corev1.Event) string {
 		event.Message,
 		event.Labels["sliceName"],
 		event.Labels["sliceCluster"],
+		event.Labels["sliceProject"],
+		event.Labels["eventTitle"],
 	},
 		"")
 }
