@@ -27,6 +27,9 @@ type metricsFactory struct {
 }
 
 func NewMetricsFactory(r prometheus.Registerer, o MetricsFactoryOptions) (MetricsFactory, error) {
+	if o.Prefix == "" {
+		o.Prefix = "kubeslice"
+	}
 	mf := &metricsFactory{
 		Registerer: r,
 		Options:    o,
@@ -58,12 +61,8 @@ func (m *metricsFactory) getCurryLabels(labels []string) ([]string, prometheus.L
 
 func (m *metricsFactory) NewCounter(name string, help string, labels []string) *prometheus.CounterVec {
 	labels, cl := m.getCurryLabels(labels)
-	ns := "kubeslice"
-	if m.Options.Prefix != "" {
-		ns = m.Options.Prefix
-	}
 	return promauto.With(m.Registerer).NewCounterVec(prometheus.CounterOpts{
-		Namespace: ns,
+		Namespace: m.Options.Prefix,
 		Name:      name,
 		Help:      help,
 	}, labels).MustCurryWith(cl)
@@ -71,12 +70,8 @@ func (m *metricsFactory) NewCounter(name string, help string, labels []string) *
 
 func (m *metricsFactory) NewGauge(name string, help string, labels []string) *prometheus.GaugeVec {
 	labels, cl := m.getCurryLabels(labels)
-	ns := "kubeslice"
-	if m.Options.Prefix != "" {
-		ns = m.Options.Prefix
-	}
 	return promauto.With(m.Registerer).NewGaugeVec(prometheus.GaugeOpts{
-		Namespace: ns,
+		Namespace: m.Options.Prefix,
 		Name:      name,
 		Help:      help,
 	}, labels).MustCurryWith(cl)
@@ -84,12 +79,8 @@ func (m *metricsFactory) NewGauge(name string, help string, labels []string) *pr
 
 func (m *metricsFactory) NewHistogram(name string, help string, labels []string) prometheus.ObserverVec {
 	labels, cl := m.getCurryLabels(labels)
-	ns := "kubeslice"
-	if m.Options.Prefix != "" {
-		ns = m.Options.Prefix
-	}
 	return promauto.With(m.Registerer).NewHistogramVec(prometheus.HistogramOpts{
-		Namespace: ns,
+		Namespace: m.Options.Prefix,
 		Name:      name,
 		Help:      help,
 	}, labels).MustCurryWith(cl)
