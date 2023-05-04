@@ -56,11 +56,12 @@ func NewEventRecorder(c client.Writer, s *runtime.Scheme, em map[EventName]*Even
 		EventsMap: em,
 		Options:   o,
 		Logger:    log,
-		cache: lru.New(4096),
+		cache:     lru.New(4096),
 	}
 }
 
 var _ EventRecorder = (*eventRecorder)(nil)
+
 type EventRecorderOptions struct {
 	// Version is the version of the component
 	Version string
@@ -115,8 +116,8 @@ type eventRecorder struct {
 	Scheme    *runtime.Scheme
 	EventsMap map[EventName]*EventSchema
 	Options   EventRecorderOptions
-	cache     *lru.Cache // cache of last seen events
-	cacheLock sync.RWMutex             // mutex to synchronize access to cache
+	cache     *lru.Cache   // cache of last seen events
+	cacheLock sync.RWMutex // mutex to synchronize access to cache
 }
 
 func (er *eventRecorder) Copy() *eventRecorder {
@@ -231,15 +232,17 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	key := GetEventKey(ev)
 	er.cacheLock.Lock()
 	defer er.cacheLock.Unlock()
-	lastSeenEvent,ok := er.cache.Get(key)
-	if !ok{
+	lastSeenEvent, ok := er.cache.Get(key)
+	if !ok {
 		ev.FirstTimestamp = t
 		if err := er.Client.Create(ctx, ev); err != nil {
 			er.Logger.With("error", err, "event", ev).Error("Unable to create event")
 			return err
 		} else {
-			er.cache.Add(key,ev)
+			er.cache.Add(key, ev)
 		}
+		er.Logger.Infof("create event key %v", key)
+		er.Logger.Infof("event has been created %v", ev)
 	} else {
 		// event already present in cache
 		e := lastSeenEvent.(*corev1.Event)
@@ -250,7 +253,9 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 			return err
 		}
 		// update the cache
-		er.cache.Add(key,e)
+		er.cache.Add(key, e)
+		er.Logger.Infof("update event key %v", key)
+		er.Logger.Infof("event has been updated %v", ev)
 	}
 	return nil
 }
