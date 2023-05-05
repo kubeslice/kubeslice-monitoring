@@ -180,7 +180,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	}
 
 	if IsEventDisabled(e.Name) {
-		er.Logger.Infof("Event disabled for %s", e.Name)
+		er.Logger.Debugf("Event disabled for %s", e.Name)
 		return nil
 	}
 
@@ -247,7 +247,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		} else {
 			er.cache.Add(key, ev)
 		}
-		er.Logger.Infof("event has been created %v", ev)
+		er.Logger.Debugf("event has been created %v", ev)
 	} else {
 		// event already present in cache
 		e := lastSeenEvent.(*corev1.Event)
@@ -259,7 +259,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		}
 		// update the cache
 		er.cache.Add(key, e)
-		er.Logger.Infof("event has been updated %v", ev)
+		er.Logger.Debugf("event has been updated %v", ev)
 	}
 	return nil
 }
