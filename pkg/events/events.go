@@ -131,6 +131,7 @@ func (er *eventRecorder) Copy() *eventRecorder {
 		Logger:    er.Logger,
 		Scheme:    er.Scheme,
 		EventsMap: er.EventsMap,
+		cache:     er.cache,
 		Options: EventRecorderOptions{
 			Version:   er.Options.Version,
 			Cluster:   er.Options.Cluster,
