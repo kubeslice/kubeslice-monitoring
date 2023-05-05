@@ -234,24 +234,18 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	// Check if there is already an event of the same type in the cache
 	if er.cache == nil {
 		er.cache = lru.New(4096)
-		er.Logger.Infof("event cache has been created: %v", er.cache)
 	}
 	key := GetEventKey(ev)
-	er.Logger.Infof("event key: %v", key)
 	er.cacheLock.Lock()
 	defer er.cacheLock.Unlock()
 	lastSeenEvent, ok := er.cache.Get(key)
-	er.Logger.Infof("Last seen event: %v", lastSeenEvent)
-	er.Logger.Infof("Event already present in cache: %v", ok)
 	if !ok {
 		ev.FirstTimestamp = t
 		if err := er.Client.Create(ctx, ev); err != nil {
 			er.Logger.With("error", err, "event", ev).Error("Unable to create event")
 			return err
 		} else {
-			er.Logger.Infof("event has been added to cache %v", ev)
 			er.cache.Add(key, ev)
-			er.Logger.Infof("New event cache: %v", er.cache)
 		}
 		er.Logger.Infof("event has been created %v", ev)
 	} else {
