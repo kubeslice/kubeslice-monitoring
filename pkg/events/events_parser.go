@@ -27,7 +27,7 @@ type EventSchema struct {
 	Type                EventType
 	ReportingController string `yaml:"reportingController"`
 	Message             string
-	MetricEvent         string `yaml:"metricEvent"`
+	MetricAction        string `yaml:"metricAction"`
 }
 
 func GetEvent(name EventName, eventsMap map[EventName]*EventSchema) (*EventSchema, error) {

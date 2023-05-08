@@ -27,7 +27,7 @@ var EventsMap = map[EventName]*EventSchema{
 		Type:                EventTypeWarning,
 		ReportingController: "controller",
 		Message:             "ExampleEvent message.",
-		MetricEvent:         "ExampleMetricEvent",
+		MetricAction:        "ExampleMetricAction",
 	},
 }
 
