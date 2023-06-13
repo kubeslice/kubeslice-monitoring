@@ -165,3 +165,40 @@ func TestRecordEventWithCache(t *testing.T) {
 		t.Error("invalid Count")
 	}
 }
+
+func TestEventWithEmptyNamespaceReference(t *testing.T) {
+	clientMock := &k8sClientMock{}
+
+	recorder := events.NewEventRecorder(clientMock, newTestScheme(), events.EventsMap, events.EventRecorderOptions{
+		Version:   "1",
+		Cluster:   "cluster-1",
+		Component: "controller",
+		Namespace: "test",
+	})
+
+	pod := &corev1.Pod{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: "test-pod",
+		},
+	}
+	err := recorder.RecordEvent(context.Background(), &events.Event{
+		Object:            pod,
+		RelatedObject:     nil,
+		ReportingInstance: "controller",
+		Name:              events.EventExampleEvent,
+	})
+	if err != nil {
+		t.Error("event not recorded ", err)
+	}
+
+	e := clientMock.createdObject.(*corev1.Event)
+	if e.InvolvedObject.Name == "" {
+		t.Error("InvolvedObject Name is empty")
+	}
+	if e.InvolvedObject.Name == "" {
+		t.Error("InvolvedObject NameSpace is empty")
+	}
+	if e.InvolvedObject.Name != e.InvolvedObject.Namespace {
+		t.Error("involved object name and namespace do not match")
+	}
+}
