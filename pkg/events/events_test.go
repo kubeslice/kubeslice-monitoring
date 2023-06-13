@@ -195,7 +195,7 @@ func TestEventWithEmptyNamespaceReference(t *testing.T) {
 	if e.InvolvedObject.Name == "" {
 		t.Error("InvolvedObject Name is empty")
 	}
-	if e.InvolvedObject.Name == "" {
+	if e.InvolvedObject.Namespace == "" {
 		t.Error("InvolvedObject NameSpace is empty")
 	}
 	if e.InvolvedObject.Name != e.InvolvedObject.Namespace {
