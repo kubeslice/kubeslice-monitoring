@@ -5,6 +5,7 @@ import (
 
 	controllerv1alpha1 "github.com/kubeslice/apis/pkg/controller/v1alpha1"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -187,18 +188,10 @@ func TestEventWithEmptyNamespaceReference(t *testing.T) {
 		ReportingInstance: "controller",
 		Name:              events.EventExampleEvent,
 	})
-	if err != nil {
-		t.Error("event not recorded ", err)
-	}
+	assert.Nil(t, err)
 
 	e := clientMock.createdObject.(*corev1.Event)
-	if e.InvolvedObject.Name == "" {
-		t.Error("InvolvedObject Name is empty")
-	}
-	if e.InvolvedObject.Namespace == "" {
-		t.Error("InvolvedObject NameSpace is empty")
-	}
-	if e.InvolvedObject.Name != e.InvolvedObject.Namespace {
-		t.Error("involved object name and namespace do not match")
-	}
+	assert.NotEqual(t, e.InvolvedObject.Name, "")
+	assert.NotEqual(t, e.InvolvedObject.Namespace, "")
+	assert.EqualValues(t, e.InvolvedObject.Name, e.InvolvedObject.Namespace)
 }
