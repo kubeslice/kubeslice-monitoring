@@ -177,18 +177,15 @@ func TestEventWithEmptyNamespaceReference(t *testing.T) {
 		Namespace: "test",
 	})
 
-	pod := &corev1.Pod{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: "test-pod",
-		},
-	}
+	ns := &corev1.Namespace{}
+	ns.Name = "test-ns"
 	err := recorder.RecordEvent(context.Background(), &events.Event{
-		Object:            pod,
+		Object:            ns,
 		RelatedObject:     nil,
 		ReportingInstance: "controller",
 		Name:              events.EventExampleEvent,
 	})
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 
 	e := clientMock.createdObject.(*corev1.Event)
 	assert.NotEqual(t, e.InvolvedObject.Name, "")
