@@ -166,7 +166,6 @@ func (er *eventRecorder) WithProject(project string) EventRecorder {
 }
 
 // RecordEvent raises a new event with the given fields
-// TODO: events caching and aggregation
 func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 	ref, err := reference.GetReference(er.Scheme, e.Object)
 	if err != nil {
@@ -222,6 +221,8 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		Type:   string(event.Type),
 	}
 
+	er.Logger.Debugf("Before event creation: %v", ev)
+
 	if e.RelatedObject != nil {
 		related, err := reference.GetReference(er.Scheme, e.RelatedObject)
 		if err != nil {
@@ -254,6 +255,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		e := lastSeenEvent.(*corev1.Event)
 		e.Count++
 		e.LastTimestamp = t
+		er.Logger.Debugf("Last seen event: %v", e)
 		if err := er.Client.Update(ctx, e); err != nil {
 			er.Logger.With("error", err, "event", ev).Error("Unable to update event")
 			return err
