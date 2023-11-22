@@ -5,6 +5,7 @@ import (
 
 	controllerv1alpha1 "github.com/kubeslice/apis/pkg/controller/v1alpha1"
 	"github.com/kubeslice/kubeslice-monitoring/pkg/events"
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -164,4 +165,30 @@ func TestRecordEventWithCache(t *testing.T) {
 	if e.Count != 2 {
 		t.Error("invalid Count")
 	}
+}
+
+func TestEventWithEmptyNamespaceReference(t *testing.T) {
+	clientMock := &k8sClientMock{}
+
+	recorder := events.NewEventRecorder(clientMock, newTestScheme(), events.EventsMap, events.EventRecorderOptions{
+		Version:   "1",
+		Cluster:   "cluster-1",
+		Component: "controller",
+		Namespace: "test",
+	})
+
+	ns := &corev1.Namespace{}
+	ns.Name = "test-ns"
+	err := recorder.RecordEvent(context.Background(), &events.Event{
+		Object:            ns,
+		RelatedObject:     nil,
+		ReportingInstance: "controller",
+		Name:              events.EventExampleEvent,
+	})
+	assert.NoError(t, err)
+
+	e := clientMock.createdObject.(*corev1.Event)
+	assert.NotEqual(t, e.InvolvedObject.Name, "")
+	assert.NotEqual(t, e.InvolvedObject.Namespace, "")
+	assert.EqualValues(t, e.InvolvedObject.Name, e.InvolvedObject.Namespace)
 }
