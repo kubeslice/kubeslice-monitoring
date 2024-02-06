@@ -252,7 +252,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		} else {
 			er.cache.Add(key, ev)
 		}
-		er.Logger.Debugf("event has been created %v", ev)
+		er.Logger.Infof("event has been created %v", ev)
 	} else {
 		// event already present in cache
 		e := lastSeenEvent.(*corev1.Event)
