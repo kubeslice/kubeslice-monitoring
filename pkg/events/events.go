@@ -264,7 +264,7 @@ func (er *eventRecorder) RecordEvent(ctx context.Context, e *Event) error {
 		}
 		// update the cache
 		er.cache.Add(key, e)
-		er.Logger.Infof("event has been updated %v", ev)
+		er.Logger.Debugf("event has been updated %v", ev)
 	}
 	return nil
 }
